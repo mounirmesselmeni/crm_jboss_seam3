@@ -1,0 +1,12 @@
+/* 
+    Document   : conf
+    Created on : 19 mars 2012, 09:26:23
+    Author     : david
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 85%;
+}
+

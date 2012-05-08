@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../WEB-INF/template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+<!--    <ui:define name="title">
+        title
+    </ui:define>
+
+    <ui:define name="titre_principal">
+        titre_principal
+    </ui:define>
+
+    <ui:define name="menu">
+        menu
+    </ui:define>
+
+    <ui:define name="switch">
+        switch
+    </ui:define>-->
+
+    <ui:define name="body">
+        <p:panel header="Panel">
+            <h:form> 
+                <p:schedule value="#{calendarController.eventModel}" widgetVar="myschedule"/> 
+            </h:form>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

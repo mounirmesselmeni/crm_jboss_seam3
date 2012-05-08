@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="cssLayout.css" />
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+    </h:head>
+
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" style="border: none;">
+                <h:form> 
+                    <p:dock position="top">
+                        <p:menuitem value="Accueil" icon="/resources/images/menu/Accueil.png" action="/home" ajax="false"/>
+                        <p:menuitem value="Tiers" icon="/resources/images/menu/Tiers.png" action="/backoffice/accounts/list" ajax="false"/>
+                        <p:menuitem value="Commercial" icon="/resources/images/menu/Commercial.png" action="/backoffice/agenda/calendar" ajax="false"/>
+                        <p:menuitem value="Produits Services" icon="/resources/images/menu/Produits.png" action="/data/accueil/accueilProduit" ajax="false"/>
+                        <p:menuitem value="Financier" icon="/resources/images/menu/Financier.png" action="/data/accueil/accueilFinancier" ajax="false"/>
+                        <p:menuitem value="Production" icon="/resources/images/menu/production.png" onclick="dlg3.show();"/>
+                        <p:menuitem value="Projet" icon="/resources/images/menu/projet.png" onclick="dlg3.show();"/>
+                        <p:menuitem value="Configuration" icon="/resources/images/menu/Configuration.png" action="/data/accueil/accueilConfiguration" ajax="false"/>
+                        <p:menuitem value="A propos" icon="/resources/images/menu/A_propos.png" onclick="dlg3.show();"/>
+                    </p:dock>
+                </h:form>
+                <p:spacer height="50"/>
+                <h1 align="left" style="border: none;">
+                    <ui:insert name="titre_principal">Titre principal</ui:insert>
+                </h1>
+            </p:layoutUnit>
+            <p:layoutUnit position="west" size="200" style="border: none;">
+                
+                <p:accordionPanel activeIndex="-1">
+                    <ui:insert name="menu">
+                        <p:tab title="A compléter">
+                            Données du template
+                        </p:tab>
+                    </ui:insert>
+                </p:accordionPanel>  
+                <ui:insert name="switch">
+                    
+                </ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit position="center" style="border: none; ">
+                <p:dialog header="Information..." width="400" height="250" widgetVar="dlg3" showEffect="explode" hideEffect="bounce" >
+                    <center>
+                        <h:graphicImage value="/resources/images/menu/production.png" />
+                        <h:graphicImage value="/resources/images/menu/projet.png" />
+                        <br/>
+                        <h:outputText value="Ce domaine fonctionnel n'est pas encore implémenté..." />
+                        <br/>
+                        <h:outputText value="L'implémentation est prévue pour 2012." />
+                        <br/>
+                        <h:outputText value="Merci." />
+                        <br/>
+                        <br/>
+                        <h:outputText value="ADMINISTRATION" />
+                    </center>
+                </p:dialog>
+<!--                <h3>
+                    <ui:insert name="title2">Titre secondaire</ui:insert>
+                </h3>
+                <p:separator />-->
+<!--                <p>-->
+                    <ui:insert name="body">Corps de la vue</ui:insert>
+<!--                </p>-->
+            </p:layoutUnit>
+        </p:layout>
+
+    </h:body>
+
+</html>
+

@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../WEB-INF/template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <!--    <ui:define name="title">
+            title
+        </ui:define>
+    
+        <ui:define name="titre_principal">
+            titre_principal
+        </ui:define>
+    
+        <ui:define name="menu">
+            menu
+        </ui:define>
+    
+        <ui:define name="title2">
+            title2
+        </ui:define>-->
+
+    <ui:define name="body">
+        <p:panel header="Panel">
+            <h:form id="formNew"  enctype="multipart/form-data">
+                <p:growl id="messages" showDetail="true" /> 
+                <p:accordionPanel  activeIndex="0" >
+                    <p:tab title="General Informations">
+                        <h:panelGrid  columns="2" cellpadding="4">
+                            <h:panelGrid id="display" columns="3" cellpadding="4">
+                                <h:outputLabel value="Name :" styleClass="titleLib"/>  
+                                <p:inputText id="newName"
+                                             required="true"
+                                             requiredMessage="Required"/>
+                                <p:message for="newName"/> 
+
+                                <h:outputLabel value="Type :" styleClass="titleLib"/>  
+                                <p:selectOneRadio  >
+                                    <f:selectItem itemLabel="BUSINESS" itemValue="BUSINESS" />  
+                                    <f:selectItem itemLabel="INDIVIDUAL" itemValue="INDIVIDUAL"/>
+                                </p:selectOneRadio>
+                                <p:spacer/>
+
+                                <h:outputLabel value="Langue :" styleClass="titleLib"/>  
+                                <p:selectOneRadio >
+                                    <f:selectItem itemLabel="Arabe" itemValue="AR" />  
+                                    <f:selectItem itemLabel="Français" itemValue="FR"/>
+                                    <f:selectItem itemLabel="Anglais" itemValue="EN"/>
+                                </p:selectOneRadio>
+                                <p:spacer/>
+
+
+
+                                <h:outputLabel value="Logo" styleClass="titleLib"/>
+                                <h:panelGrid>
+                                    <p:fileUpload value="#{fileUploadController.file}" mode="simple"
+                                                  update="messages" />  
+
+                                </h:panelGrid>
+                                     <p:spacer/>
+
+                                <p:spacer height="30"/>
+
+                            </h:panelGrid> 
+                            <!--                            <h:panelGrid id="logo" width="100" >
+                                                            <p:panel style="border-style: dotted" id="panelLogo" >  
+                                                                <h:graphicImage height="100" width="100" library="images" name="other/Logo.png"/>  
+                            
+                                                            </p:panel>
+                                                        </h:panelGrid >-->
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Address Informations">
+
+                        <h:panelGrid id="addressesGrid" columns="3" cellpadding="4">
+                            <h:outputLabel value="Street :" styleClass="titleLib"/>  
+                            <p:inputText />
+                            <p:spacer/> 
+
+                            <h:outputLabel value="City :" styleClass="titleLib"/>  
+                            <p:inputText />
+                            <p:spacer/> 
+
+                            <h:outputLabel value="Gouvernment :" styleClass="titleLib"/>  
+                            <p:selectOneMenu >
+                                <f:selectItem itemLabel="Sfax" itemValue="Sfax" />  
+                                <f:selectItem itemLabel="Tunis" itemValue="Tunis"/>
+                            </p:selectOneMenu>
+                            <p:spacer/> 
+
+                            <h:outputLabel value="Zip code :" styleClass="titleLib"/>  
+                            <p:inputText />
+                            <p:spacer/> 
+
+                            <h:outputLabel value="Type :" styleClass="titleLib"/>  
+                            <p:selectOneMenu  >
+                                <f:selectItem itemLabel="BUSINESS" itemValue="BUSINESS" />  
+                                <f:selectItem itemLabel="INDIVIDUAL" itemValue="INDIVIDUAL"/>
+                            </p:selectOneMenu>
+                            <p:spacer/>
+
+                            <p:spacer height="30"/>
+
+                        </h:panelGrid> 
+                    </p:tab>
+                    <p:tab title="3">
+
+                    </p:tab>
+
+                </p:accordionPanel>
+                <p:spacer height="40"/>
+                <table width="100%" border="0">
+                    <tr >
+                        <td width="20%" height="20px">
+                            <p:commandButton   styleClass="btn_annul" value="Cancel" ajax="false" action="list"
+                                               immediate="true" />
+                        </td>
+                        <td width="60%" >
+                        </td>
+                        <td  width="20%" height="20px">
+                            <p:commandButton  
+                                ajax="false"  value="Validate"
+                                styleClass="btn_val"
+                                />
+                        </td>
+                    </tr>  
+                </table>
+            </h:form>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

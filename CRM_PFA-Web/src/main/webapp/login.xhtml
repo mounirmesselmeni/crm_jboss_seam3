@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+        <ui:composition  xmlns:ui="http://java.sun.com/jsf/facelets"
+                         template="./WEB-INF/template/loginTemplate.xhtml"
+                         xmlns:h="http://java.sun.com/jsf/html"
+                         xmlns:p="http://primefaces.org/ui">
+
+            <ui:define name="body">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td width="25%"></td>
+                        <td>
+                            <p:panel style="width:100%; height:100%;">
+                                <div style="position:relative; left:-25px;">
+                                    <table border="0" cellpadding="0" cellspacing="0" >
+
+                                        <tr>
+                                            <td width="50px"></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td style="vertical-align:top;"><center>
+                                                    <h:form id="loginForm">
+                                                        <p:messages id="messages" globalOnly="true"/>
+                                                        <h:panelGrid columns="2">
+                                                            <h:graphicImage library="images"  name="/other/Login.png"/>
+                                                            <h:panelGrid columns="2">
+                                                                <h:outputText value="Username"  />
+                                                                <p:inputText id="name" />
+                                                                <h:outputText value="Password" />
+                                                                <p:password id="password" feedback="false" />
+                                                                <p:spacer/>
+                                                                <p:commandButton id="login" value="Login" ajax="false" />
+                                                            </h:panelGrid>
+                                                        </h:panelGrid>
+                                                    </h:form>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <h:panelGrid columns="2">
+                                </h:panelGrid>
+                            </p:panel>
+                        </td>
+                        <td width="25%"></td>
+                    </tr>
+                </table>
+            </ui:define>
+
+        </ui:composition>
+
+

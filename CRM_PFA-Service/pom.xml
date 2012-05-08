@@ -1,0 +1,41 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.insat.gl5</groupId>
+    <artifactId>CRM_PFA-Service</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>CRM_PFA-Service</name>
+    <parent>
+        <groupId>com.insat.gl5</groupId>
+        <artifactId>CRM_PFA</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- Seam Transaction -->
+        <dependency>
+            <groupId>org.jboss.seam.transaction</groupId>
+            <artifactId>seam-transaction</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <!-- Seam Persistence -->
+        <dependency>
+            <groupId>org.jboss.seam.persistence</groupId>
+            <artifactId>seam-persistence</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CRM_PFA-Model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project>

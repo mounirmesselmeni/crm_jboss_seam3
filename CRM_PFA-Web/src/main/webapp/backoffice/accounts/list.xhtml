@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../WEB-INF/template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <!--    <ui:define name="title">
+            title
+        </ui:define>
+    
+        <ui:define name="titre_principal">
+            titre_principal
+        </ui:define>
+    
+        <ui:define name="menu">
+            menu
+        </ui:define>
+    
+        <ui:define name="switch">
+            switch
+        </ui:define>-->
+
+    <ui:define name="body">
+        <p:panel header="Accounts List">
+            <h:form id="form1">
+                <p:spacer width="3"/>
+                <h:commandButton image="/resources/images/icons/add.png" action="create" />
+                <p:spacer width="5"/>
+                <p:commandLink  ajax="false" value="New Account" action="create"
+                               style="font-weight: bold">
+                </p:commandLink>
+                <p:spacer height="10"/>
+
+                <h:panelGrid width="100%">
+                    <p:spacer height="7" />
+                    <p:dataTable id="datatable" var="account" value="#{lstAgencesMedia}"
+                                 paginator="true" paginatorPosition="bottom" rows="10">  
+
+                        <p:column headerText="Name" style="width:20%">  
+                            <h:outputText value="#{account.name}" />  
+                        </p:column>  
+                        <p:column headerText="Options" style="text-align:center;width: 15%">  
+
+                            <h:commandButton image="/resources/images/icons/pencil.png" title="#{bundles.messages['form.modify']}">                                             
+                            </h:commandButton>  
+                            <p:spacer width="5"/>
+                            <p:commandLink  title="Delete">
+                                <p:graphicImage value="/resources/images/icons/remove.png"/>   
+                            </p:commandLink>
+                            <p:spacer width="5"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:panelGrid>
+
+            </h:form>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>
