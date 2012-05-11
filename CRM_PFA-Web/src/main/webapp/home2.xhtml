@@ -37,43 +37,37 @@
             <tr valign="top">
                 <td>
                     <p:panel header="Recherche">
-                        <h:form>
-                            <h:panelGrid columns="2">
-                                <h:panelGroup>
-                                    [image]<h:outputLabel value="Societé"/>
-                                </h:panelGroup>
-                                <p:spacer/>
-                                <h:inputText/>
-                                <p:commandButton value="Go"/>
-                                <h:panelGroup>
-                                    [image]<h:outputLabel value="Contact"/>
-                                </h:panelGroup>
-                                <p:spacer/>
-                                <h:inputText/>
-                                <p:commandButton value="Go"/>
-                                <h:panelGroup>
-                                    [image]<h:outputLabel value="Prospect"/>
-                                </h:panelGroup>
-                                <p:spacer/>
-                                <h:inputText/>
-                                <p:commandButton value="Go"/>
-                            </h:panelGrid>
-                        </h:form>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Contact"/>
+                            <h:inputText/>
+                        </h:panelGrid>
 
                     </p:panel>
                 </td>
-                <td rowspan="2" valign="top" width="100%">
+                <td rowspan="2" valign="top">
 
-                    <p:panel header="Les 10 derniers clients modifiés">
-
+                    <p:panel header="Panel">
+                        
                         <center>
                             <table>
                                 <tbody>
                                     <tr>
                                         <td>
+                                            <p:pieChart id="sample" value="#{chartBean.pieModelAchat}" legendPosition="e" title="Achats" style="width:400px;height:200px" />
                                         </td>
-
+                                        <td>                    
+                                            <p:pieChart id="custom" value="#{chartBean.pieModelVente}" legendPosition="e" title="Ventes" style="width:400px;height:200px" />
+                                        </td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            <p:barChart id="basic" value="#{chartBean.categoryModel}" legendPosition="ne" title="Produits et Services" min="0" max="100" style="height:250px"/>
+                                        </td>
+                                        <td>
+                                            <p:barChart id="basic2" value="#{chartBean.categoryModelClient}" legendPosition="ne" title="Clients" min="0" max="100" style="height:250px"/>
+                                        </td>
+                                    </tr>
+
                                 </tbody>
                             </table>
                         </center>
@@ -83,8 +77,8 @@
             <tr>
                 <td valign="top">
                     <p:panel header="Recherche">
-
-                        <p:pieChart value="#{chartBean.pieModelAchat}" legendPosition="e" title="Achats" style="width:300px;height:200px" />
+                       
+                      <p:pieChart value="#{chartBean.pieModelAchat}" legendPosition="e" title="Achats" style="width:400px;height:200px" />
                     </p:panel>
                 </td>
             </tr>
