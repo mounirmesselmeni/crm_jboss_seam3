@@ -16,16 +16,18 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Address extends BaseEntity {
 
+    @JoinColumn(name = "account", nullable = false)
+    @ManyToOne
     private Account account;
     private String description;
+    @Enumerated(EnumType.STRING)
     private AddressType type;
     private String street;
     private String city;
+    @Enumerated(EnumType.STRING)
     private Gouvernment gouvernment;
     private String postalCode;
 
-    @JoinColumn(name = "account", nullable = false)
-    @ManyToOne
     public Account getAccount() {
         return account;
     }
@@ -43,7 +45,6 @@ public class Address extends BaseEntity {
     }
 
     @NotNull
-    @Enumerated(EnumType.STRING)
     public AddressType getType() {
         return type;
     }
@@ -71,7 +72,6 @@ public class Address extends BaseEntity {
     }
 
     @NotNull
-    @Enumerated(EnumType.STRING)
     public Gouvernment getGouvernment() {
         return gouvernment;
     }

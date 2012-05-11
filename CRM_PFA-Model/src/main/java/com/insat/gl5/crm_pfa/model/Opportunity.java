@@ -7,6 +7,7 @@ package com.insat.gl5.crm_pfa.model;
 import com.insat.gl5.crm_pfa.enumeration.OpportunityType;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,9 +22,12 @@ public class Opportunity extends BaseEntity {
     private String name;
     private String description;
     private OpportunityType type;
+    @Temporal(TemporalType.DATE)
     private Date closeDate;
     private int probability;
     private int amount;
+    @ManyToOne
+    @JoinColumn(name="accountId")
     private Account account;
 
     /**
@@ -57,8 +61,7 @@ public class Opportunity extends BaseEntity {
     /**
      * @return the closeDate
      */
-    @Temporal(TemporalType.DATE)
-    public Date getCloseDate() {
+        public Date getCloseDate() {
         return closeDate;
     }
 
@@ -100,7 +103,6 @@ public class Opportunity extends BaseEntity {
     /**
      * @return the account
      */
-    @ManyToOne
     public Account getAccount() {
         return account;
     }

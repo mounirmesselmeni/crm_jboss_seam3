@@ -23,16 +23,20 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 public class Contact extends BaseEntity {
 
+    @Email
+    @Column(unique = true)
     private String emailAddress;
     private String firstName;
     private String lastName;
     private String roleName;
+    @Enumerated(EnumType.STRING)
     private Salutation salutation;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account", nullable = false)
     private Account account;
+    @OneToMany(mappedBy = "contact", fetch = FetchType.LAZY)
     private List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 
-    @Email
-    @Column(unique = true)
     public String getEmailAddress() {
         return emailAddress;
     }
@@ -70,9 +74,7 @@ public class Contact extends BaseEntity {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account", nullable = false)
-    public Account getAccount() {
+        public Account getAccount() {
         return account;
     }
 
@@ -80,8 +82,7 @@ public class Contact extends BaseEntity {
         this.account = account;
     }
 
-    @OneToMany(mappedBy = "contact", fetch = FetchType.LAZY)
-    public List<PhoneNumber> getPhoneNumbers() {
+        public List<PhoneNumber> getPhoneNumbers() {
         return phoneNumbers;
     }
 
@@ -92,8 +93,7 @@ public class Contact extends BaseEntity {
     /**
      * @return the salutation
      */
-    @Enumerated(EnumType.STRING)
-    public Salutation getSalutation() {
+        public Salutation getSalutation() {
         return salutation;
     }
 

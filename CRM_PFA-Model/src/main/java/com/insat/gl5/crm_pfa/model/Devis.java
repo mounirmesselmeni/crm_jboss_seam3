@@ -4,12 +4,14 @@
  */
 package com.insat.gl5.crm_pfa.model;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * 
@@ -22,18 +24,19 @@ public class Devis extends BaseEntity {
     private Collection<LineItem> lineItems;
     @ManyToOne
     private Contact contact;
-    private Timestamp creationDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
     private double totalPrice;
 
     public Collection<LineItem> getLineItems() {
         return lineItems;
     }
 
-    public Timestamp getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Timestamp creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 

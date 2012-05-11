@@ -18,13 +18,17 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 public class PhoneNumber extends BaseEntity {
 
-    private String number;
-    private PhoneNumberType type;
-    private boolean verified;
-    private Contact contact;
-
     @NotNull
     @NotEmpty
+    private String number;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private PhoneNumberType type;
+    private boolean verified;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contact", nullable = true)
+    private Contact contact;
+
     public String getNumber() {
         return number;
     }
@@ -33,8 +37,6 @@ public class PhoneNumber extends BaseEntity {
         this.number = number;
     }
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
     public PhoneNumberType getType() {
         return type;
     }
@@ -51,9 +53,7 @@ public class PhoneNumber extends BaseEntity {
         this.verified = verified;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contact", nullable = true)
-    public Contact getContact() {
+        public Contact getContact() {
         return contact;
     }
 

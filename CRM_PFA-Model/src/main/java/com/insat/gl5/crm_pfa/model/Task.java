@@ -20,10 +20,13 @@ public class Task extends BaseEntity {
 
     private TaskType taskType;
     private String subject;
+    @OneToOne
     private Contact assignedTo;
     private PriorityType priority;
     private String description;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date startDate;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dueDate;
 
     /**
@@ -72,7 +75,6 @@ public class Task extends BaseEntity {
     /**
      * @return the startDate
      */
-    @Temporal(javax.persistence.TemporalType.DATE)
     public Date getStartDate() {
         return startDate;
     }
@@ -87,8 +89,7 @@ public class Task extends BaseEntity {
     /**
      * @return the dueDate
      */
-    @Temporal(javax.persistence.TemporalType.DATE)
-    public Date getDueDate() {
+        public Date getDueDate() {
         return dueDate;
     }
 
@@ -102,8 +103,7 @@ public class Task extends BaseEntity {
     /**
      * @return the assignedTo
      */
-    @OneToOne
-    public Contact getAssignedTo() {
+        public Contact getAssignedTo() {
         return assignedTo;
     }
 

@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 public class Fidelity extends BaseEntity{
     private int score;
     
+    @OneToOne
     private Account account;
 
 
@@ -32,7 +33,6 @@ public class Fidelity extends BaseEntity{
         this.score = score;
     }
 
-    @OneToOne
     public Account getAccount() {
         return account;
     }
