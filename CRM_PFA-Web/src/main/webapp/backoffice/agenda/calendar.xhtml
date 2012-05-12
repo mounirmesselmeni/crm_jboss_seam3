@@ -2,29 +2,70 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
                 template="./../../WEB-INF/template/generalTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-<!--    <ui:define name="title">
-        title
-    </ui:define>
-
-    <ui:define name="titre_principal">
-        titre_principal
-    </ui:define>
-
-    <ui:define name="menu">
-        menu
-    </ui:define>
-
-    <ui:define name="switch">
-        switch
-    </ui:define>-->
+    <!--    <ui:define name="title">
+            title
+        </ui:define>
+    
+        <ui:define name="titre_principal">
+            titre_principal
+        </ui:define>
+    
+        <ui:define name="menu">
+            menu
+        </ui:define>
+    
+        <ui:define name="switch">
+            switch
+        </ui:define>-->
 
     <ui:define name="body">
         <p:panel header="Panel">
             <h:form> 
-                <p:schedule value="#{calendarController.eventModel}" widgetVar="myschedule"/> 
+                <p:schedule value="#{scheduleController.eventModel}" widgetVar="myschedule">
+                    <p:ajax event="dateSelect" listener="#{scheduleController.onDateSelect}" update="eventDetails" oncomplete="eventDialog.show()"/>
+                    <p:ajax event="eventSelect" listener="#{scheduleController.onEventSelect}" update="eventDetails" oncomplete="eventDialog.show()"/>
+                </p:schedule>
+                <p:dialog widgetVar="eventDialog" header="Détails tâche" showEffect="clip" hideEffect="clip">
+                    <h:panelGrid id="eventDetails" columns="3">
+                        <h:outputLabel for="type" value="Type:" />
+                        <p:selectOneMenu id="type" value="#{scheduleController.event.title}" required="true">
+                            <f:selectItem itemValue="Mail" itemLabel="Mail"/>
+                            <f:selectItem itemValue="RDV" itemLabel="RDV"/>
+                            <f:selectItem itemValue="Réunion" itemLabel="Réunion"/>
+                            <f:selectItem itemValue="Lettre" itemLabel="Lettre"/>
+                            <f:selectItem itemValue="Fax" itemLabel="Fax"/>
+                            <f:selectItem itemValue="Téléphone" itemLabel="Téléphone"/>
+                            <f:selectItem itemValue="Autre" itemLabel="Autre"/>
+                        </p:selectOneMenu>
+                        <p:message for="type"/>
+                        <h:outputLabel for="title" value="Title:" />
+                        <p:inputText id="title" value="#{scheduleController.event.title}" required="true"/>
+                        <p:message for="title"/>
+
+                        <h:outputLabel for="from" value="From:" />
+                        <p:inputMask id="from" value="#{scheduleController.event.startDate}" mask="99/99/9999" converter="dateConverter"/>
+                        <p:selectOneMenu>
+                            <f:selectItems value="#{hourOfTheDay}" var="hour" itemValue="#{hour}" itemLabel="#{hour}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="to" value="To:" />
+                        <p:inputMask id="to" value="#{scheduleController.event.endDate}" mask="99/99/9999" converter="dateConverter"/>
+                        <p:selectOneMenu>
+                            <f:selectItems value="#{hourOfTheDay}" var="hour" itemValue="#{hour}" itemLabel="#{hour}"/>
+                        </p:selectOneMenu>
+                        
+                        <h:outputLabel for="allDay" value="All Day:" />
+                        <p:selectBooleanCheckbox id="allDay" value="#{scheduleController.event.allDay}" />
+                        <p:message for="allDay"/>
+                        
+                        <p:commandButton type="reset" value="Reset" />
+                        <p:commandButton value="Save" action="#{scheduleController.addEvent}" oncomplete="myschedule.update();eventDialog.hide();"/>
+                    </h:panelGrid>
+                </p:dialog>
             </h:form>
         </p:panel>
     </ui:define>
