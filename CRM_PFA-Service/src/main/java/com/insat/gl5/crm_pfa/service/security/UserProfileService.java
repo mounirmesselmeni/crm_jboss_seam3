@@ -4,9 +4,9 @@
  */
 package com.insat.gl5.crm_pfa.service.security;
 
+import com.insat.gl5.crm_pfa.model.Contact;
 import com.insat.gl5.crm_pfa.model.security.IdentityObject;
 import com.insat.gl5.crm_pfa.model.security.IdentityRoleName;
-import com.insat.gl5.crm_pfa.model.security.UserDetails;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.ejb.TransactionAttribute;
@@ -32,7 +32,7 @@ import org.picketlink.idm.common.exception.IdentityException;
  */
 @TransactionAttribute
 @Interceptors(org.jboss.seam.transaction.TransactionInterceptor.class)
-public class UserProfile implements Serializable {
+public class UserProfileService implements Serializable {
 
     @Inject
     private EntityManager em;
@@ -43,7 +43,7 @@ public class UserProfile implements Serializable {
     @Inject
     private Logger log;
     @Inject
-    private Event<UserDetails> uDetailsEvent;
+    private Event<Contact> uDetailsEvent;
     private final static String INFORMATION_USER = "informationUser";
 
     public boolean updatePassword(String password, String email, String oldPassword) {
@@ -65,16 +65,16 @@ public class UserProfile implements Serializable {
         }
     }
 
-    public UserDetails saveNewUser(UserDetails userDetails, String password, Collection<Role> roles) throws FeatureNotSupportedException, IdentityException {
+    public Contact saveNewUser(Contact contact, String password, Collection<Role> roles) throws FeatureNotSupportedException, IdentityException {
         if (this.ident.getUser() != null) {
-            this.log.info("Save a new user '" + userDetails.getEmail() + "'. Done by " + ident.getUser().getId());
+            this.log.info("Save a new user '" + contact.getEmailAddress() + "'. Done by " + ident.getUser().getId());
         }
         User user = null;
         try {
-            user = this.identitySession.getPersistenceManager().createUser(userDetails.getEmail());
+            user = this.identitySession.getPersistenceManager().createUser(contact.getEmailAddress());
             this.identitySession.getAttributesManager().updatePassword(user, password);
-            this.em.persist(userDetails);
-            this.identitySession.getAttributesManager().addAttribute(user.getId(), INFORMATION_USER, userDetails.getId().toString());
+            this.em.persist(contact.getEmailAddress());
+            this.identitySession.getAttributesManager().addAttribute(user.getId(), INFORMATION_USER, contact.getId().toString());
             for (Role role : roles) {
                 try {
                     identitySession.getRoleManager().createRole(role.getRoleType(), user, role.getGroup());
@@ -83,7 +83,7 @@ public class UserProfile implements Serializable {
                     throw ex;
                 }
             }
-            return userDetails;
+            return contact;
         } catch (IdentityException ex) {
             this.log.error("", ex);
             throw ex;
@@ -91,35 +91,35 @@ public class UserProfile implements Serializable {
     }
 
     //* find profiluser by id*/   
-    public UserDetails getProfilById(int profilId) {
-        return this.em.find(UserDetails.class, profilId);
+    public Contact getProfilById(int profilId) {
+        return this.em.find(Contact.class, profilId);
     }
 
     /**
      * Edit User Profile
-     * @param userDetails 
+     * @param Contact 
      */
-    public void editProfiluser(UserDetails userDetails) {
-        this.log.info("Edit a profil '" + userDetails.getEmail() + "'. Done by " + ident.getUser().getId());
+    public void editProfiluser(Contact contact) {
+        this.log.info("Edit a profil '" + contact.getEmailAddress() + "'. Done by " + ident.getUser().getId());
         try {
-            User user = searchUser(userDetails.getEmail());
+            User user = searchUser(contact.getEmailAddress());
             String pu = this.identitySession.getAttributesManager().getAttribute(user, INFORMATION_USER).getValue().toString();
-            userDetails.setId(Long.parseLong(pu));
-            this.em.merge(userDetails);
+            contact.setId(Long.parseLong(pu));
+            this.em.merge(contact);
         } catch (IdentityException ex) {
             this.log.error("", ex);
         }
-        this.uDetailsEvent.fire(userDetails);
+        this.uDetailsEvent.fire(contact);
     }
 
-    public UserDetails loadProfilUser(User user) {
+    public Contact loadProfilUser(User user) {
         try {
             if (user != null && this.identitySession.getAttributesManager().getAttribute(user.getId(), INFORMATION_USER) != null) {
-                Query query = this.em.createQuery("select p from UserDetails p where p.id = ?1");
+                Query query = this.em.createQuery("select p from Contact p where p.id = ?1");
                 Object o = this.identitySession.getAttributesManager().getAttribute(user.getId(), INFORMATION_USER).getValue();
                 query.setParameter(1, Long.parseLong(o.toString()));
                 if (!query.getResultList().isEmpty()) {
-                    return (UserDetails) query.getSingleResult();
+                    return (Contact) query.getSingleResult();
                 }
             }
         } catch (IdentityException ex) {
@@ -133,12 +133,12 @@ public class UserProfile implements Serializable {
      * @param userId
      * @return 
      */
-    public UserDetails loadProfilUser(String userId) {
+    public Contact loadProfilUser(String userId) {
         try {
-            Query query = this.em.createQuery("select p from UserDetails p where p.email = ?1");
+            Query query = this.em.createQuery("select p from Contact p where p.email = ?1");
             query.setParameter(1, userId);
             if (!query.getResultList().isEmpty()) {
-                return (UserDetails) query.getSingleResult();
+                return (Contact) query.getSingleResult();
             }
 
         } catch (Exception ex) {
@@ -162,17 +162,17 @@ public class UserProfile implements Serializable {
         return this.searchUser(username) != null;
     }
 
-    public UserDetails verifyExistenceCount(String username) {
-        Query query = this.em.createQuery("select p from UserDetails p where p.email = ?1");
+    public Contact verifyExistenceCount(String username) {
+        Query query = this.em.createQuery("select p from Contact p where p.email = ?1");
         query.setParameter(1, username);
         if ((query.getResultList()).isEmpty()) {
             return null;
         }
-        return (UserDetails) query.getSingleResult();
+        return (Contact) query.getSingleResult();
     }
 
-    public UserDetails createUserDetails() {
-        return new UserDetails();
+    public Contact createContact() {
+        return new Contact();
     }
 
     public void deleteGroup(String name, String groupType) throws IdentityException {

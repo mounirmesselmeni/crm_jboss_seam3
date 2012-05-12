@@ -4,7 +4,6 @@
  */
 package com.insat.gl5.crm_pfa.model;
 
-import com.insat.gl5.crm_pfa.model.security.UserDetails;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -28,15 +27,15 @@ public abstract class BaseEntity implements Serializable {
     @Id
     @GeneratedValue
     @Basic
-    private Long id;
+    protected Long id;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedOn;
     @ManyToOne
-    private UserDetails userCreation;
+    private Contact createdBy;
     @ManyToOne
-    private UserDetails userModification;
+    private Contact modifiedBy;
 
     
     
@@ -65,42 +64,36 @@ public abstract class BaseEntity implements Serializable {
         this.modifiedOn = new Date(modifiedOn.getTime());
     }
 
-    public UserDetails getUserCreation() {
-        return userCreation;
+    public Contact getCreatedBy() {
+        return createdBy;
     }
 
-    public void setUserCreation(UserDetails userCreation) {
-        this.userCreation = userCreation;
+    public void setCreatedBy(Contact createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public UserDetails getUserModification() {
-        return userModification;
+    public Contact getModifiedBy() {
+        return modifiedBy;
     }
 
-    public void setUserModification(UserDetails userModification) {
-        this.userModification = userModification;
+    public void setModifiedBy(Contact modifiedBy) {
+        this.modifiedBy = modifiedBy;
     }
 
-    
     @PrePersist
     public void initTimeStamps() {
         // we do this for the purpose of the demo, this lets us create our own
         // creation dates. Typically we would just set the createdOn field.
         if (createdOn == null) {
             createdOn = new Date();
-        //    userModification = userDetails;
-           
         }
         modifiedOn = createdOn;
-        //userModification = userDetails;
     }
 
     
     @PreUpdate
     public void updateTimeStamp() {
         modifiedOn = new Date();
-     //   userModification = userDetails;
-       
     }
 
     @Override
@@ -121,10 +114,10 @@ public abstract class BaseEntity implements Serializable {
         if (this.modifiedOn != other.modifiedOn && (this.modifiedOn == null || !this.modifiedOn.equals(other.modifiedOn))) {
             return false;
         }
-        if (this.userCreation != other.userCreation && (this.userCreation == null || !this.userCreation.equals(other.userCreation))) {
+        if (this.createdBy != other.createdBy && (this.createdBy == null || !this.createdBy.equals(other.createdBy))) {
             return false;
         }
-        if (this.userModification != other.userModification && (this.userModification == null || !this.userModification.equals(other.userModification))) {
+        if (this.modifiedBy != other.modifiedBy && (this.modifiedBy == null || !this.modifiedBy.equals(other.modifiedBy))) {
             return false;
         }
         return true;
@@ -136,8 +129,8 @@ public abstract class BaseEntity implements Serializable {
         hash = 37 * hash + (this.id != null ? this.id.hashCode() : 0);
         hash = 37 * hash + (this.createdOn != null ? this.createdOn.hashCode() : 0);
         hash = 37 * hash + (this.modifiedOn != null ? this.modifiedOn.hashCode() : 0);
-        hash = 37 * hash + (this.userCreation != null ? this.userCreation.hashCode() : 0);
-        hash = 37 * hash + (this.userModification != null ? this.userModification.hashCode() : 0);
+        hash = 37 * hash + (this.createdBy != null ? this.createdBy.hashCode() : 0);
+        hash = 37 * hash + (this.modifiedBy != null ? this.modifiedBy.hashCode() : 0);
         return hash;
     }
 }
