@@ -27,3 +27,8 @@ a:link:hover, a:visited:hover  {
   font-weight : bold;
   text-decoration : underline;
 }
+
+.fs22
+{
+    font-size: 28px; /* Paragraphes de 14 pixels */
+}
