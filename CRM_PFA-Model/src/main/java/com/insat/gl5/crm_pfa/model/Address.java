@@ -5,8 +5,6 @@ import com.insat.gl5.crm_pfa.enumeration.Gouvernment;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -16,9 +14,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Address extends BaseEntity {
 
-    @JoinColumn(name = "account", nullable = false)
-    @ManyToOne
-    private Account account;
+    
     private String description;
     @Enumerated(EnumType.STRING)
     private AddressType type;
@@ -28,15 +24,7 @@ public class Address extends BaseEntity {
     private Gouvernment gouvernment;
     private String postalCode;
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public String getDescription() {
+        public String getDescription() {
         return description;
     }
 
@@ -86,5 +74,10 @@ public class Address extends BaseEntity {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+    }
+
+    @Override
+    public String toString() {
+        return type + ": " + street + " -" + postalCode + "-" + city + ", " + gouvernment ;
     }
 }

@@ -8,6 +8,7 @@ import com.insat.gl5.crm_pfa.model.BaseEntity;
 import com.insat.gl5.crm_pfa.model.Contact;
 import com.insat.gl5.crm_pfa.service.qualifier.CurrentUser;
 import com.insat.gl5.crm_pfa.service.qualifier.DataRepository;
+import java.io.Serializable;
 import javax.ejb.TransactionAttribute;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
@@ -20,7 +21,7 @@ import org.jboss.solder.logging.Logger;
  */
 @TransactionAttribute
 @Interceptors(org.jboss.seam.transaction.TransactionInterceptor.class)
-public abstract class GenericService {
+public abstract class GenericService implements Serializable{
 
     @Inject
     @DataRepository

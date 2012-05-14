@@ -1,8 +1,6 @@
 package com.insat.gl5.crm_pfa.model;
 
 import com.insat.gl5.crm_pfa.enumeration.Salutation;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -28,14 +25,17 @@ public class Contact extends BaseEntity {
     private String emailAddress;
     private String firstName;
     private String lastName;
-    private String roleName;
     @Enumerated(EnumType.STRING)
     private Salutation salutation;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account", nullable = false)
+    @JoinColumn(name = "accountId")
     private Account account;
-    @OneToMany(mappedBy = "contact", fetch = FetchType.LAZY)
-    private List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
+    @ManyToOne
+    @JoinColumn(name = "primaryAddressId")
+    private Address primaryAddress;
+    @ManyToOne
+    @JoinColumn(name = "secondaryAddressId")
+    private Address secondaryAddress;
 
     public String getEmailAddress() {
         return emailAddress;
@@ -65,29 +65,12 @@ public class Contact extends BaseEntity {
         this.lastName = lastName;
     }
 
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-
         public Account getAccount() {
         return account;
     }
 
     public void setAccount(Account account) {
         this.account = account;
-    }
-
-        public List<PhoneNumber> getPhoneNumbers() {
-        return phoneNumbers;
-    }
-
-    public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
-        this.phoneNumbers = phoneNumbers;
     }
 
     /**
@@ -102,5 +85,37 @@ public class Contact extends BaseEntity {
      */
     public void setSalutation(Salutation salutation) {
         this.salutation = salutation;
+    }
+
+    /**
+     * @return the primaryAddress
+     */
+    public Address getPrimaryAddress() {
+        return primaryAddress;
+    }
+
+    /**
+     * @param primaryAddress the primaryAddress to set
+     */
+    public void setPrimaryAddress(Address primaryAddress) {
+        this.primaryAddress = primaryAddress;
+    }
+
+    /**
+     * @return the secondaryAddress
+     */
+    public Address getSecondaryAddress() {
+        return secondaryAddress;
+    }
+
+    /**
+     * @param secondaryAddress the secondaryAddress to set
+     */
+    public void setSecondaryAddress(Address secondaryAddress) {
+        this.secondaryAddress = secondaryAddress;
+    }
+    
+    public String getFullName(){
+        return firstName+" "+lastName;
     }
 }

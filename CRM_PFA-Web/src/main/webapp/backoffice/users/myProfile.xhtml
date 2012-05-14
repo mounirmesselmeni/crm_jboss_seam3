@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="./WEB-INF/template/generalTemplate.xhtml">
+    <ui:define name="body">
+        <p:panel header="Profil">
+            <p:messages id="messages" globalOnly="true"/>
+            <h:form>
+                <h:panelGrid columns="2" cellspacing="50" cellpadding="20">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Nom" styleClass="titleLib" />
+                        <h:outputText id="firstName" value="#{currentUser.firstName}"/>
+                        <h:outputText value="Prenom" styleClass="titleLib" />
+                        <h:outputText id="lastName" value="#{currentUser.lastName}"/>
+                        <h:outputText value="e-mail" styleClass="titleLib" />
+                        <h:outputText id="email" value="#{currentUser.emailAddress}"/>
+                        <ui:remove>
+                            <h:outputText value="Telephone" styleClass="titleLib" />
+                            <h:outputText id="phoneNumber" value="#{currentUser.phoneNumber}"/>
+                        </ui:remove>
+                        <h:outputText value="Adresse" styleClass="titleLib" />
+                        <h:outputText id="address" value="#{currentUser.address}" />
+                        
+                    </h:panelGrid>
+                    <p:dataTable value="#{currentUserRoles}" var="role" style="width: 100%">
+                        <f:facet name="header">
+                            <h:outputText value="Roles"/>
+                        </f:facet>
+                        <p:column headerText="Nom">
+                            <h:outputText value="#{role.roleType.name}"/>
+                        </p:column>
+                        <p:column headerText="Groupe">
+                            <h:outputText value="#{role.group.name}"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandLink value="Changer le mot de passe" action="changePassword" ajax="false"/>
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+    </ui:define>
+</ui:composition>

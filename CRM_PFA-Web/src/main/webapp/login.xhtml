@@ -19,18 +19,19 @@
                                             <td width="50px"></td>
                                             <td></td>
                                             <td></td>
-                                            <td style="vertical-align:top;"><center>
-                                                    <h:form id="loginForm">
+                                            <td style="vertical-align:top;width: 100%">
+                                                <center>
+                                                    <h:form id="loginForm"  rendered="#{not identity.loggedIn}">
                                                         <p:messages id="messages" globalOnly="true"/>
                                                         <h:panelGrid columns="2">
                                                             <h:graphicImage library="images"  name="/other/Login.png"/>
                                                             <h:panelGrid columns="2">
                                                                 <h:outputText value="Username"  />
-                                                                <p:inputText id="name" />
+                                                                <p:inputText id="name" value="#{credentials.username}"/>
                                                                 <h:outputText value="Password" />
-                                                                <p:password id="password" feedback="false" />
+                                                                <p:password id="password" feedback="false" value="#{credentials.password}" />
                                                                 <p:spacer/>
-                                                                <p:commandButton id="login" value="Login" ajax="false" />
+                                                                <p:commandButton id="login" value="Login" ajax="false" action="#{identity.login()}"/>
                                                             </h:panelGrid>
                                                         </h:panelGrid>
                                                     </h:form>

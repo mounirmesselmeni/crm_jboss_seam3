@@ -6,27 +6,24 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-   
     <ui:define name="body">
-        <p:panel header="Liste des comptes">
+        <p:panel header="Liste des contacts">
             <h:form id="form1">
-                <p:messages id="messages" globalOnly="true"/>
                 <p:spacer width="3"/>
-                <h:commandButton image="/resources/images/icons/add.png"/>
+                <h:commandButton image="/resources/images/icons/add.png" action="create?faces-redirect=true" />
                 <p:spacer width="5"/>
-                <p:commandLink  ajax="false" value="Nouveau Compte" actionListener="#{accountController.beginConversation()}" action="create?faces-redirect=true"
+                <p:commandLink  ajax="false" value="Nouveau contact" actionListener="#{contactController.beginConversation()}" action="create"
                                style="font-weight: bold">
-                    <f:setPropertyActionListener target="#{accountController.redirect}" value="list.jsf?faces-redirect=true"/>
                 </p:commandLink>
                 <p:spacer height="10"/>
 
                 <h:panelGrid width="100%">
                     <p:spacer height="7" />
-                    <p:dataTable id="datatable" var="account" value="#{lstAccounts}"
+                    <p:dataTable id="datatable" var="contact" value="#{lstContacts}"
                                  paginator="true" paginatorPosition="bottom" rows="10">  
 
                         <p:column headerText="Name" style="width:20%">  
-                            <h:outputText value="#{account.name}" />  
+                            <h:outputText value="#{contact.firstName}" />  
                         </p:column>  
                         <p:column headerText="Actions" style="text-align:center;width: 15%">  
 

@@ -5,7 +5,8 @@
 package com.insat.gl5.crm_pfa.model;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * 
@@ -16,8 +17,11 @@ public class LineItem extends BaseEntity {
 
     private double subTotal;
     private int quantity;
-    @OneToOne
+    @ManyToOne
     private Product product;
+    
+    @ManyToOne
+    private Opportunity opportunity;
 
     public LineItem() {
     }
@@ -36,13 +40,7 @@ public class LineItem extends BaseEntity {
         this.product = product;
     }
 
-    /*public PurchaseOrder getOrder() {
-    return order;
-    }
-
-    public void setOrder(PurchaseOrder order) {
-    this.order = order;
-    }*/
+    
     public int getQuantity() {
         return quantity;
     }
@@ -82,6 +80,20 @@ public class LineItem extends BaseEntity {
     @Override
     public String toString() {
         return "LineItem{" + "quantity=" + quantity + ", product=" + product + '}';
+    }
+
+    /**
+     * @return the opportunity
+     */
+    public Opportunity getOpportunity() {
+        return opportunity;
+    }
+
+    /**
+     * @param opportunity the opportunity to set
+     */
+    public void setOpportunity(Opportunity opportunity) {
+        this.opportunity = opportunity;
     }
 
     

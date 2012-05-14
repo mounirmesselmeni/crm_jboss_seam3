@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="./WEB-INF/template/generalTemplate.xhtml">
+
+    <ui:define name="body">
+        <f:metadata>
+            <f:event type="preRenderView"
+                     listener="#{roleTypeController.beginConversation()}" />
+        </f:metadata>
+        <p:panel header="Liste des rôles">
+            
+            <p:messages autoUpdate="true" showSummary="true"/>
+            <h:form>
+                <h:commandButton image="/icone/add.png" />
+                <p:commandLink value="Nouveau rôle" oncomplete="newRoleDialog.show()" style="font-weight: bold">
+                </p:commandLink>
+                <p:dataTable value="#{lstRoleTypes}" var="roleType">
+                    <p:column headerText="Nom" >
+                        <h:outputText value="#{roleType.name}"/>
+                    </p:column>
+                    <p:column headerText="Actions" style="text-align: center;">
+                        <p:commandButton oncomplete="editRoleType.show()" 
+                                         title="Modifier">
+                            <p:graphicImage value="/icone/edit.png"/>   
+                            <f:setPropertyActionListener value="#{roleType.name}" 
+                                                         target="#{roleTypeController.roleType}" />
+                            <f:setPropertyActionListener value="#{roleType.name}" 
+                                                         target="#{roleTypeController.oldName}" />
+                        </p:commandButton>
+                        <p:spacer width="10"/>
+                        <p:commandButton oncomplete="confirmation.show()" 
+                                         title="#{bundles.messages['delete']}">
+                            <p:graphicImage value="/icone/remove.png"/>   
+                            <f:setPropertyActionListener value="#{roleType.name}" 
+                                                         target="#{roleTypeController.roleType}" />  
+                        </p:commandButton>  
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:confirmDialog message="Etes vous sur de supprimer ce rôle ?" width="200"    
+                         header="Confirmation" severity="alert" widgetVar="confirmation">  
+            <h:form>
+                <p:commandButton id="btnNo" value="Non" onclick="confirmation.hide()" type="button" />  
+                <p:commandButton id="btnYes" value="Oui" 
+                                 actionListener="#{roleTypeController.deleteRoleType()}"
+                                 onclick="confirmation.hide()"/>  
+            </h:form>
+        </p:confirmDialog>
+        <p:dialog widgetVar="editRoleType" modal="true">
+            <h:form>
+                <p:outputPanel autoUpdate="true">
+                    <h:panelGrid columns="3">
+                        <h:outputText value="Nom"/>
+                        <p:inputText id="roleType" value="#{roleTypeController.roleType}" 
+                                     required="true" requiredMessage="required"/>
+                        <p:message for="roleType"/>
+                        <p:spacer />
+                        <p:spacer />
+                        <p:spacer height="20"/>
+                    </h:panelGrid>
+                </p:outputPanel>
+                <table width="100%" border="0">
+                    <tr >
+                        <td width="20%" >
+                    <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler" 
+                                     ajax="false" oncomplete="editRoleType.hide();" immediate="true">
+                    </p:commandButton>
+                    </td>
+                    <td width="60%" >
+                    </td>
+                    <td  width="20%" height="20px">
+                    <p:commandButton id="val" action="#{roleTypeController.updateRoleType()}" ajax="false" 
+                                     styleClass="btn_val" oncomplete="editRoleType.hide();"
+                                     value="Mettre à jour"/>
+                    </td>
+                    </tr>  
+                </table>
+            </h:form>
+        </p:dialog>
+              <p:dialog widgetVar="newRoleDialog" modal="true">
+            <h:form>
+                <p:outputPanel autoUpdate="true">
+                    <h:panelGrid columns="3">
+                        <h:outputText value="Nom"/>
+                        <p:inputText id="roleType" value="#{roleTypeController.roleType}" 
+                                     required="true" requiredMessage="required"/>
+                        <p:message for="roleType"/>
+                        <p:spacer />
+                        <p:spacer />
+                        <p:spacer height="20"/>
+                    </h:panelGrid>
+                </p:outputPanel>
+                <table width="100%" border="0">
+                    <tr >
+                        <td width="20%" >
+                    <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler" 
+                                     ajax="false" oncomplete="newRoleDialog.hide();" immediate="true">
+                    </p:commandButton>
+                    </td>
+                    <td width="60%" >
+                    </td>
+                    <td  width="20%" height="20px">
+                    <p:commandButton id="val" action="#{roleTypeController.save()}" ajax="false" 
+                                     styleClass="btn_val" oncomplete="newRoleDialog.hide();"
+                                     value="Sauvegarder"/>
+                    </td>
+                    </tr>  
+                </table>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

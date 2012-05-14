@@ -17,13 +17,15 @@ import javax.persistence.NamedQuery;
 @NamedQueries({@NamedQuery(name = "Product.findAll", query = "select o from Product o"), @NamedQuery(name = "Product.findByProductId", query = "select o from Product o where id = :productId"), @NamedQuery(name = "Product.findByCategoryId", query = "select o from Product o where category.id = :catgoryId")})
 public class Product extends BaseEntity {
 
+    private String reference;
     private String name;
     private String description;
     private String image;
     @ManyToOne
     private Category category;
-    private String type;
     private double price;
+    @ManyToOne
+    private TVA tva;
     private boolean availability;
     private int quantity;
 
@@ -46,7 +48,6 @@ public class Product extends BaseEntity {
         this.image = image;
         this.quantity = quantity;
         this.price = price;
-        this.type = type;
     }
 
     public String getDescription() {
@@ -97,13 +98,6 @@ public class Product extends BaseEntity {
         this.price = price;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     @Override
     public int hashCode() {
@@ -128,6 +122,34 @@ public class Product extends BaseEntity {
     @Override
     public String toString() {
         return "Product{" + "name=" + name + '}';
+    }
+
+    /**
+     * @return the reference
+     */
+    public String getReference() {
+        return reference;
+    }
+
+    /**
+     * @param reference the reference to set
+     */
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
+    /**
+     * @return the tva
+     */
+    public TVA getTva() {
+        return tva;
+    }
+
+    /**
+     * @param tva the tva to set
+     */
+    public void setTva(TVA tva) {
+        this.tva = tva;
     }
 
 }

@@ -135,7 +135,7 @@ public class UserProfileService implements Serializable {
      */
     public Contact loadProfilUser(String userId) {
         try {
-            Query query = this.em.createQuery("select p from Contact p where p.email = ?1");
+            Query query = this.em.createQuery("select p from Contact p where p.emailAddress = ?1");
             query.setParameter(1, userId);
             if (!query.getResultList().isEmpty()) {
                 return (Contact) query.getSingleResult();
@@ -163,7 +163,7 @@ public class UserProfileService implements Serializable {
     }
 
     public Contact verifyExistenceCount(String username) {
-        Query query = this.em.createQuery("select p from Contact p where p.email = ?1");
+        Query query = this.em.createQuery("select p from Contact p where p.emailAddress = ?1");
         query.setParameter(1, username);
         if ((query.getResultList()).isEmpty()) {
             return null;
