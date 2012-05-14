@@ -3,6 +3,17 @@
   <persistence-unit name="unit" transaction-type="JTA">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <jta-data-source>crmDS</jta-data-source>
+    <class>com.insat.gl5.crm_pfa.model.Account</class>
+    <class>com.insat.gl5.crm_pfa.model.Address</class>
+    <class>com.insat.gl5.crm_pfa.model.Category</class>
+    <class>com.insat.gl5.crm_pfa.model.Contact</class>
+    <class>com.insat.gl5.crm_pfa.model.Devis</class>
+    <class>com.insat.gl5.crm_pfa.model.Fidelity</class>
+    <class>com.insat.gl5.crm_pfa.model.LineItem</class>
+    <class>com.insat.gl5.crm_pfa.model.Opportunity</class>
+    <class>com.insat.gl5.crm_pfa.model.PhoneNumber</class>
+    <class>com.insat.gl5.crm_pfa.model.Product</class>
+    <class>com.insat.gl5.crm_pfa.model.Task</class>
     <class>com.insat.gl5.crm_pfa.model.security.IdentityObject</class>
     <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectAttribute</class>
     <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectCredential</class>
@@ -12,7 +23,6 @@
     <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectType</class>
     <class>com.insat.gl5.crm_pfa.model.security.IdentityPermission</class>
     <class>com.insat.gl5.crm_pfa.model.security.IdentityRoleName</class>
-    <class>com.insat.gl5.crm_pfa.model.security.UserDetails</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.hbm2ddl.auto" value="update"/>

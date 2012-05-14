@@ -33,6 +33,47 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>org.jboss.seam.mail</groupId>
+            <artifactId>seam-mail</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.seam.mail</groupId>
+            <artifactId>seam-mail-api</artifactId>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.seam.solder</groupId>
+                    <artifactId>seam-solder</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+		
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+        </dependency>
+		
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.16</version>  			
+        </dependency>
+
+        <dependency>
+            <groupId>org.subethamail</groupId>
+            <artifactId>subethasmtp</artifactId>
+            <scope>test</scope>
+            <version>3.1.6</version>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CRM_PFA-Model</artifactId>
             <version>${project.version}</version>

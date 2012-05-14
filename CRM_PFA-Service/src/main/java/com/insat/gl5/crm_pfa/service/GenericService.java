@@ -29,9 +29,9 @@ public abstract class GenericService {
     @Inject
     protected Logger log;
 
-    @Inject
-    @CurrentUser
-    private Contact currentUser;
+//    @Inject
+//    @CurrentUser
+//    private Contact currentUser;
 
     public GenericService() {
         super();
@@ -46,7 +46,7 @@ public abstract class GenericService {
      * @param object l'objet à persister
      */
     protected <T extends BaseEntity> void persist(T object) {
-        object.setCreatedBy(currentUser);
+//        object.setCreatedBy(currentUser);
         em.persist(object);
     }
 
@@ -65,7 +65,7 @@ public abstract class GenericService {
      */
     protected <T extends BaseEntity> void edit(T object) {
         object = em.merge(object);
-        object.setModifiedBy(currentUser);
+//        object.setModifiedBy(currentUser);
         em.persist(object);
     }
 

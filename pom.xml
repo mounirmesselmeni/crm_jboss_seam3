@@ -66,6 +66,7 @@
         <dependency>
             <groupId>org.jboss.seam.mail</groupId>
             <artifactId>seam-mail</artifactId>
+            <scope>compile</scope>
         </dependency>
         <!--Seam Solder -->
         <dependency>
@@ -75,6 +76,7 @@
         <dependency>
             <groupId>org.jboss.solder</groupId>
             <artifactId>solder-api</artifactId>
+            <scope>compile</scope>
         </dependency>
         <!--Picketlink Core -->
         <dependency>
