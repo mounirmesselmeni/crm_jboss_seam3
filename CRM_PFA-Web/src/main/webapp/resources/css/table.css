@@ -44,7 +44,7 @@
 	.table thead th,
 	.table thead td,
 	.head {
-		background: #a4a4a4 url(../images/old-browsers-bg/planning-header-bg.png) repeat-x top;
+		background: #a4a4a4 url(./../../resources/images/constellation/old-browsers-bg/planning-header-bg.png) repeat-x top;
 		-webkit-background-size: 100% 100%;
 		-moz-background-size: 100% 100%;
 		-o-background-size: 100% 100%;
@@ -139,7 +139,7 @@
 		.table tfoot th,
 		.table tfoot td {
 			border-top: 1px solid #FF9900;
-			background: #999999 url(../images/old-browsers-bg/tfoot-bg.png) repeat-x top;
+			background: #999999 url(./../../resources/images/constellation/old-browsers-bg/tfoot-bg.png) repeat-x top;
 			-o-background-size: 100% 100%;
 			-moz-background-size: 100% 100%;
 			-webkit-background-size: 100% 100%;
@@ -191,7 +191,7 @@
 	
 	.table .black-cell,
 	.head .black-cell {
-		background: #242424 url(../images/old-browsers-bg/black-cell-bg.png) repeat-x top;
+		background: #242424 url(./../../resources/images/constellation/old-browsers-bg/black-cell-bg.png) repeat-x top;
 		-webkit-background-size: 100% 100%;
 		-moz-background-size: 100% 100%;
 		-o-background-size: 100% 100%;
@@ -244,9 +244,9 @@
 				height: auto;
 				padding: 0;
 			}
-			.table .black-cell span.loading, .with-head .black-cell span.loading { background-image: url(../images/table-loader.gif); }
-			.table .black-cell span.error, .with-head .black-cell span.error { background-image: url(../images/icons/fugue/cross-circle.png); }
-			.table .black-cell span.success, .with-head .black-cell span.success { background-image: url(../images/icons/fugue/tick-circle-blue.png); }
+			.table .black-cell span.loading, .with-head .black-cell span.loading { background-image: url(./../../resources/images/constellation/table-loader.gif); }
+			.table .black-cell span.error, .with-head .black-cell span.error { background-image: url(./../../resources/images/constellation/icons/fugue/cross-circle.png); }
+			.table .black-cell span.success, .with-head .black-cell span.success { background-image: url(./../../resources/images/constellation/icons/fugue/tick-circle-blue.png); }
 	
 	.table-actions a img {
 		margin: -2px 0;
@@ -268,7 +268,7 @@
 		display: block;
 		width: 13px;
 		height: 14px;
-		background: url(../images/table-sort-arrows.png) no-repeat;
+		background: url(./../../resources/images/constellation/table-sort-arrows.png) no-repeat;
 		border-right: 1px solid #999999;
 	}
 	.column-sort .sort-up {

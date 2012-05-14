@@ -4,7 +4,7 @@
 
 body {
 	font-family: HelveticaNeue, Verdana, Arial, Helvetica, sans-serif;
-	background: url(../images/bg-mobile.png) no-repeat center top;
+	background: url(./../../resources/images/constellation/bg-mobile.png) no-repeat center top;
 	-webkit-text-size-adjust: none;
 }
 textarea, input {
@@ -88,7 +88,7 @@ ul.roundRectangle {
 	ul.roundRectangle .showArrow {
 		float: right;
 		padding-right: 1em;
-		background: url(../images/chevron.png) no-repeat right;
+		background: url(./../../resources/images/constellation/chevron.png) no-repeat right;
 	}
 	ul.roundRectangle .secondary {
 		font-weight: normal;
@@ -109,7 +109,7 @@ header {
 	border-top: 0.063em solid #ff6500;
 	height: 2.5em;
 	line-height: 2.438em;
-	background: black url(../images/old-browsers-bg/subnav-bg.png) repeat-x;
+	background: black url(./../../resources/images/constellation/old-browsers-bg/subnav-bg.png) repeat-x;
 	-webkit-background-size: 100% 100%;
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
@@ -135,7 +135,7 @@ header {
 	width: 76px;
 	height: 40px;
 	line-height: 40px;
-	background: url(../images/back-button.png) no-repeat center center;
+	background: url(./../../resources/images/constellation/back-button.png) no-repeat center center;
 	color: white;
 	text-align: center;
 	text-indent: 0.286em;
@@ -150,7 +150,7 @@ header {
 	height: 1.75em;
 	line-height: 1.75em;
 	margin: -2.188em 0.25em 0 0;
-	background: #465a6e url(../images/old-browsers-bg/subnav-bt-border-bg.png) repeat-x;
+	background: #465a6e url(./../../resources/images/constellation/old-browsers-bg/subnav-bt-border-bg.png) repeat-x;
 	-webkit-background-size: 100% 100%;
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
@@ -178,7 +178,7 @@ header {
 		-moz-border-radius: 0.286em;
 		-webkit-border-radius: 0.286em;
 		border-radius: 0.286em;
-		background: #1d2a36 url(../images/old-browsers-bg/subnav-bt-bg.png) repeat-x;
+		background: #1d2a36 url(./../../resources/images/constellation/old-browsers-bg/subnav-bt-bg.png) repeat-x;
 		-webkit-background-size: 100% 100%;
 		-moz-background-size: 100% 100%;
 		-o-background-size: 100% 100%;
@@ -187,7 +187,7 @@ header {
 		background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#858d95), to(#1c2733), color-stop(.5, #46505b), color-stop(.5, #38424d));
 	}
 	#menu.active {
-		background: #6dc0e5 url(../images/old-browsers-bg/subnav-bt-hover-border-bg.png) repeat-x;
+		background: #6dc0e5 url(./../../resources/images/constellation/old-browsers-bg/subnav-bt-hover-border-bg.png) repeat-x;
 		-webkit-background-size: 100% 100%;
 		-moz-background-size: 100% 100%;
 		-o-background-size: 100% 100%;
@@ -200,7 +200,7 @@ header {
 		transition: all 100ms;
 		}
 		#menu.active > a {
-			background: #305d79 url(../images/old-browsers-bg/subnav-bt-hover-bg.png) repeat-x;
+			background: #305d79 url(./../../resources/images/constellation/old-browsers-bg/subnav-bt-hover-bg.png) repeat-x;
 			-webkit-background-size: 100% 100%;
 			-moz-background-size: 100% 100%;
 			-o-background-size: 100% 100%;
@@ -258,7 +258,7 @@ header {
 				text-overflow: ellipsis;
 			}
 			#menu ul li.with-subs > a {
-				background: url(../images/chevron2.png) no-repeat 95% center;
+				background: url(./../../resources/images/constellation/chevron2.png) no-repeat 95% center;
 			}
 			
 			/* Back button */
@@ -266,14 +266,14 @@ header {
 				text-align: right;
 			}
 			#menu ul li.back a {
-				background: rgba(255, 255, 255, 0.2) url(../images/chevron-left2.png) no-repeat 2% center;
+				background: rgba(255, 255, 255, 0.2) url(./../../resources/images/constellation/chevron-left2.png) no-repeat 2% center;
 			}
 
 #status-bar {
 	font-size: 1.333em;
 	height: 3em;
 	line-height: 2.938em;
-	background: white url(../images/old-browsers-bg/status-bar-bg.png) repeat-x;
+	background: white url(./../../resources/images/constellation/old-browsers-bg/status-bar-bg.png) repeat-x;
 	-webkit-background-size: 100% 100%;
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
@@ -299,7 +299,7 @@ header {
 			}
 
 #header-shadow {
-	background: url(../images/old-browsers-bg/status-bar-shadow.png) repeat-x;
+	background: url(./../../resources/images/constellation/old-browsers-bg/status-bar-shadow.png) repeat-x;
 	-webkit-background-size: 100% 100%;
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;

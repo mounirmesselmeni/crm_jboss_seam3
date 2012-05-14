@@ -8,7 +8,7 @@
 	border: 1px solid #b5b3b4;
 	border-width: 1px 0;
 	border-top: 1px solid #9bd2ee;
-	background: #0c5fa3 url(../images/old-browsers-bg/block-header-bg.png) repeat-x top;
+	background: #0c5fa3 url(./../../resources/images/constellation/old-browsers-bg/block-header-bg.png) repeat-x top;
 	-webkit-background-size: 100% 100%;
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
@@ -42,7 +42,7 @@
 		-moz-text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
 		-webkit-text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
 		text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
-		background: url(../images/wizard-head-effect.png) no-repeat right center;
+		background: url(./../../resources/images/constellation/wizard-head-effect.png) no-repeat right center;
 		padding: 0 1.25em 0 0.75em;
 		position: relative;
 		z-index: 89;
@@ -84,7 +84,7 @@
 			left: 50%;
 			margin: 0 0 0 -1.143em;
 			bottom: -0.786em;
-			background: #0c5fa5 url(../images/old-browsers-bg/number-bg.png) repeat-x top;
+			background: #0c5fa5 url(./../../resources/images/constellation/old-browsers-bg/number-bg.png) repeat-x top;
 			-webkit-background-size: 100% 100%;
 			-moz-background-size: 100% 100%;
 			-o-background-size: 100% 100%;
@@ -123,7 +123,7 @@
 				margin-bottom: 0.286em;
 			}
 			.wizard-steps li.disabled .number {
-				background: #dfdfdf url(../images/old-browsers-bg/button-bg.png) repeat-x top;
+				background: #dfdfdf url(./../../resources/images/constellation/old-browsers-bg/button-bg.png) repeat-x top;
 				-webkit-background-size: 100% 100%;
 				-moz-background-size: 100% 100%;
 				-o-background-size: 100% 100%;
@@ -152,9 +152,9 @@
 				right: -8px;
 				top: -8px;
 				}
-				.wizard-steps li .number .status-ok { background-image: url(../images/icons/fugue/tick-circle.png); }
-				.wizard-steps li .number .status-error { background-image: url(../images/icons/fugue/cross-circle.png); }
-				.wizard-steps li .number .status-warning { background-image: url(../images/icons/fugue/exclamation-diamond.png); }
+				.wizard-steps li .number .status-ok { background-image: url(./../../resources/images/constellation/icons/fugue/tick-circle.png); }
+				.wizard-steps li .number .status-error { background-image: url(./../../resources/images/constellation/icons/fugue/cross-circle.png); }
+				.wizard-steps li .number .status-warning { background-image: url(./../../resources/images/constellation/icons/fugue/exclamation-diamond.png); }
 			
 	.block-content .wizard-steps + .no-margin {
 		margin-top: -1.667em;

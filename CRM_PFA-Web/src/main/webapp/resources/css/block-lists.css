@@ -23,7 +23,7 @@
 		border-top: 0;
 	}
 	.favorites > li:hover {
-		background: url(../images/old-browsers-bg/favorites-bg.png) repeat-x;
+		background: url(./../../resources/images/constellation/old-browsers-bg/favorites-bg.png) repeat-x;
 		-webkit-background-size: 100% 100%;
 		-moz-background-size: 100% 100%;
 		-o-background-size: 100% 100%;
@@ -53,7 +53,7 @@
 		min-height: 1.833em;
 		font-weight: bold;
 		line-height: 0.833em;
-		background: url(../images/favorites-border.png) no-repeat left center;
+		background: url(./../../resources/images/constellation/favorites-border.png) no-repeat left center;
 		color: #39c;
 		}
 		/* IE class */
@@ -238,7 +238,7 @@ ul.grid {
 	padding-bottom: 0.75em;
 }
 ul.grid > li {
-	background: #cccccc url(../images/old-browsers-bg/grid-block-bg.png) repeat-x top;
+	background: #cccccc url(./../../resources/images/constellation/old-browsers-bg/grid-block-bg.png) repeat-x top;
 	-webkit-background-size: 100% 100%;
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
@@ -275,11 +275,11 @@ ul.grid > li {
 		background-position: 0.75em 0.75em;
 		border-right: 1px solid #b3b3b3;
 		}
-		ul.grid > li .grid-picto.user { background-image: url(../images/icons/web-app/32/Profile.png); }
-		ul.grid > li .grid-picto.computer { background-image: url(../images/icons/web-app/32/Loading.png); }
-		ul.grid > li .grid-picto.chart { background-image: url(../images/icons/web-app/32/Pie-Chart.png); }
-		ul.grid > li .grid-picto.print { background-image: url(../images/icons/web-app/32/Print.png); }
-		ul.grid > li .grid-picto.warning { background-image: url(../images/icons/web-app/32/Warning.png); }
+		ul.grid > li .grid-picto.user { background-image: url(./../../resources/images/constellation/icons/web-app/32/Profile.png); }
+		ul.grid > li .grid-picto.computer { background-image: url(./../../resources/images/constellation/icons/web-app/32/Loading.png); }
+		ul.grid > li .grid-picto.chart { background-image: url(./../../resources/images/constellation/icons/web-app/32/Pie-Chart.png); }
+		ul.grid > li .grid-picto.print { background-image: url(./../../resources/images/constellation/icons/web-app/32/Print.png); }
+		ul.grid > li .grid-picto.warning { background-image: url(./../../resources/images/constellation/icons/web-app/32/Warning.png); }
 		ul.grid > li .grid-name {
 			color: #373737;
 			font-weight: bold;
@@ -300,7 +300,7 @@ ul.grid > li {
 		bottom: 0;
 		width: 1.7em;
 		border-left: 1px solid white;
-		background: #b3b3b3 url(../images/old-browsers-bg/grid-block-controls-bg.png) repeat-x top;
+		background: #b3b3b3 url(./../../resources/images/constellation/old-browsers-bg/grid-block-controls-bg.png) repeat-x top;
 		-webkit-background-size: 100% 100%;
 		-moz-background-size: 100% 100%;
 		-o-background-size: 100% 100%;
@@ -346,7 +346,7 @@ ul.grid > li {
 .task,
 .blocks-list > li,
 .mini-blocks-list > li {
-	background: #e6e6e6 url(../images/old-browsers-bg/lite-grey-grad-bg.png) repeat-x top;
+	background: #e6e6e6 url(./../../resources/images/constellation/old-browsers-bg/lite-grey-grad-bg.png) repeat-x top;
 	-webkit-background-size: 100% 100%;
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
@@ -401,7 +401,7 @@ ul.grid > li {
 		}
 		.task-dialog > li {
 			border-top: 1px solid #c5c39c;
-			background: #ffffcd url(../images/icons/fugue/balloon-reverse.png) no-repeat 0.667em 0.75em;
+			background: #ffffcd url(./../../resources/images/constellation/icons/fugue/balloon-reverse.png) no-repeat 0.667em 0.75em;
 			padding: 0.75em 0.75em 0.75em 2.5em;
 			margin: 0 -1px;
 			color: #565340;
@@ -489,7 +489,7 @@ ul.grid > li {
 	}
 	.icon-list li {
 		float: left;
-		background: url(../images/corner.png) no-repeat right bottom;
+		background: url(./../../resources/images/constellation/corner.png) no-repeat right bottom;
 		padding: 7px 26px 21px 61px;
 		width: 5em;
 		height: 2.5em;
@@ -542,7 +542,7 @@ ul.grid > li {
 /************* Small files icon list ************/
 .small-files-list li {
 	padding: 0.25em 0 0 42px;
-	background: url(../images/icons/finefiles/32/default.png) no-repeat;
+	background: url(./../../resources/images/constellation/icons/finefiles/32/default.png) no-repeat;
 	color: black;
 	min-height: 32px;
 	margin-bottom: 0.25em;
@@ -568,14 +568,14 @@ ul.grid > li {
 		color: #999999;
 	}
 	
-	.small-files-list.icon-html li, .small-files-list li.icon-html { background-image: url(../images/icons/finefiles/32/html.png); }
-	.small-files-list.icon-xml li, .small-files-list li.icon-xml { background-image: url(../images/icons/finefiles/32/xml.png); }
-	.small-files-list.icon-img li, .small-files-list li.icon-img { background-image: url(../images/icons/finefiles/32/other_image.png); }
-	.small-files-list.icon-music li, .small-files-list li.icon-music { background-image: url(../images/icons/finefiles/32/other_music2.png); }
-	.small-files-list.icon-movie li, .small-files-list li.icon-movie { background-image: url(../images/icons/finefiles/32/mpg.png); }
-	.small-files-list.icon-folder li, .small-files-list li.icon-folder { background-image: url(../images/icons/finefiles/32/_Close.png); }
-	.small-files-list.icon-mail li, .small-files-list li.icon-mail { background-image: url(../images/icons/email.png); }
-	.small-files-list.icon-comment li, .small-files-list li.icon-comment { background-image: url(../images/icons/web-app/32/Comment.png); }
+	.small-files-list.icon-html li, .small-files-list li.icon-html { background-image: url(./../../resources/images/constellation/icons/finefiles/32/html.png); }
+	.small-files-list.icon-xml li, .small-files-list li.icon-xml { background-image: url(./../../resources/images/constellation/icons/finefiles/32/xml.png); }
+	.small-files-list.icon-img li, .small-files-list li.icon-img { background-image: url(./../../resources/images/constellation/icons/finefiles/32/other_image.png); }
+	.small-files-list.icon-music li, .small-files-list li.icon-music { background-image: url(./../../resources/images/constellation/icons/finefiles/32/other_music2.png); }
+	.small-files-list.icon-movie li, .small-files-list li.icon-movie { background-image: url(./../../resources/images/constellation/icons/finefiles/32/mpg.png); }
+	.small-files-list.icon-folder li, .small-files-list li.icon-folder { background-image: url(./../../resources/images/constellation/icons/finefiles/32/_Close.png); }
+	.small-files-list.icon-mail li, .small-files-list li.icon-mail { background-image: url(./../../resources/images/constellation/icons/email.png); }
+	.small-files-list.icon-comment li, .small-files-list li.icon-comment { background-image: url(./../../resources/images/constellation/icons/web-app/32/Comment.png); }
 
 /*************** Extended infos list ************/
 .extended-list > li {
@@ -585,7 +585,7 @@ ul.grid > li {
 	z-index: 89;
 	}
 	.extended-list > li:hover {
-		background: url(../images/old-browsers-bg/favorites-bg.png) repeat-y;
+		background: url(./../../resources/images/constellation/old-browsers-bg/favorites-bg.png) repeat-y;
 		-webkit-background-size: 100% 100%;
 		-moz-background-size: 100% 100%;
 		-o-background-size: 100% 100%;
@@ -682,14 +682,14 @@ ul.grid > li {
 				margin-left: 0;
 			}
 
-		.icon-user .icon, .icon.icon-user { background-image: url(../images/icons/web-app/48/Profile.png); }
-		.icon-image .icon, .icon.icon-image { background-image: url(../images/icons/web-app/48/Picture.png); }
-		.icon-chart .icon, .icon.icon-chart { background-image: url(../images/icons/web-app/48/Pie-Chart.png); }
-		.icon-printer .icon, .icon.icon-printer { background-image: url(../images/icons/web-app/48/Print.png); }
-		.icon-computer .icon, .icon.icon-computer { background-image: url(../images/icons/web-app/48/Loading.png); }
-		.icon-article .icon, .icon.icon-article { background-image: url(../images/icons/web-app/48/Modify.png); }
-		.icon-comment .icon, .icon.icon-comment { background-image: url(../images/icons/web-app/48/Comment.png); }
-		.icon-warning .icon, .icon.icon-warning { background-image: url(../images/icons/web-app/48/Warning.png); }
+		.icon-user .icon, .icon.icon-user { background-image: url(./../../resources/images/constellation/icons/web-app/48/Profile.png); }
+		.icon-image .icon, .icon.icon-image { background-image: url(./../../resources/images/constellation/icons/web-app/48/Picture.png); }
+		.icon-chart .icon, .icon.icon-chart { background-image: url(./../../resources/images/constellation/icons/web-app/48/Pie-Chart.png); }
+		.icon-printer .icon, .icon.icon-printer { background-image: url(./../../resources/images/constellation/icons/web-app/48/Print.png); }
+		.icon-computer .icon, .icon.icon-computer { background-image: url(./../../resources/images/constellation/icons/web-app/48/Loading.png); }
+		.icon-article .icon, .icon.icon-article { background-image: url(./../../resources/images/constellation/icons/web-app/48/Modify.png); }
+		.icon-comment .icon, .icon.icon-comment { background-image: url(./../../resources/images/constellation/icons/web-app/48/Comment.png); }
+		.icon-warning .icon, .icon.icon-warning { background-image: url(./../../resources/images/constellation/icons/web-app/48/Warning.png); }
 
 /* http://perishablepress.com/press/2008/02/05/lessons-learned-concerning-the-clearfix-css-hack */
 .shortcuts-list:after,
