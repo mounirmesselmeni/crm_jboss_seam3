@@ -3,6 +3,15 @@
   <persistence-unit name="unit" transaction-type="JTA">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <jta-data-source>crmDS</jta-data-source>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObject</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectAttribute</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectCredential</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectCredentialType</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectRelationship</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectRelationshipType</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectType</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityPermission</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityRoleName</class>
     <class>com.insat.gl5.crm_pfa.model.Account</class>
     <class>com.insat.gl5.crm_pfa.model.Address</class>
     <class>com.insat.gl5.crm_pfa.model.Category</class>
@@ -14,15 +23,7 @@
     <class>com.insat.gl5.crm_pfa.model.PhoneNumber</class>
     <class>com.insat.gl5.crm_pfa.model.Product</class>
     <class>com.insat.gl5.crm_pfa.model.Task</class>
-    <class>com.insat.gl5.crm_pfa.model.security.IdentityObject</class>
-    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectAttribute</class>
-    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectCredential</class>
-    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectCredentialType</class>
-    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectRelationship</class>
-    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectRelationshipType</class>
-    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectType</class>
-    <class>com.insat.gl5.crm_pfa.model.security.IdentityPermission</class>
-    <class>com.insat.gl5.crm_pfa.model.security.IdentityRoleName</class>
+    <class>com.insat.gl5.crm_pfa.model.TVA</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.hbm2ddl.auto" value="update"/>

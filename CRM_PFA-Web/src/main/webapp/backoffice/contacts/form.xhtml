@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:s="http://jboss.org/seam/faces"
+                xmlns:o="http://java.sun.com/jsf/composite/crm"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:accordionPanel  activeIndex="0" >
+        <p:tab title="Informations générales">
+            <table width="100%">
+                <tr>
+                    <td>
+                <h:panelGrid id="contactPanel"  columns="3" cellpadding="4">
+
+                    <h:outputLabel value="Société (Compte)"/>
+
+                    <p:autoComplete id="account" value="#{contactController.contact.account}" converter="accountConverter" 
+                                    forceSelection="true"  size="35"  style="float:left">
+                        <p:ajax event="itemSelect" />
+                    </p:autoComplete>
+
+                    <p:commandLink value="Effacer" update="@form"  style="float:left;margin-left:5px">
+                        <ui:remove>
+                            <f:setPropertyActionListener target="" value="#{null}" />
+                        </ui:remove>
+                    </p:commandLink>
+
+                    <h:outputLabel value="Salutation"/>
+                    <p:selectOneRadio  required="false" >
+                        <f:selectItems value="#{enumValues.salutations}" var="_s" itemValue="#{_s}" itemLabel="#{_s.shortName}" />
+                    </p:selectOneRadio>	
+                    <p:spacer/> 
+                    <h:outputLabel value="Nom"/>
+                    <p:inputText id="inputName" value="#{contactController.contact.firstName}" required="true" size="35" requiredMessage="Required" />				
+                    <p:message for="inputName"/> 
+
+                    <h:outputLabel value="Prénom"/>
+                    <p:inputText id="inputLastName"  value="#{contactController.contact.lastName}" required="true" size="35" requiredMessage="Required" />				
+                    <p:message for="inputLastName"/> 
+
+                    <h:outputLabel value="Image" />
+                    <h:panelGrid>
+                        <p:fileUpload mode="advanced" 
+                                      invalidFileMessage="Fichier non supporté"
+                                      auto="true"
+                                      update="panelLogo"  
+                                      sizeLimit="1000000"   
+                                      allowTypes="/(\.|\/)(png)$/"
+                                      fileUploadListener="#{fileUploadController.handleFileUpload}"
+                                      />   
+
+                    </h:panelGrid>
+                    <p:spacer/>
+                </h:panelGrid>
+                </td>
+                <td valign="top" align="right">
+                <h:panelGrid id="logo" width="100" >
+                    <p:panel style="border-style: dotted" id="panelLogo" >  
+                        <h:graphicImage height="100" width="100" library="images" name="other/defaultLogo.png" rendered="#{fileUploadController.image eq null}"/>  
+                        <p:graphicImage height="100" width="100" value="#{fileUploadController.image}" rendered="#{fileUploadController.image ne null}"/>  
+                        <p:graphicImage height="100" width="100" value="/accounts/#{contactController.contact.fullName}/logo.png" rendered="#{fileUploadController.image eq null}"/>  
+                    </p:panel>
+                </h:panelGrid >
+                </td>
+                </tr>
+            </table>
+        </p:tab>
+        <p:tab title="Credentials">
+            <h:panelGrid columns="3">
+                <h:outputLabel value="Email"/>
+                <p:inputText id="emailAddress" value="#{contactController.contact.emailAddress}" required="false" size="35"/>
+                <p:spacer/>
+                <h:outputText value="Mot de passe" styleClass="titleLib"/>
+                <p:password id="password" feedback="true" value="#{contactController.password}" 
+                            required="true" requiredMessage="required"/>
+                <p:message for="password"/>
+                <h:outputText value="Confirmer le mot de passe" styleClass="titleLib"/>
+                <p:password id="confirmPassword" feedback="true" value="#{contactController.confirmPassword}" 
+                            required="true" requiredMessage="required"
+                            weakLabel="weak password"
+                            goodLabel="good password"
+                            strongLabel="strong password"/>
+                <p:message for="confirmPassword"/>
+
+                <p:spacer height="30"/>
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Adresses">
+                <h:panelGrid columns="2" style="width: 100%">
+                    <h:panelGrid columns="3">
+                        <h:outputLabel value="Addresse primaire" styleClass="titlePanel"/>
+                        <p:spacer/>
+                        <p:spacer/>
+                        <h:outputLabel value="Type :" />  
+                        <p:selectOneRadio  >
+                            <f:selectItems value="#{enumValues.addressTypes}" var="_a" itemValue="#{_a}" itemLabel="#{_a.displayName}"/>  
+
+                        </p:selectOneRadio>
+                        <p:spacer/>
+
+                        <h:outputLabel value="Avenue / Rue :" />  
+                        <p:inputText value="#{contactController.contact.primaryAddress.street}" />
+                        <p:spacer/> 
+
+                        <h:outputLabel value="Code postale:" />  
+                        <p:inputText value="#{contactController.contact.primaryAddress.postalCode}" />
+                        <p:spacer/> 
+
+                        <h:outputLabel value="Ville :" />  
+                        <p:inputText value="#{contactController.contact.primaryAddress.city}" />
+                        <p:spacer/> 
+
+                        <h:outputLabel value="Gouvernement :" />  
+                        <p:selectOneMenu >
+                            <f:selectItems value="#{enumValues.gouvernments}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
+                        </p:selectOneMenu>
+                        <p:spacer/> 
+                    </h:panelGrid>
+                    <h:panelGrid columns="3">
+                        <h:outputLabel value="Addresse secondaire" styleClass="titlePanel"/>
+                        <p:spacer/>
+                        <p:spacer/>
+                        <h:outputLabel value="Type :" />  
+                        <p:selectOneRadio  >
+                            <f:selectItems value="#{enumValues.addressTypes}" var="_a" itemValue="#{_a}" itemLabel="#{_a.displayName}"/>  
+
+                        </p:selectOneRadio>
+                        <p:spacer/>
+
+                        <h:outputLabel value="Avenue / Rue :" />  
+                        <p:inputText value="#{contactController.contact.secondaryAddress.street}" />
+                        <p:spacer/> 
+
+                        <h:outputLabel value="Code postale:" />  
+                        <p:inputText value="#{contactController.contact.secondaryAddress.postalCode}" />
+                        <p:spacer/> 
+
+                        <h:outputLabel value="Ville :" />  
+                        <p:inputText value="#{contactController.contact.secondaryAddress.city}" />
+                        <p:spacer/> 
+
+                        <h:outputLabel value="Gouvernement :" />  
+                        <p:selectOneMenu  >
+                            <f:selectItems value="#{enumValues.gouvernments}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
+                        </p:selectOneMenu>
+                        <p:spacer/> 
+                    </h:panelGrid>
+            </h:panelGrid>
+        </p:tab>
+    </p:accordionPanel>
+
+    <ui:remove>
+
+
+        <p:outputPanel autoUpdate="true">
+            <h:panelGroup>
+                <h4><h:outputText value="Roles"/></h4>
+                <ui:repeat value="#{contactController.roles}" var="role">
+                    <b><h:outputText value="#{role.roleType.name}"/></b>
+                    <span> <h:outputText value="Groupe"/> </span>
+                    <b><h:outputText value="#{role.group.name}"/></b><br/>
+                </ui:repeat>
+            </h:panelGroup>
+        </p:outputPanel>
+        <p:commandButton value="Ajouter" oncomplete="newRoleType.show();" 
+                         ajax="true"/>
+    </ui:remove>
+    <ui:remove>
+        <p:dialog widgetVar="newRoleType" modal="true" header="Ajouter rôle" >
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputText value="Rôle"/>
+                    <p:selectOneMenu id="roleType" converter="roleTypeConverter" value="#{contactController.roleType}"
+                                     required="true" requiredMessage="required">
+                        <f:selectItems value="#{lstRoleTypes}" var="roleType" itemLabel="#{roleType.name}"/>
+                    </p:selectOneMenu>
+                    <p:message for="roleType"/>
+                    <h:outputText value="Groupe"/>
+                    <p:selectOneMenu id="group" converter="groupConverter" value="#{contactController.roleGroup}"
+                                     required="true" requiredMessage="required">
+                        <f:selectItems value="#{lstGroups}" var="group" itemLabel="#{group.name}"/>
+                    </p:selectOneMenu>
+                    <p:message for="group"/>
+                    <p:spacer/>
+                    <p:commandButton value="Annuler" ajax="true"
+                                     oncomplete="newRoleType.hide();"/>
+                    <p:commandButton value="Valider" ajax="true" action="#{contactController.saveRole()}"
+                                     oncomplete="newRoleType.hide();"/>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:remove>
+</ui:composition>

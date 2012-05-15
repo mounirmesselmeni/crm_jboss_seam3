@@ -70,6 +70,12 @@
             <artifactId>CRM_PFA-Service</artifactId>
             <version>${project.version}</version>
         </dependency>
+<!--        <dependency>
+            <groupId>org.jboss.seam.conversation</groupId>
+            <artifactId>seam-conversation-spi</artifactId>
+            <version>3.0.0.Final</version>
+            <type>jar</type>
+        </dependency>-->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>

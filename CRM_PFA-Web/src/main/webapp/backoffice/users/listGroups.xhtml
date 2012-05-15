@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../WEB-INF/template/generalTemplate.xhtml">
+
+    <ui:define name="body">
+        <f:metadata>
+            <f:event type="preRenderView"
+                     listener="#{groupController.beginConversation()}" />
+        </f:metadata>
+        <p:panel id="groupList" header="Liste des groupes">
+            <p:messages autoUpdate="true" showSummary="true"/>
+            <h:form>
+                <h:commandButton image="/icone/add.png" />
+                <p:commandLink value="Nouveau" ajax="false" style="font-weight: bold" oncomplete="newGroupDialog.show()"/>
+                <p:dataTable value="#{lstGroups}" var="group">
+                    <p:column headerText="Nom" >
+                        <h:outputText value="#{group.name}"/>
+                    </p:column>
+                    <p:column headerText="Type" >
+                        <h:outputText value="#{group.groupType}"/>
+                    </p:column>
+                    <p:column headerText="Actions" style="text-align: center;">
+                        <p:commandButton oncomplete="editGroupDialog.show()" 
+                                         title="Modifier">
+                            <p:graphicImage value="/icone/edit.png"/>   
+                            <f:setPropertyActionListener value="#{group.name}" 
+                                                         target="#{groupController.groupName}" />
+                            <f:setPropertyActionListener value="#{group.name}" 
+                                                         target="#{groupController.oldName}" />
+                        </p:commandButton>
+                        <p:spacer width="10"/>
+                        <p:commandButton oncomplete="confirmation.show()" 
+                                         title="Supprimer">  
+                            <f:setPropertyActionListener value="#{group.name}" 
+                                                         target="#{groupController.groupName}" />  
+                            <p:graphicImage value="/icone/remove.png"/>   
+                        </p:commandButton>  
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:confirmDialog message="Etes vous sur de supprimer le groupe ?" width="200"    
+                         header="Confirmation" severity="alert" widgetVar="confirmation">  
+            <h:form>
+                <p:commandButton id="btnNo" value="Non" onclick="confirmation.hide()" type="button" />  
+                <p:commandButton id="btnYes" value="Oui" update=":groupList" 
+                                 actionListener="#{groupController.deleteGroup()}"
+                                 onclick="confirmation.hide()"/>  
+            </h:form>
+        </p:confirmDialog>
+        <p:dialog widgetVar="editGroupDialog" modal="false">
+            <h:form>
+                <p:outputPanel autoUpdate="true">
+                    <h:panelGrid columns="3">
+                        <h:outputText value="Nom"/>
+                        <p:inputText id="groupName" value="#{groupController.groupName}" required="true" requiredMessage="Value required"/>
+                        <p:message for="groupName"/>
+                        <p:spacer />
+                        <p:spacer />
+                        <p:spacer height="20"/>
+                    </h:panelGrid>
+                </p:outputPanel>
+                <table width="100%" border="0">
+                    <tr >
+                        <td width="20%" >
+                    <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler"
+                                     ajax="false" oncomplete="editGroupDialog.hide();" immediate="true">
+                    </p:commandButton>
+                    </td>
+                    <td width="60%" >
+                    </td>
+                    <td  width="20%" height="20px">
+                    <p:commandButton id="val" action="#{groupController.updateGroup()}" ajax="false" 
+                                     styleClass="btn_val" oncomplete="editGroupDialog.hide();"
+                                     value="Mettre à jour"/>
+                    </td>
+                    </tr>  
+                </table>
+            </h:form>
+        </p:dialog>
+        <p:dialog widgetVar="newGroupDialog" modal="false">
+            <h:form>
+                <p:outputPanel autoUpdate="true">
+                    <h:panelGrid columns="3">
+                        <h:outputText value="Nom"/>
+                        <p:inputText id="groupName" value="#{groupController.groupName}" required="true" requiredMessage="Value required"/>
+                        <p:message for="groupName"/>
+                        <p:spacer />
+                        <p:spacer />
+                        <p:spacer height="20"/>
+                    </h:panelGrid>
+                </p:outputPanel>
+                <table width="100%" border="0">
+                    <tr >
+                        <td width="20%" >
+                    <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler"
+                                     ajax="false" oncomplete="newGroupDialog.hide();" immediate="true">
+                    </p:commandButton>
+                    </td>
+                    <td width="60%" >
+                    </td>
+                    <td  width="20%" height="20px">
+                    <p:commandButton id="val" action="#{groupController.saveGroup()}" ajax="false" 
+                                     styleClass="btn_val" oncomplete="newGroupDialog.hide();"
+                                     value="Sauvegarder"/>
+                    </td>
+                    </tr>  
+                </table>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

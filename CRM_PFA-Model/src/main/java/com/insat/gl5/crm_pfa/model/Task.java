@@ -8,6 +8,8 @@ import com.insat.gl5.crm_pfa.enumeration.PriorityType;
 import com.insat.gl5.crm_pfa.enumeration.TaskType;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
@@ -18,6 +20,7 @@ import javax.persistence.Temporal;
 @Entity
 public class Task extends BaseEntity {
 
+    @Enumerated(EnumType.STRING)
     private TaskType taskType;
     private String subject;
     @OneToOne

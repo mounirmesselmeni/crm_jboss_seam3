@@ -1,12 +1,23 @@
-package com.insat.gl5.crm_pfa.enumeration;
+package com.insat.gl5.crm_pfa.web.util;
 
+import com.insat.gl5.crm_pfa.enumeration.AddressType;
+import com.insat.gl5.crm_pfa.enumeration.CustomerType;
+import com.insat.gl5.crm_pfa.enumeration.Gouvernment;
+import com.insat.gl5.crm_pfa.enumeration.OpportunityType;
+import com.insat.gl5.crm_pfa.enumeration.PhoneNumberType;
+import com.insat.gl5.crm_pfa.enumeration.PriorityType;
+import com.insat.gl5.crm_pfa.enumeration.Salutation;
+import com.insat.gl5.crm_pfa.enumeration.TaskType;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
-
+/**
+ * 
+ * @author Mu7ammed 3li -- mohamed.ali.affes@gmail.com --
+ */
 @Named
 @ApplicationScoped
 public class EnumValues {

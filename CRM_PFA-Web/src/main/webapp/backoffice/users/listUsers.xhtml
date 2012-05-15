@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../WEB-INF/template/generalTemplate.xhtml">
+
+    <ui:define name="body">
+        <p:messages autoUpdate="true" showSummary="true"/>
+        <h:form>
+            <p:panel style="width: 100%; height: 100%;" header="Liste des utilisateurs">
+
+                <h:panelGrid columns="8">
+                    <h:commandButton image="/icone/add.png" />
+                    <p:commandLink value="Nouveau **" ajax="false" style="font-weight: bold"
+                                   actionListener="#{userManagementController.beginConversation()}">
+                    </p:commandLink>
+                    <p:spacer width="8"/>
+                    <h:commandButton image="/icone/add.png" />
+                    <p:commandLink value="Gestion des groupes" ajax="false" style="font-weight: bold"
+                                   action="listGroups">
+                    </p:commandLink>
+                    <p:spacer width="8"/>
+                    <h:commandButton image="/icone/add.png" />
+                    <p:commandLink value="Gestion des rôles" ajax="false" style="font-weight: bold"
+                                   action="listRoleTypes">
+                    </p:commandLink>
+                </h:panelGrid>
+                <div>
+                    <p:dataTable value="#{lstContacts}" var="user"
+                                 paginator="true" paginatorPosition="bottom" rows="10">
+                        <p:column headerText="Nom" >
+                            <h:outputText value="#{user.firstName}"/>
+                        </p:column>
+                        <p:column headerText="Prénom" >
+                            <h:outputText value="#{user.lastName}"/>
+                        </p:column>
+                        <p:column headerText="e-mail" >
+                            <h:outputText value="#{user.email}"/>
+                        </p:column>
+                        <ui:remove>
+                            <p:column headerText="#{bundles.messages['profil.phone']}" >
+                                <h:outputText value="#{user.phoneNumber}"/>
+                            </p:column>
+                        </ui:remove>
+                        <p:column headerText="Adresse" >
+                            <h:outputText value="#{user.address}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
