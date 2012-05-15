@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>CRM-PFA Administration</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <!-- Global stylesheets -->
+        <link href="resources/css/reset.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/common.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/form.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/standard.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/special-pages.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="resources/images/constellation/favicon.ico"/>
+        <link rel="icon" type="image/png" href="resources/constellation/favicon-large.png"/>
+
+        <!-- Generic libs -->
+        <script type="text/javascript" src="resources/js/html5.js"></script><!-- this has to be loaded before anything else -->
+        <script type="text/javascript" src="resources/js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="resources/js/old-browsers.js"></script>		<!-- remove if you do not need older browsers detection -->
+
+        <!-- Template core functions -->
+        <script type="text/javascript" src="resources/js/common.js"></script>
+        <script type="text/javascript" src="resources/js/standard.js"></script>
+        <!--[if lte IE 8]><script type="text/javascript" src="js/standard.ie.js"></script><![endif]-->
+        <script type="text/javascript" src="resources/js/jquery.tip.js"></script>
+
+        <!-- example login script -->
+        <script type="text/javascript">
+	
+            $(document).ready(function()
+            {
+                // We'll catch form submission to do it in AJAX, but this works also with JS disabled
+                $('#login-form').submit(function(event)
+                {
+                    // Stop full page load
+                    event.preventDefault();
+				
+                    // Check fields
+                    var login = $('#login').val();
+                    var pass = $('#pass').val();
+				
+                    if (!login || login.length == 0)
+                    {
+                        $('#login-block').removeBlockMessages().blockMessage('Please enter your user name', {type: 'warning'});
+                    }
+                    else if (!pass || pass.length == 0)
+                    {
+                        $('#login-block').removeBlockMessages().blockMessage('Please enter your password', {type: 'warning'});
+                    }
+                    else
+                    {
+                        var submitBt = $(this).find('button[type=submit]');
+                        submitBt.disableBt();
+					
+                        // Target url
+                        var target = $(this).attr('action');
+                        if (!target || target == '')
+                        {
+                            // Page url without hash
+                            target = document.location.href.match(/^([^#]+)/)[1];
+                        }
+					
+                        // Request
+                        var data = {
+                            a: $('#a').val(),
+                            login: login,
+                            pass: pass
+                        };
+                        var redirect = $('#redirect');
+                        if (redirect.length > 0)
+                        {
+                            data.redirect = redirect.val();
+                        }
+					
+                        // Start timer
+                        var sendTimer = new Date().getTime();
+					
+                        // Send
+                        $.ajax({
+                            url: target,
+                            dataType: 'json',
+                            type: 'POST',
+                            data: data,
+                            success: function(data, textStatus, XMLHttpRequest)
+                            {
+                                if (data.valid)
+                                {
+                                    // Small timer to allow the 'cheking login' message to show when server is too fast
+                                    var receiveTimer = new Date().getTime();
+                                    if (receiveTimer-sendTimer>500)
+                                    {
+                                        setTimeout(function()
+                                        {
+                                            document.location.href = data.redirect;
+										
+                                        }, 500-(receiveTimer-sendTimer));
+                                    }
+                                    else
+                                    {
+                                        document.location.href = data.redirect;
+                                    }
+                                }
+                                else
+                                {
+                                    // Message
+                                    $('#login-block').removeBlockMessages().blockMessage(data.error || 'An unexpected error occured, please try again', {type: 'error'});
+								
+                                    submitBt.enableBt();
+                                }
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown)
+                            {
+                                // Message
+                                $('#login-block').removeBlockMessages().blockMessage('Error while contacting server, please try again', {type: 'error'});
+							
+                                submitBt.enableBt();
+                            }
+                        });
+					
+                        // Message
+                        $('#login-block').removeBlockMessages().blockMessage('Please wait, cheking login...', {type: 'loading'});
+                    }
+                });
+            });
+	
+        </script>
+
+    </h:head>
+
+    <!-- the 'special-page' class is only an identifier for scripts -->
+    <h:body class="special-page login-bg dark">
+
+        <ui:insert name="body" id="content">Body</ui:insert>
+    </h:body>
+</html>

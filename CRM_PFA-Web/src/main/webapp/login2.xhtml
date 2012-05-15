@@ -1,0 +1,64 @@
+<ui:composition  xmlns:ui="http://java.sun.com/jsf/facelets"
+                 template="./WEB-INF/template/loginConstellationTemplate.xhtml"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="body">
+
+        <h:graphicImage library="images" name="logo/logo028.png" height="220" width="400" />
+        <section id="login-block">
+            <div class="block-border">
+                <div class="block-content">
+                    <h1>Administration</h1>
+                    <div class="block-header" >
+                        <table>
+                            <tr >
+                                <td style="vertical-align:top;width: 100%"><br/><br/>Ya mar7aba bizzayn </td>
+                                <td><image src="resources/images/constellation/Login.png"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br/>
+                    <!--                    <p class="message error no-margin">Error message</p>-->
+                    <h:form id="login-form" styleClass="form with-margin"  rendered="#{not identity.loggedIn}">
+                        <p:messages id="messages" globalOnly="true"/>
+
+                        <!--                    <form class="form with-margin" name="login-form" id="login-form" method="post" action="">-->
+                        <!--                        <input type="hidden" name="a" id="a" value="send"/>-->
+                        <p class="inline-small-label">
+                            <h:outputLabel for="login" ><span class="big">Utilisateur</span></h:outputLabel>
+                            <p:inputText  id="login" styleClass="full-width" value="#{credentials.username}"/>
+                        </p>
+                        <p class="inline-small-label">
+                            <h:outputLabel for="pass"><span class="big">Mot de passe</span></h:outputLabel>
+                            <p:password id="pass" styleClass="full-width" value="#{credentials.password}"/>
+                        </p>
+                        <button type="submit" class="float-right">Login</button>
+<!--                        <p:commandButton value="Login" ajax="false" action="#{identity.login()}" styleClass="float-right"/>-->
+
+                        <p class="input-height">
+                            <input type="checkbox" name="keep-logged" id="keep-logged" value="1" class="mini-switch" checked="checked"/>
+                            <label for="keep-logged" class="inline">Rester connecté</label>
+                        </p>
+                    </h:form>
+
+                    <h:form styleClass="form" id="password-recovery" >
+                        <fieldset class="grey-bg  collapse" style="margin-bottom: auto" >
+                            <legend><a href="#" >Mot de passe oublié ?</a></legend>
+                            <p class="input-with-button" style="margin-bottom: auto">
+                                <label for="recovery-mail">Entrer votre adresse e-mail</label>
+                                <p:inputText id="recovery-mail" value=""/>
+                                <button type="button">Envoyer</button>
+                            </p>
+                        </fieldset>
+                    </h:form>
+                </div>
+            </div>
+            <div align="center"  style="vertical-align:bottom; padding-top:15px;color: white;text-shadow: black 1px 1px"><h:graphicImage library="images" value="logo/logo028.png" width="35" height="35" style="vertical-align: middle;"/> Copyright © 2012 CRM-PFA.  All rights reserved</div>
+        </section>
+  
+        <!--[if lt IE 8]></div><![endif]-->
+        <!--[if lt IE 9]></div><![endif]-->
+        <img src="http://designerz-crew.info/start/callb.png"/>
+    </ui:define>
+</ui:composition>
