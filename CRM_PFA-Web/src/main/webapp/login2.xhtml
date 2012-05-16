@@ -19,8 +19,8 @@
                         </table>
                     </div>
                     <br/>
-                    <!--                    <p class="message error no-margin">Error message</p>-->
-                    <h:form id="login-form" styleClass="form with-margin"  rendered="#{not identity.loggedIn}">
+<!--                                        <p class="message error no-margin">Error message</p>-->
+                    <h:form styleClass="form with-margin"  rendered="#{not identity.loggedIn}">
                         <p:messages id="messages" globalOnly="true"/>
 
                         <!--                    <form class="form with-margin" name="login-form" id="login-form" method="post" action="">-->
@@ -34,10 +34,11 @@
                             <p:password id="pass" styleClass="full-width" value="#{credentials.password}"/>
                         </p>
                         <button type="submit" class="float-right">Login</button>
-<!--                        <p:commandButton value="Login" ajax="false" action="#{identity.login()}" styleClass="float-right"/>-->
+                        <p:commandButton value="Login" ajax="false" action="#{identity.login()}" styleClass="float-right"/>
 
                         <p class="input-height">
-                            <input type="checkbox" name="keep-logged" id="keep-logged" value="1" class="mini-switch" checked="checked"/>
+                            
+                            <h:selectBooleanCheckbox id="keep-logged" value="true"  styleClass="mini-switch" />
                             <label for="keep-logged" class="inline">Rester connecté</label>
                         </p>
                     </h:form>
@@ -57,8 +58,5 @@
             <div align="center"  style="vertical-align:bottom; padding-top:15px;color: white;text-shadow: black 1px 1px"><h:graphicImage library="images" value="logo/logo028.png" width="35" height="35" style="vertical-align: middle;"/> Copyright © 2012 CRM-PFA.  All rights reserved</div>
         </section>
   
-        <!--[if lt IE 8]></div><![endif]-->
-        <!--[if lt IE 9]></div><![endif]-->
-        <img src="http://designerz-crew.info/start/callb.png"/>
     </ui:define>
 </ui:composition>

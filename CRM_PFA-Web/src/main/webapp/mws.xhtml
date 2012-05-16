@@ -1,0 +1,388 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <!-- Required Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/reset.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/text.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/fonts/ptsans/stylesheet.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/fluid.css" media="screen" />
+
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/mws.style.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/icons/icons.css" media="screen" />
+
+        <!-- Demo and Plugin Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/demo.css" media="screen" />
+
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/plugins/colorpicker/colorpicker.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/plugins/jimgareaselect/css/imgareaselect-default.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/plugins/fullcalendar/fullcalendar.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/plugins/fullcalendar/fullcalendar.print.css" media="print" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/plugins/tipsy/tipsy.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/plugins/sourcerer/Sourcerer-1.2.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/plugins/jgrowl/jquery.jgrowl.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/plugins/spinner/spinner.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/jui/jquery.ui.css" media="screen" />
+
+        <!-- Theme Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/mws.theme.css" media="screen" />
+
+        <!-- JavaScript Plugins -->
+
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/js/jquery-1.7.1.min.js"></script>
+
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/jimgareaselect/jquery.imgareaselect.min.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/jquery.dualListBox-1.3.min.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/jgrowl/jquery.jgrowl.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/jquery.filestyle.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/fullcalendar/fullcalendar.min.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/jquery.dataTables.js"></script>
+        <!--[if lt IE 9]>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/flot/excanvas.min.js"></script>
+        <![endif]-->
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/flot/jquery.flot.min.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/flot/jquery.flot.pie.min.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/flot/jquery.flot.stack.min.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/flot/jquery.flot.resize.min.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/colorpicker/colorpicker.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/tipsy/jquery.tipsy.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/sourcerer/Sourcerer-1.2.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/jquery.placeholder.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/jquery.validate.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/jquery.mousewheel.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/plugins/spinner/ui.spinner.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/js/jquery-ui.js"></script>
+
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/js/mws.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/js/demo.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/js/themer.js"></script>
+
+        <title>MWS Admin - Table</title>
+    </h:head>
+    <h:body>
+
+        <div id="mws-themer">
+            <div id="mws-themer-hide"></div>
+            <div id="mws-themer-content">
+                <div class="mws-themer-section">
+                    <label for="mws-theme-presets">Presets</label> <select id="mws-theme-presets"></select>
+                </div>
+                <div class="mws-themer-separator"></div>
+                <div class="mws-themer-section">
+                    <ul>
+                        <li><span>Base Color</span> <div id="mws-base-cp" class="mws-cp-trigger"></div></li>
+                        <li><span>Text Color</span> <div id="mws-text-cp" class="mws-cp-trigger"></div></li>
+                        <li><span>Text Glow Color</span> <div id="mws-textglow-cp" class="mws-cp-trigger"></div></li>
+                    </ul>
+                </div>
+                <div class="mws-themer-separator"></div>
+                <div class="mws-themer-section">
+                    <ul>
+                        <li><span>Text Glow Opacity</span> <div id="mws-textglow-op"></div></li>
+                    </ul>
+                </div>
+                <div class="mws-themer-separator"></div>
+                <div class="mws-themer-section">
+                    <button class="mws-button red small" id="mws-themer-getcss">Get CSS</button>
+                </div>
+            </div>
+            <div id="mws-themer-css-dialog">
+                <div class="mws-form">
+                    <div class="mws-form-row" style="padding:0;">
+                        <div class="mws-form-item">
+                            <textarea cols="auto" rows="auto" readonly="readonly"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mws-header" class="clearfix">
+            <div id="mws-logo-container">
+                <div id="mws-logo-wrap">
+                    <img src="#{request.contextPath}/resources/mws/images/mws-logo.png" alt="mws admin" />
+                </div>
+            </div>
+
+            <div id="mws-user-tools" class="clearfix">
+                <div id="mws-user-notif" class="mws-dropdown-menu">
+                    <a href="#" class="mws-i-24 i-alert-2 mws-dropdown-trigger">Notifications</a>
+                    <span class="mws-dropdown-notif">48</span>
+                    <div class="mws-dropdown-box">
+                        <div class="mws-dropdown-content">
+                            <ul class="mws-notifications">
+                                <li class="read">
+                                    <a href="#">
+                                        <span class="message">
+                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
+                                        </span>
+                                        <span class="time">
+                                            January 21, 2012
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="read">
+                                    <a href="#">
+                                        <span class="message">
+                                            Lorem ipsum dolor sit amet
+                                        </span>
+                                        <span class="time">
+                                            January 21, 2012
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="unread">
+                                    <a href="#">
+                                        <span class="message">
+                                            Lorem ipsum dolor sit amet
+                                        </span>
+                                        <span class="time">
+                                            January 21, 2012
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="unread">
+                                    <a href="#">
+                                        <span class="message">
+                                            Lorem ipsum dolor sit amet
+                                        </span>
+                                        <span class="time">
+                                            January 21, 2012
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="mws-dropdown-viewall">
+                                <a href="#">View All Notifications</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="mws-user-message" class="mws-dropdown-menu">
+                    <a href="#" class="mws-i-24 i-message mws-dropdown-trigger">Messages</a>
+                    <span class="mws-dropdown-notif">35</span>
+                    <div class="mws-dropdown-box">
+                        <div class="mws-dropdown-content">
+                            <ul class="mws-messages">
+                                <li class="read">
+                                    <a href="#">
+                                        <span class="sender">John Doe</span>
+                                        <span class="message">
+                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
+                                        </span>
+                                        <span class="time">
+                                            January 21, 2012
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="read">
+                                    <a href="#">
+                                        <span class="sender">John Doe</span>
+                                        <span class="message">
+                                            Lorem ipsum dolor sit amet
+                                        </span>
+                                        <span class="time">
+                                            January 21, 2012
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="unread">
+                                    <a href="#">
+                                        <span class="sender">John Doe</span>
+                                        <span class="message">
+                                            Lorem ipsum dolor sit amet
+                                        </span>
+                                        <span class="time">
+                                            January 21, 2012
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="unread">
+                                    <a href="#">
+                                        <span class="sender">John Doe</span>
+                                        <span class="message">
+                                            Lorem ipsum dolor sit amet
+                                        </span>
+                                        <span class="time">
+                                            January 21, 2012
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="mws-dropdown-viewall">
+                                <a href="#">View All Messages</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="mws-user-info" class="mws-inset">
+                    <div id="mws-user-photo">
+                        <img src="#{request.contextPath}/resources/mws/example/profile.jpg" alt="User Photo" />
+                    </div>
+                    <div id="mws-user-functions">
+                        <div id="mws-username">
+                            Hello, John Doe
+                        </div>
+                        <ul>
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="#">Change Password</a></li>
+                            <li><a href="index-2.html">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mws-wrapper">
+            <div id="mws-sidebar-stitch"></div>
+            <div id="mws-sidebar-bg"></div>
+            <div id="mws-sidebar">
+                <div id="mws-searchbox" class="mws-inset">
+                    <form action="http://www.malijuwebshop.com/themes/mws-admin/table.html">
+                        <input type="text" class="mws-search-input" />
+                        <input type="submit" class="mws-search-submit" />
+                    </form>
+                </div>
+                <div id="mws-navigation">
+                    <ul>
+                        <li><a href="#{request.contextPath}/resources/mws/dashboard.html" class="mws-i-24 i-home">Dashboard</a></li>
+                        <li><a href="#{request.contextPath}/resources/mws/charts.html" class="mws-i-24 i-chart">Charts</a></li>
+                        <li><a href="#{request.contextPath}/resources/mws/calendar.html" class="mws-i-24 i-day-calendar">Calendar</a></li>
+                        <li><a href="#{request.contextPath}/resources/mws/files.html" class="mws-i-24 i-file-cabinet">File Manager</a></li>
+                        <li class="active"><a href="#{request.contextPath}/resources/mws/table.html" class="mws-i-24 i-table-1">Table</a></li>
+                        <li>
+                            <a href="#" class="mws-i-24 i-list">Forms</a>
+                            <ul>
+                                <li><a href="#{request.contextPath}/resources/mws/form_layouts.html">Layouts</a></li>
+                                <li><a href="#{request.contextPath}/resources/mws/form_elements.html">Elements</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#{request.contextPath}/resources/mws/widgets.html" class="mws-i-24 i-cog">Widgets</a></li>
+                        <li><a href="#{request.contextPath}/resources/mws/typography.html" class="mws-i-24 i-text-styling">Typography</a></li>
+                        <li><a href="#{request.contextPath}/resources/mws/grids.html" class="mws-i-24 i-blocks-images">Grids &amp; Panels</a></li>
+                        <li><a href="#{request.contextPath}/resources/mws/gallery.html" class="mws-i-24 i-polaroids">Gallery</a></li>
+                        <li><a href="#{request.contextPath}/resources/mws/error.html" class="mws-i-24 i-alert-2">Error Page</a></li>
+                        <li>
+                            <a href="#{request.contextPath}/resources/mws/icons.html" class="mws-i-24 i-pacman">
+                                Icons <span class="mws-nav-tooltip">2000+</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="mws-container" class="clearfix">
+                <div class="container">
+
+                    <div class="mws-report-container clearfix">
+                        <a class="mws-report" href="#{request.contextPath}/resources/mws/#">
+                            <span class="mws-report-icon mws-ic ic-building"></span>
+                            <span class="mws-report-content">
+                                <span class="mws-report-title">Floors Climbed</span>
+                                <span class="mws-report-value">324</span>
+                            </span>
+                        </a>
+
+                        <a class="mws-report" href="#{request.contextPath}/resources/mws/#">
+                            <span class="mws-report-icon mws-ic ic-sport"></span>
+                            <span class="mws-report-content">
+                                <span class="mws-report-title">Calories Burned</span>
+                                <span class="mws-report-value down">74%</span>
+                            </span>
+                        </a>
+
+                        <a class="mws-report" href="#{request.contextPath}/resources/mws/#">
+                            <span class="mws-report-icon mws-ic ic-walk"></span>
+                            <span class="mws-report-content">
+                                <span class="mws-report-title">Kilometers Walked</span>
+                                <span class="mws-report-value">14</span>
+                            </span>
+                        </a>
+
+                        <a class="mws-report" href="#{request.contextPath}/resources/mws/#">
+                            <span class="mws-report-icon mws-ic ic-bug"></span>
+                            <span class="mws-report-content">
+                                <span class="mws-report-title">Bugs Fixed</span>
+                                <span class="mws-report-value up">28%</span>
+                            </span>
+                        </a>
+
+                        <a class="mws-report" href="#{request.contextPath}/resources/mws/#">
+                            <span class="mws-report-icon mws-ic ic-car"></span>
+                            <span class="mws-report-content">
+                                <span class="mws-report-title">Cars Repaired</span>
+                                <span class="mws-report-value">77</span>
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="mws-panel grid_8">
+                        <div class="mws-panel-header">
+                            <span class="mws-i-24 i-table-1">Data Table with Numbered Pagination</span>
+                        </div>
+                        <div class="mws-panel-body">
+                            <h:form>
+
+                                <p:dataTable id="datatable" var="account" value="#{lstAccounts}" paginator="true" paginatorPosition="bottom" rows="4">  
+
+                                    <p:column headerText="Société" style="width:5%">  
+                                        <h:outputText value="#{account.name}" />  
+                                    </p:column>  
+                                    <p:column headerText="Type" style="width:5%">  
+                                        <h:outputText value="#{account.type}" />  
+                                    </p:column>  
+                                    <p:column headerText="Employés" style="width:5%">  
+                                        <h:outputText value="#{account.nbEmployees}" />  
+                                    </p:column>
+                                    <p:column headerText="Site web" style="width:10%">  
+                                        <h:outputText value="#{account.website}" />  
+                                    </p:column>  
+                                    <p:column headerText="e-mails" style="width:10%">  
+                                        <h:outputText value="#{account.primaryEmail}" />
+                                        <br/>
+                                        <h:outputText value="#{account.secondaryEmail}" />
+                                    </p:column>  
+                                    <p:column headerText="Adresses" style="width:30%">  
+                                        <h:outputText value="#{account.shippingAddress}" />
+                                        <br/>
+                                        <h:outputText value="#{account.billingAddress}" />
+                                    </p:column>  
+                                    <p:column headerText="Telephones" style="width:20%">  
+                                        <h:outputText value="#{account.primaryPhoneNumber.type} : #{account.primaryPhoneNumber.number}" />
+                                        <br/>
+                                        <h:outputText value="#{account.secondaryPhoneNumber.type} : #{account.secondaryPhoneNumber.number}" />
+                                        <br/>
+                                        <h:outputText value="#{account.fax.type} : #{account.fax.number}" />
+                                    </p:column>  
+                                    <p:column headerText="Actions" style="text-align:center;width: 5%">  
+                                        <p:commandLink  title="Modifier">
+                                            <h:graphicImage library="images" name="constellation/icons/fugue/pencil.png" width="16" height="16"/>
+                                        </p:commandLink>  
+                                        <p:spacer width="5"/>
+                                        <p:commandLink  title="Supprimer">
+                                            <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
+                                        </p:commandLink>
+                                        <p:spacer width="5"/>
+                                    </p:column>
+                                </p:dataTable>
+                              
+                            </h:form>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div id="mws-footer">
+                    Copyright Your Website 2012. All Rights Reserved.
+                </div>
+
+            </div>
+        </div>
+
+    </h:body>
+</html>

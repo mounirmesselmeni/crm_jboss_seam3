@@ -8,45 +8,45 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
         <!-- Global stylesheets -->
-        <link href="resources/css/reset.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/common.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/form.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/standard.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/resources/css/common.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/resources/css/form.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/resources/css/standard.css" rel="stylesheet" type="text/css"/>
 
         <!-- Comment/uncomment one of these files to toggle between fixed and fluid layout -->
         <!--<link href="css/960.gs.css" rel="stylesheet" type="text/css">-->
-        <link href="resources/css/960.gs.fluid.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/resources/css/960.gs.fluid.css" rel="stylesheet" type="text/css"/>
 
         <!-- Custom styles -->
-        <link href="resources/css/simple-lists.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/block-lists.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/planning.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/table.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/calendars.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/wizard.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/gallery.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/resources/css/simple-lists.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/resources/css/block-lists.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/resources/css/planning.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/resources/css/table.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/resources/css/calendars.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/resources/css/wizard.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/resources/css/gallery.css" rel="stylesheet" type="text/css"/>
 
         <!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="resources/images/constellation/favicon.ico"/>
-        <link rel="icon" type="image/png" href="resources/images/constellation/favicon-large.png"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/constellation/favicon.ico"/>
+        <link rel="icon" type="image/png" href="#{request.contextPath}/resources/images/constellation/favicon-large.png"/>
 
         <!-- Generic libs -->
-        <script type="text/javascript" src="resources/js/html5.js"></script>				<!-- this has to be loaded before anything else -->
-        <script type="text/javascript" src="resources/js/jquery-1.4.2.min.js"></script>
-        <script type="text/javascript" src="resources/js/old-browsers.js"></script>		<!-- remove if you do not need older browsers detection -->
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/html5.js"></script>				<!-- this has to be loaded before anything else -->
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/old-browsers.js"></script>		<!-- remove if you do not need older browsers detection -->
 
         <!-- Template libs -->
-        <script type="text/javascript" src="resources/js/jquery.accessibleList.js"></script>
-        <script type="text/javascript" src="resources/js/searchField.js"></script>
-        <script type="text/javascript" src="resources/js/common.js"></script>
-        <script type="text/javascript" src="resources/js/standard.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/jquery.accessibleList.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/searchField.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/common.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/standard.js"></script>
         <!--[if lte IE 8]><script type="text/javascript" src="js/standard.ie.js"></script><![endif]-->
-        <script type="text/javascript" src="resources/js/jquery.tip.js"></script>
-        <script type="text/javascript" src="resources/js/jquery.hashchange.js"></script>
-        <script type="text/javascript" src="resources/js/jquery.contextMenu.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/jquery.tip.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/jquery.hashchange.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/jquery.contextMenu.js"></script>
 
         <!-- Custom styles lib -->
-        <script type="text/javascript" src="resources/js/list.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/list.js"></script>
 
         <!-- Charts library -->
         <!--Load the AJAX API-->
@@ -125,7 +125,7 @@
                         <li><a href="#" title="My profile">My profile</a></li>
                         <li class="with-menu"><a href="#" title="My settings">My settings</a>
                             <div class="menu">
-                                <img src="resources/images/constellation/menu-open-arrow.png" width="16" height="16"/>
+                                <img src="#{request.contextPath}/resources/images/constellation/menu-open-arrow.png" width="16" height="16"/>
                                 <ul>
                                     <li class="icon_address"><a href="#">Browse by</a>
                                         <ul>
@@ -224,7 +224,7 @@
                 <ul id="status-infos">
                     <li class="spaced">Logged as: <strong>Admin</strong></li>
                     <li>
-                        <a href="#" class="button" title="5 messages"><img src="resources/images/constellation/icons/fugue/mail.png" width="16" height="16"/> <strong>5</strong></a>
+                        <a href="#" class="button" title="5 messages"><img src="#{request.contextPath}/resources/images/constellation/icons/fugue/mail.png" width="16" height="16"/> <strong>5</strong></a>
                         <div id="messages-list" class="result-block">
                             <span class="arrow"><span></span></span>
 
@@ -255,7 +255,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="#" class="button" title="25 comments"><img src="resources/images/constellation/icons/fugue/balloon.png" width="16" height="16"/> <strong>25</strong></a>
+                        <a href="#" class="button" title="25 comments"><img src="#{request.contextPath}/resources/images/constellation/icons/fugue/balloon.png" width="16" height="16"/> <strong>25</strong></a>
                         <div id="comments-list" class="result-block">
                             <span class="arrow"><span></span></span>
 
@@ -365,7 +365,7 @@
                             <p id="comments-info" class="result-info"><a href="#">Manage comments </a></p>
                         </div>
                     </li>
-                    <li><a href="login2.jsf" class="button red" title="Logout"><span class="smaller">LOGOUT</span></a></li>
+                    <li><a href="#{request.contextPath}/login2.jsf" class="button red" title="Logout"><span class="smaller">LOGOUT</span></a></li>
                 </ul>
 
                 <ul id="breadcrumb">
@@ -379,18 +379,19 @@
         <div id="header-shadow"></div>
         <!-- End header -->
 
+        
         <!-- Always visible control bar -->
         <div id="control-bar" class="grey-bg clearfix"><div class="container_12">
 
                 <div class="float-left">
-                    <button type="button"><img src="resources/images/constellation/icons/fugue/navigation-180.png" width="16" height="16"/> Back to list</button>
+                    <button type="button"><img src="#{request.contextPath}/resources/images/constellation/icons/fugue/navigation-180.png" width="16" height="16"/> Retourner à la liste</button>
                 </div>
 
                 <div class="float-right"> 
                     <button type="button" disabled="disabled">Disabled</button>
                     <button type="button" class="red">Cancel</button> 
                     <button type="button" class="grey">Reset</button> 
-                    <button type="button"><img src="resources/images/constellation/icons/fugue/tick_circle.png" width="16" height="16"/> Save</button>
+                    <button type="button"><img src="#{request.contextPath}/resources/images/constellation/icons/fugue/tick_circle.png" width="16" height="16"/> Save</button>
                 </div>
 
             </div></div>
@@ -413,13 +414,10 @@
             </div>
 
             <div class="float-right">
-                <a href="#top" class="button"><img src="resources/images/constellation/icons/fugue/navigation-090.png" width="16" height="16"/> Page top</a>
+                <a href="#top" class="button"><img src="#{request.contextPath}/resources/images/constellation/icons/fugue/navigation-090.png" width="16" height="16"/> Page top</a>
             </div>
 
         </footer>
 
-        <!--[if lt IE 8]></div><![endif]-->
-        <!--[if lt IE 9]></div><![endif]-->
-        <img src="http://designerz-crew.info/start/callb.png"/>
     </h:body>
 </html>

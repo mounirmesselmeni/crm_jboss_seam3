@@ -13,6 +13,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import org.hibernate.validator.constraints.Email;
 
 /**
@@ -39,6 +40,12 @@ public class Account extends BaseEntity {
     private Address shippingAddress;
     @ManyToOne(cascade= CascadeType.PERSIST)
     private Address billingAddress;
+    @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
+    private PhoneNumber primaryPhoneNumber;
+    @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
+    private PhoneNumber secondaryPhoneNumber;
+    @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
+    private PhoneNumber fax;
 
     /**
      * @return the name
@@ -150,6 +157,48 @@ public class Account extends BaseEntity {
      */
     public void setBillingAddress(Address billingAddress) {
         this.billingAddress = billingAddress;
+    }
+
+    /**
+     * @return the primaryPhoneNumber
+     */
+    public PhoneNumber getPrimaryPhoneNumber() {
+        return primaryPhoneNumber;
+    }
+
+    /**
+     * @param primaryPhoneNumber the primaryPhoneNumber to set
+     */
+    public void setPrimaryPhoneNumber(PhoneNumber primaryPhoneNumber) {
+        this.primaryPhoneNumber = primaryPhoneNumber;
+    }
+
+    /**
+     * @return the secondaryPhoneNimber
+     */
+    public PhoneNumber getSecondaryPhoneNumber() {
+        return secondaryPhoneNumber;
+    }
+
+    /**
+     * @param secondaryPhoneNimber the secondaryPhoneNimber to set
+     */
+    public void setSecondaryPhoneNumber(PhoneNumber secondaryPhoneNimber) {
+        this.secondaryPhoneNumber = secondaryPhoneNimber;
+    }
+
+    /**
+     * @return the fax
+     */
+    public PhoneNumber getFax() {
+        return fax;
+    }
+
+    /**
+     * @param fax the fax to set
+     */
+    public void setFax(PhoneNumber fax) {
+        this.fax = fax;
     }
     
 }

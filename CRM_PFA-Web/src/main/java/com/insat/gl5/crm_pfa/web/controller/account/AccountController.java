@@ -5,10 +5,11 @@
 package com.insat.gl5.crm_pfa.web.controller.account;
 
 import com.insat.gl5.crm_pfa.enumeration.AddressType;
+import com.insat.gl5.crm_pfa.enumeration.PhoneNumberType;
 import com.insat.gl5.crm_pfa.model.Account;
 import com.insat.gl5.crm_pfa.model.Address;
+import com.insat.gl5.crm_pfa.model.PhoneNumber;
 import com.insat.gl5.crm_pfa.service.AccountService;
-import com.insat.gl5.crm_pfa.service.AddressService;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
@@ -27,10 +28,13 @@ public class AccountController extends ConversationController {
     private AccountService accountService;
     @Inject
     private Messages messages;
-    //@Inject
+//    @Inject
     private Account account = new Account();
     private Address shippingAddress = new Address();
     private Address billingAddress = new Address();
+    private PhoneNumber primaryPhoneNumber = new PhoneNumber(PhoneNumberType.TRAVAIL);
+    private PhoneNumber secondaryPhoneNumber = new PhoneNumber(PhoneNumberType.TRAVAIL);
+    private PhoneNumber fax = new PhoneNumber(PhoneNumberType.FAX);
     private String redirect;
 
     /**
@@ -40,10 +44,16 @@ public class AccountController extends ConversationController {
     public String saveAccount() {
 
         try {
+            
             getBillingAddress().setType(AddressType.TRAVAIL);
             getShippingAddress().setType(AddressType.TRAVAIL);
+            
             getAccount().setBillingAddress(getBillingAddress());
             getAccount().setShippingAddress(getShippingAddress());
+            
+            getAccount().setPrimaryPhoneNumber(getPrimaryPhoneNumber());
+            getAccount().setSecondaryPhoneNumber(getSecondaryPhoneNumber());
+            
             accountService.saveAccount(getAccount());
             messages.info("Compte {0} est enregistré avec succés !", getAccount().getName());
 
@@ -149,4 +159,47 @@ public class AccountController extends ConversationController {
     public void setRedirect(String redirect) {
         this.redirect = redirect;
     }
+
+    /**
+     * @return the primaryPhoneNumber
+     */
+    public PhoneNumber getPrimaryPhoneNumber() {
+        return primaryPhoneNumber;
+    }
+
+    /**
+     * @param primaryPhoneNumber the primaryPhoneNumber to set
+     */
+    public void setPrimaryPhoneNumber(PhoneNumber primaryPhoneNumber) {
+        this.primaryPhoneNumber = primaryPhoneNumber;
+    }
+
+    /**
+     * @return the secondaryPhoneNumber
+     */
+    public PhoneNumber getSecondaryPhoneNumber() {
+        return secondaryPhoneNumber;
+    }
+
+    /**
+     * @param secondaryPhoneNumber the secondaryPhoneNumber to set
+     */
+    public void setSecondaryPhoneNumber(PhoneNumber secondaryPhoneNumber) {
+        this.secondaryPhoneNumber = secondaryPhoneNumber;
+    }
+
+    /**
+     * @return the fax
+     */
+    public PhoneNumber getFax() {
+        return fax;
+    }
+
+    /**
+     * @param fax the fax to set
+     */
+    public void setFax(PhoneNumber fax) {
+        this.fax = fax;
+    }
+    
 }

@@ -4,9 +4,6 @@ import com.insat.gl5.crm_pfa.enumeration.PhoneNumberType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -25,10 +22,15 @@ public class PhoneNumber extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PhoneNumberType type;
     private boolean verified;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contact", nullable = true)
-    private Contact contact;
 
+    public PhoneNumber() {
+    }
+
+    public PhoneNumber(PhoneNumberType type) {
+        this.type = type;
+    }
+
+    
     public String getNumber() {
         return number;
     }
@@ -53,11 +55,4 @@ public class PhoneNumber extends BaseEntity {
         this.verified = verified;
     }
 
-        public Contact getContact() {
-        return contact;
-    }
-
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
 }

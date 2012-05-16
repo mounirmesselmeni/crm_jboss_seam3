@@ -6,7 +6,7 @@ package com.insat.gl5.crm_pfa.web;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 /**

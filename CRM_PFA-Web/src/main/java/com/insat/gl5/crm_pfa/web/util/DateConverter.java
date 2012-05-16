@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -20,6 +21,7 @@ import javax.faces.convert.FacesConverter;
  */
 
 @FacesConverter(value = "dateConverter")
+@RequestScoped
 public class DateConverter implements Converter {
 
     @Override

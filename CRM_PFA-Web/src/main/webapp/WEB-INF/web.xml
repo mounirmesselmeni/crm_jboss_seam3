@@ -63,6 +63,6 @@
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
     <welcome-file-list>
-        <welcome-file>login.jsf</welcome-file>
+        <welcome-file>login2.jsf</welcome-file>
     </welcome-file-list>
 </web-app>
