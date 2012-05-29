@@ -4,14 +4,9 @@
  */
 package com.insat.gl5.crm_pfa.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.LinkedList;
+import java.util.List;
+import javax.persistence.*;
 
 /**
  * 
@@ -20,36 +15,17 @@ import javax.persistence.TemporalType;
 @Entity
 public class Devis extends BaseEntity {
 
-    @OneToMany
-    private Collection<LineItem> lineItems;
+    @OneToMany(cascade= CascadeType.ALL)
+    private List<ItemToPurchase> itemsToPurchase = new LinkedList<ItemToPurchase>();
     @ManyToOne
     private Contact contact;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creationDate;
-    private double totalPrice;
-
-    public Collection<LineItem> getLineItems() {
-        return lineItems;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public void setLineItems(Collection<LineItem> lineItems) {
-        this.lineItems = lineItems;
-    }
 
     public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+        double total = 0;
+        for (ItemToPurchase itemToPurchase : itemsToPurchase) {
+            total += itemToPurchase.getProduct().getPrice() * itemToPurchase.getQuantity();
+        }
+        return total;
     }
 
     @Override
@@ -72,46 +48,6 @@ public class Devis extends BaseEntity {
         return true;
     }
 
-   
-
-    public void addPurchase(LineItem item, int quantity, double price) {
-        if (lineItems == null) {
-            lineItems = new ArrayList<LineItem>();
-        }
-        //item.setOrder(this);
-        item.setQuantity(item.getQuantity() + quantity);
-        item.setSubTotal(item.getSubTotal() + (quantity * price));
-        totalPrice += item.getSubTotal() + (quantity * price);
-    }
-
-    public void updatePurchaseAndUpdateLineItem(LineItem item, int quantity, double price) {
-        if (lineItems == null) {
-            lineItems = new ArrayList<LineItem>();
-        }
-        int oldQuantity = item.getQuantity();
-        item.setQuantity(quantity);
-        item.setSubTotal(quantity * price);
-        totalPrice = totalPrice - (oldQuantity * price);
-        totalPrice += quantity * price;
-    }
-    Long itemId = new Long(0);
-
-    public LineItem addPurchaseAndLineItem(Product product, int quantity, double price) {
-
-        if (lineItems == null || lineItems.isEmpty()) {
-            lineItems = new ArrayList<LineItem>();
-        }
-        LineItem item = new LineItem();
-        item.setId(itemId);
-        item.setProduct(product);
-        item.setQuantity(quantity);
-        item.setSubTotal(quantity * price);
-        lineItems.add(item);
-        totalPrice += quantity * price;
-        itemId = itemId + 1;
-        return item;
-    }
-
     /**
      * @return the contact
      */
@@ -124,5 +60,19 @@ public class Devis extends BaseEntity {
      */
     public void setContact(Contact contact) {
         this.contact = contact;
+    }
+
+    /**
+     * @return the itemsToPurchase
+     */
+    public List<ItemToPurchase> getItemsToPurchase() {
+        return itemsToPurchase;
+    }
+
+    /**
+     * @param itemsToPurchase the itemsToPurchase to set
+     */
+    public void setItemsToPurchase(List<ItemToPurchase> itemsToPurchase) {
+        this.itemsToPurchase = itemsToPurchase;
     }
 }

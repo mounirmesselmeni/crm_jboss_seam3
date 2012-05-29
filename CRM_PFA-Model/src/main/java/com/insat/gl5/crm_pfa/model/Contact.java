@@ -1,16 +1,18 @@
 package com.insat.gl5.crm_pfa.model;
 
 import com.insat.gl5.crm_pfa.enumeration.Salutation;
+import java.util.LinkedList;
+import java.util.List;
+import javax.persistence.CascadeType;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -20,30 +22,19 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 public class Contact extends BaseEntity {
 
-    @Email
-    @Column(unique = true)
-    private String emailAddress;
     private String firstName;
     private String lastName;
+    @OneToMany(cascade= CascadeType.ALL)
+    private List<EmailAdress> lstEmails = new LinkedList<EmailAdress>();
+    @OneToMany(cascade= CascadeType.ALL)
+    private List<PhoneNumber> lstPhoneNumbers = new LinkedList<PhoneNumber>();
+    @OneToMany(cascade= CascadeType.ALL)
+    private List<Address> lstAddresses = new LinkedList<Address>();
     @Enumerated(EnumType.STRING)
     private Salutation salutation;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accountId")
     private Account account;
-    @ManyToOne
-    @JoinColumn(name = "primaryAddressId")
-    private Address primaryAddress;
-    @ManyToOne
-    @JoinColumn(name = "secondaryAddressId")
-    private Address secondaryAddress;
-
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
 
     @NotNull
     @NotEmpty
@@ -65,7 +56,7 @@ public class Contact extends BaseEntity {
         this.lastName = lastName;
     }
 
-        public Account getAccount() {
+    public Account getAccount() {
         return account;
     }
 
@@ -76,7 +67,7 @@ public class Contact extends BaseEntity {
     /**
      * @return the salutation
      */
-        public Salutation getSalutation() {
+    public Salutation getSalutation() {
         return salutation;
     }
 
@@ -87,35 +78,49 @@ public class Contact extends BaseEntity {
         this.salutation = salutation;
     }
 
-    /**
-     * @return the primaryAddress
-     */
-    public Address getPrimaryAddress() {
-        return primaryAddress;
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
     /**
-     * @param primaryAddress the primaryAddress to set
+     * @return the lstEmails
      */
-    public void setPrimaryAddress(Address primaryAddress) {
-        this.primaryAddress = primaryAddress;
+    public List<EmailAdress> getLstEmails() {
+        return lstEmails;
     }
 
     /**
-     * @return the secondaryAddress
+     * @param lstEmails the lstEmails to set
      */
-    public Address getSecondaryAddress() {
-        return secondaryAddress;
+    public void setLstEmails(List<EmailAdress> lstEmails) {
+        this.lstEmails = lstEmails;
     }
 
     /**
-     * @param secondaryAddress the secondaryAddress to set
+     * @return the lstPhoneNumbers
      */
-    public void setSecondaryAddress(Address secondaryAddress) {
-        this.secondaryAddress = secondaryAddress;
+    public List<PhoneNumber> getLstPhoneNumbers() {
+        return lstPhoneNumbers;
     }
-    
-    public String getFullName(){
-        return firstName+" "+lastName;
+
+    /**
+     * @param lstPhoneNumbers the lstPhoneNumbers to set
+     */
+    public void setLstPhoneNumbers(List<PhoneNumber> lstPhoneNumbers) {
+        this.lstPhoneNumbers = lstPhoneNumbers;
+    }
+
+    /**
+     * @return the lstAddresses
+     */
+    public List<Address> getLstAddresses() {
+        return lstAddresses;
+    }
+
+    /**
+     * @param lstAddresses the lstAddresses to set
+     */
+    public void setLstAddresses(List<Address> lstAddresses) {
+        this.lstAddresses = lstAddresses;
     }
 }

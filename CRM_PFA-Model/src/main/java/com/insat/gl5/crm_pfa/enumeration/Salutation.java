@@ -7,8 +7,8 @@ package com.insat.gl5.crm_pfa.enumeration;
 public enum Salutation {
 
     MR("Mr", "Monsieur"),
-    Mme("Mme", "Madame"),
-    Mlle("Mlle", "Mademoiselle");
+    MME("Mme", "Madame"),
+    MLLE("Mlle", "Mademoiselle");
 
     private String shortName;
     private String displayName;

@@ -5,47 +5,33 @@
 package com.insat.gl5.crm_pfa.model;
 
 import com.insat.gl5.crm_pfa.enumeration.CustomerType;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import org.hibernate.validator.constraints.Email;
+import java.util.LinkedList;
+import java.util.List;
+import javax.persistence.*;
 
 /**
  *
  * @author Mu7ammed 3li -- mohamed.ali.affes@gmail.com --
  */
 @Entity
-@NamedQueries({@NamedQuery(name = "Account.findAll", query = "select o from Account o"), 
-@NamedQuery(name = "Account.findByName", query = "select o from Account o where name = ?1")})
+@NamedQueries({
+    @NamedQuery(name = "Account.findAll", query = "select o from Account o"),
+    @NamedQuery(name = "Account.findByName", query = "select o from Account o where name = ?1")})
 public class Account extends BaseEntity {
 
     private String name;
     @Enumerated(EnumType.STRING)
     private CustomerType type;
-    private int nbEmployees;
     private String website;
-    @Email
-    @Column(unique = true)
-    private String primaryEmail;
-    @Email
-    @Column(unique = true)
-    private String secondaryEmail;
-    @ManyToOne(cascade= CascadeType.PERSIST)
-    private Address shippingAddress;
-    @ManyToOne(cascade= CascadeType.PERSIST)
-    private Address billingAddress;
-    @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
-    private PhoneNumber primaryPhoneNumber;
-    @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
-    private PhoneNumber secondaryPhoneNumber;
-    @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
-    private PhoneNumber fax;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<EmailAdress> lstEmails = new LinkedList<EmailAdress>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Address> lstAddresses = new LinkedList<Address>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<PhoneNumber> lstPhoneNumbers = new LinkedList<PhoneNumber>();
+    @OneToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name = "fidelityId")
+    private Fidelity fidelity;
 
     /**
      * @return the name
@@ -76,48 +62,6 @@ public class Account extends BaseEntity {
     }
 
     /**
-     * @return the nbEmployees
-     */
-    public int getNbEmployees() {
-        return nbEmployees;
-    }
-
-    /**
-     * @param nbEmployees the nbEmployees to set
-     */
-    public void setNbEmployees(int nbEmployees) {
-        this.nbEmployees = nbEmployees;
-    }
-
-    /**
-     * @return the primaryEmail
-     */
-    public String getPrimaryEmail() {
-        return primaryEmail;
-    }
-
-    /**
-     * @param primaryEmail the primaryEmail to set
-     */
-    public void setPrimaryEmail(String primaryEmail) {
-        this.primaryEmail = primaryEmail;
-    }
-
-    /**
-     * @return the secondaryEmail
-     */
-    public String getSecondaryEmail() {
-        return secondaryEmail;
-    }
-
-    /**
-     * @param secondaryEmail the secondaryEmail to set
-     */
-    public void setSecondaryEmail(String secondaryEmail) {
-        this.secondaryEmail = secondaryEmail;
-    }
-
-    /**
      * @return the website
      */
     public String getWebsite() {
@@ -132,73 +76,58 @@ public class Account extends BaseEntity {
     }
 
     /**
-     * @return the shippingAddress
+     * @return the lstEmails
      */
-    public Address getShippingAddress() {
-        return shippingAddress;
+    public List<EmailAdress> getLstEmails() {
+        return lstEmails;
     }
 
     /**
-     * @param shippingAddress the shippingAddress to set
+     * @param lstEmails the lstEmails to set
      */
-    public void setShippingAddress(Address shippingAddress) {
-        this.shippingAddress = shippingAddress;
+    public void setLstEmails(List<EmailAdress> lstEmails) {
+        this.lstEmails = lstEmails;
     }
 
     /**
-     * @return the billingAddress
+     * @return the lstPhoneNumbers
      */
-    public Address getBillingAddress() {
-        return billingAddress;
+    public List<PhoneNumber> getLstPhoneNumbers() {
+        return lstPhoneNumbers;
     }
 
     /**
-     * @param billingAddress the billingAddress to set
+     * @param lstPhoneNumbers the lstPhoneNumbers to set
      */
-    public void setBillingAddress(Address billingAddress) {
-        this.billingAddress = billingAddress;
+    public void setLstPhoneNumbers(List<PhoneNumber> lstPhoneNumbers) {
+        this.lstPhoneNumbers = lstPhoneNumbers;
     }
 
     /**
-     * @return the primaryPhoneNumber
+     * @return the lstAddresses
      */
-    public PhoneNumber getPrimaryPhoneNumber() {
-        return primaryPhoneNumber;
+    public List<Address> getLstAddresses() {
+        return lstAddresses;
     }
 
     /**
-     * @param primaryPhoneNumber the primaryPhoneNumber to set
+     * @param lstAddresses the lstAddresses to set
      */
-    public void setPrimaryPhoneNumber(PhoneNumber primaryPhoneNumber) {
-        this.primaryPhoneNumber = primaryPhoneNumber;
+    public void setLstAddresses(List<Address> lstAddresses) {
+        this.lstAddresses = lstAddresses;
     }
 
     /**
-     * @return the secondaryPhoneNimber
+     * @return the fidelity
      */
-    public PhoneNumber getSecondaryPhoneNumber() {
-        return secondaryPhoneNumber;
+    public Fidelity getFidelity() {
+        return fidelity;
     }
 
     /**
-     * @param secondaryPhoneNimber the secondaryPhoneNimber to set
+     * @param fidelity the fidelity to set
      */
-    public void setSecondaryPhoneNumber(PhoneNumber secondaryPhoneNimber) {
-        this.secondaryPhoneNumber = secondaryPhoneNimber;
+    public void setFidelity(Fidelity fidelity) {
+        this.fidelity = fidelity;
     }
-
-    /**
-     * @return the fax
-     */
-    public PhoneNumber getFax() {
-        return fax;
-    }
-
-    /**
-     * @param fax the fax to set
-     */
-    public void setFax(PhoneNumber fax) {
-        this.fax = fax;
-    }
-    
 }

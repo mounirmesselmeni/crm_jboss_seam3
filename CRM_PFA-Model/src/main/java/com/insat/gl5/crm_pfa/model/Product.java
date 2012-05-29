@@ -8,13 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.Min;
 
 /**
  * 
  * @author Mu7ammed 3li -- mohamed.ali.affes@gmail.com --
  */
 @Entity
-@NamedQueries({@NamedQuery(name = "Product.findAll", query = "select o from Product o"), @NamedQuery(name = "Product.findByProductId", query = "select o from Product o where id = :productId"), @NamedQuery(name = "Product.findByCategoryId", query = "select o from Product o where category.id = :catgoryId")})
+@NamedQueries({
+    @NamedQuery(name = "Product.findAll", query = "select o from Product o"),
+    @NamedQuery(name = "Product.findByProductId", query = "select o from Product o where id = :productId"),
+    @NamedQuery(name = "Product.findByCategoryId", query = "select o from Product o where category.id = :catgoryId")})
 public class Product extends BaseEntity {
 
     private String reference;
@@ -26,8 +30,20 @@ public class Product extends BaseEntity {
     private double price;
     @ManyToOne
     private TVA tva;
-    private boolean availability;
+    @Min(0)
     private int quantity;
+
+    public Product() {
+    }
+
+    public Product(String name, String description, String image, int quantity, Category category, String type, double price) {
+        this.name = name;
+        this.category = category;
+        this.description = description;
+        this.image = image;
+        this.quantity = quantity;
+        this.price = price;
+    }
 
     public int getQuantity() {
         return quantity;
@@ -35,19 +51,6 @@ public class Product extends BaseEntity {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public Product() {
-    }
-
-    public Product(String name, String description, String image, int quantity, Category category, String type, double price, boolean availability) {
-        this.name = name;
-        this.availability = availability;
-        this.category = category;
-        this.description = description;
-        this.image = image;
-        this.quantity = quantity;
-        this.price = price;
     }
 
     public String getDescription() {
@@ -74,14 +77,6 @@ public class Product extends BaseEntity {
         this.category = category;
     }
 
-    public boolean isAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
-    }
-
     public String getName() {
         return name;
     }
@@ -97,7 +92,6 @@ public class Product extends BaseEntity {
     public void setPrice(double price) {
         this.price = price;
     }
-
 
     @Override
     public int hashCode() {
@@ -151,5 +145,4 @@ public class Product extends BaseEntity {
     public void setTva(TVA tva) {
         this.tva = tva;
     }
-
 }

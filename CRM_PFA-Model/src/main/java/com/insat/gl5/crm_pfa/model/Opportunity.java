@@ -6,11 +6,9 @@ package com.insat.gl5.crm_pfa.model;
 
 import com.insat.gl5.crm_pfa.enumeration.OpportunityType;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.LinkedList;
+import java.util.List;
+import javax.persistence.*;
 
 /**
  *
@@ -27,8 +25,23 @@ public class Opportunity extends BaseEntity {
     private int probability;
     private int amount;
     @ManyToOne
-    @JoinColumn(name="accountId")
+    @JoinColumn(name = "accountId")
     private Account account;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ItemToPurchase> itemsToPurchase = new LinkedList<ItemToPurchase>();
+
+    public double getTotalFidelityPrice() {
+        double total = getTotalPrice() * account.getFidelity().getScore();
+        return total;
+    }
+
+    public double getTotalPrice() {
+        double total = 0;
+        for (ItemToPurchase itemToPurchase : itemsToPurchase) {
+            total += itemToPurchase.getProduct().getPrice() * itemToPurchase.getQuantity();
+        }
+        return total;
+    }
 
     /**
      * @return the name
@@ -61,7 +74,7 @@ public class Opportunity extends BaseEntity {
     /**
      * @return the closeDate
      */
-        public Date getCloseDate() {
+    public Date getCloseDate() {
         return closeDate;
     }
 
@@ -126,5 +139,19 @@ public class Opportunity extends BaseEntity {
      */
     public void setType(OpportunityType type) {
         this.type = type;
+    }
+
+    /**
+     * @return the itemsToPurchase
+     */
+    public List<ItemToPurchase> getItemsToPurchase() {
+        return itemsToPurchase;
+    }
+
+    /**
+     * @param itemsToPurchase the itemsToPurchase to set
+     */
+    public void setItemsToPurchase(List<ItemToPurchase> itemsToPurchase) {
+        this.itemsToPurchase = itemsToPurchase;
     }
 }

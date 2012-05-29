@@ -7,11 +7,13 @@ package com.insat.gl5.crm_pfa.model;
 import com.insat.gl5.crm_pfa.enumeration.PriorityType;
 import com.insat.gl5.crm_pfa.enumeration.TaskType;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -23,13 +25,15 @@ public class Task extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TaskType taskType;
     private String subject;
-    @OneToOne
-    private Contact assignedTo;
-    private PriorityType priority;
     private String description;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    private PriorityType priority;
+    @ManyToOne
+    private Contact assignedTo;
+    @ManyToOne
+    private Contact creator;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dueDate;
 
     /**
@@ -59,7 +63,6 @@ public class Task extends BaseEntity {
     public void setSubject(String subject) {
         this.subject = subject;
     }
-
 
     /**
      * @return the priority
@@ -92,7 +95,7 @@ public class Task extends BaseEntity {
     /**
      * @return the dueDate
      */
-        public Date getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
@@ -101,20 +104,6 @@ public class Task extends BaseEntity {
      */
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
-    }
-
-    /**
-     * @return the assignedTo
-     */
-        public Contact getAssignedTo() {
-        return assignedTo;
-    }
-
-    /**
-     * @param assignedTo the assignedTo to set
-     */
-    public void setAssignedTo(Contact assignedTo) {
-        this.assignedTo = assignedTo;
     }
 
     /**
@@ -130,6 +119,32 @@ public class Task extends BaseEntity {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
+
+    /**
+     * @return the creator
+     */
+    public Contact getCreator() {
+        return creator;
+    }
+
+    /**
+     * @param creator the creator to set
+     */
+    public void setCreator(Contact creator) {
+        this.creator = creator;
+    }
+
+    /**
+     * @return the assignedTo
+     */
+    public Contact getAssignedTo() {
+        return assignedTo;
+    }
+
+    /**
+     * @param assignedTo the assignedTo to set
+     */
+    public void setAssignedTo(Contact assignedTo) {
+        this.assignedTo = assignedTo;
+    }
 }

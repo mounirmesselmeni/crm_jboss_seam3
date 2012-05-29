@@ -7,6 +7,8 @@ package com.insat.gl5.crm_pfa.model;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 
@@ -16,6 +18,8 @@ import javax.persistence.NamedQuery;
 @NamedQueries({@NamedQuery(name = "Category.findAll", query = "select o from Category o"), @NamedQuery(name = "Category.findByCategoryName", query = "select o from Category o where name = :categoryName")})
 public class Category extends BaseEntity {
 
+    @NotNull
+    @NotEmpty
     private String name;
 
     public String getName() {

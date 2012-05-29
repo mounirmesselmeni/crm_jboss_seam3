@@ -14,25 +14,18 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Address extends BaseEntity {
 
-    
-    private String description;
+    @NotNull
     @Enumerated(EnumType.STRING)
     private AddressType type;
+    @NotNull
     private String street;
+    @NotNull
     private String city;
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Gouvernment gouvernment;
     private String postalCode;
 
-        public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @NotNull
     public AddressType getType() {
         return type;
     }
@@ -41,7 +34,6 @@ public class Address extends BaseEntity {
         this.type = type;
     }
 
-    @NotNull
     public String getStreet() {
         return street;
     }
@@ -50,7 +42,6 @@ public class Address extends BaseEntity {
         this.street = address1;
     }
 
-    @NotNull
     public String getCity() {
         return city;
     }
@@ -59,7 +50,6 @@ public class Address extends BaseEntity {
         this.city = city;
     }
 
-    @NotNull
     public Gouvernment getGouvernment() {
         return gouvernment;
     }
@@ -78,6 +68,6 @@ public class Address extends BaseEntity {
 
     @Override
     public String toString() {
-        return type + ": " + street + " -" + postalCode + "-" + city + ", " + gouvernment ;
+        return type + ": " + street + " -" + postalCode + "-" + city + ", " + gouvernment;
     }
 }

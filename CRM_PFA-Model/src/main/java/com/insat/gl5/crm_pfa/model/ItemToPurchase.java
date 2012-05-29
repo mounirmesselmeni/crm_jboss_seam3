@@ -6,30 +6,26 @@ package com.insat.gl5.crm_pfa.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
 
 /**
  * 
  * @author Mu7ammed 3li -- mohamed.ali.affes@gmail.com --
  */
 @Entity
-public class LineItem extends BaseEntity {
+public class ItemToPurchase extends BaseEntity {
 
-    private double subTotal;
+    @Min(0)
     private int quantity;
     @ManyToOne
     private Product product;
-    
-    @ManyToOne
-    private Opportunity opportunity;
 
-    public LineItem() {
+    public ItemToPurchase() {
     }
 
-    public LineItem(double subTotal, int quantity, Product product) {
+    public ItemToPurchase(double subTotal, int quantity, Product product) {
         this.product = product;
         this.quantity = quantity;
-        this.subTotal = subTotal;
     }
 
     public Product getProduct() {
@@ -40,21 +36,12 @@ public class LineItem extends BaseEntity {
         this.product = product;
     }
 
-    
     public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public double getSubTotal() {
-        return subTotal;
-    }
-
-    public void setSubTotal(double subTotal) {
-        this.subTotal = subTotal;
     }
 
     @Override
@@ -67,10 +54,10 @@ public class LineItem extends BaseEntity {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LineItem)) {
+        if (!(object instanceof ItemToPurchase)) {
             return false;
         }
-        LineItem other = (LineItem) object;
+        ItemToPurchase other = (ItemToPurchase) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -81,20 +68,4 @@ public class LineItem extends BaseEntity {
     public String toString() {
         return "LineItem{" + "quantity=" + quantity + ", product=" + product + '}';
     }
-
-    /**
-     * @return the opportunity
-     */
-    public Opportunity getOpportunity() {
-        return opportunity;
-    }
-
-    /**
-     * @param opportunity the opportunity to set
-     */
-    public void setOpportunity(Opportunity opportunity) {
-        this.opportunity = opportunity;
-    }
-
-    
 }

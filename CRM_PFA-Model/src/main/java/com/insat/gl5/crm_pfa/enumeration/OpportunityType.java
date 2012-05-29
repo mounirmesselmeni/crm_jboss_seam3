@@ -7,7 +7,7 @@ package com.insat.gl5.crm_pfa.enumeration;
  */
 public enum OpportunityType{
 
-    NEGOTIATION("Negotiation"), 
+    NEGOCIATION("Negociation"), 
     PROSPECTION("Prospection"),
     PROPOSITION("Proposition");
 

@@ -6,7 +6,10 @@ package com.insat.gl5.crm_pfa.enumeration;
  */
 public enum AddressType {
     TRAVAIL("Travail"), 
-    DOMICILE("Domicile");
+    DOMICILE("Domicile"),
+    FACTURATION("Facturation"),
+    LIVRAISON("Livraison")
+    ;
 
     private String displayName;
 
