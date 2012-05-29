@@ -321,13 +321,29 @@
                         </a>
                     </div>
 
+                     
+            	<div class="mws-panel grid_4">
+                	<div class="mws-panel-header">
+                    	<span class="mws-i-24 i-alert">jQuery-UI Dialog</span>
+                    </div>
+                    <div class="mws-panel-body">
+                    	<div class="mws-panel-content">
+                        	<input type="button" id="mws-jui-dialog-btn" class="mws-button red" value="Show Dialog" />
+                        	<input type="button" id="mws-jui-dialog-mdl-btn" class="mws-button blue" value="Show Modal Dialog" />
+                            
+                            <div id="mws-jui-dialog">
+                            	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nisi tellus, faucibus tristique faucibus sit amet, lacinia at velit. Proin pretium vulputate orci, nec luctus odio volutpat ac. Curabitur semper adipiscing tellus sed venenatis. Integer vitae diam dui. Ut ut quam ac ante eleifend aliquam. Cras tincidunt pulvinar sollicitudin. Nullam mattis justo nec nisl adipiscing ullamcorper. Curabitur fermentum egestas massa, eu dictum ligula accumsan id. Duis elit arcu, adipiscing vel consectetur ac, fermentum ac nisl. Quisque varius ipsum vitae mauris cursus eu tristique velit dapibus. Cras eu viverra neque.</p>
+                            </div>
+                        </div>
+                    </div>    	
+                </div>
+                    
                     <div class="mws-panel grid_8">
                         <div class="mws-panel-header">
                             <span class="mws-i-24 i-table-1">Data Table with Numbered Pagination</span>
                         </div>
                         <div class="mws-panel-body">
                             <h:form>
-
                                 <p:dataTable id="datatable" var="account" value="#{lstAccounts}" paginator="true" paginatorPosition="bottom" rows="4">  
 
                                     <p:column headerText="Société" style="width:5%">  
@@ -370,10 +386,10 @@
                                         <p:spacer width="5"/>
                                     </p:column>
                                 </p:dataTable>
-                              
+
                             </h:form>
                         </div>
-                        
+
                     </div>
                 </div>
 
@@ -384,5 +400,19 @@
             </div>
         </div>
 
+        <p:outputPanel id="outPutPanel">
+            <p:confirmDialog message="Etes vous sur ?" width="200"   
+                             header="confirmation" severity="alert" widgetVar="confirmation">  
+                <h:form id="formDelete"  >
+                    <p:commandButton id="btnNo" value="Non" onclick="confirmation.hide()" type="button"/>
+
+                    <p:spacer width="65"/>
+
+                    <p:commandButton id="btnYes" value="Oui" update="form1:datatable" 
+
+                                     onclick="confirmation.hide()"/>  
+                </h:form>
+            </p:confirmDialog>
+        </p:outputPanel>
     </h:body>
 </html>

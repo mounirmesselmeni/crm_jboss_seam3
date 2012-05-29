@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:s="http://jboss.org/seam/faces"
+                xmlns:o="http://java.sun.com/jsf/composite/crm"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:messages id="messages" globalOnly="true"/>   
+    <h3>Informations générales</h3>
+    <p:spacer height="30"/>
+    <table width="100%" >
+        <tr >
+            <td style="vertical-align: top">
+                <h:panelGrid id="display" columns="3" cellpadding="4" >
+                    <h:outputLabel value="Nom :" styleClass="titleLib"/>  
+                    <p:inputText id="newName" value="#{accountController.account.name}"
+                                 required="true"
+                                 requiredMessage="Required"/>
+                    <p:message for="newName"/> 
+
+                    <h:outputLabel value="Type :" styleClass="titleLib"/>  
+                    <h:selectOneMenu value="#{accountController.account.type}" styleClass="full-width">
+                        <f:selectItems value="#{enumValues.customerTypes}" var="_c" itemValue="#{_c}" itemLabel="#{_c.displayName}" />  
+                    </h:selectOneMenu>
+                    <p:spacer/>
+
+                    <h:outputLabel value="Logo" styleClass="titleLib"/>
+                    <p:fileUpload mode="advanced" 
+                                  invalidFileMessage="Fichier non supporté"
+                                  auto="true"
+                                  update="panelLogo"  
+                                  sizeLimit="1000000"   
+                                  allowTypes="/(\.|\/)(png)$/"
+                                  fileUploadListener="#{fileUploadController.handleFileUpload}"
+                                  />   
+                    <p:spacer/>
+                </h:panelGrid> 
+            </td>
+            <td valign="top" align="right">
+                <h:panelGrid id="logo" width="100" >
+                    <p:panel style="border-style: dotted" id="panelLogo" >  
+                        <h:graphicImage height="100" width="100" library="images" name="other/defaultLogo.png" rendered="#{fileUploadController.image eq null}"/>  
+                        <p:graphicImage height="100" width="100" value="#{fileUploadController.image}" rendered="#{fileUploadController.image ne null}"/>  
+                        <p:graphicImage height="100" width="100" value="/accounts/#{accountController.account.name}/logo.png" rendered="#{fileUploadController.image eq null}"/>  
+                    </p:panel>
+                </h:panelGrid >
+            </td>
+        </tr>
+    </table>
+    <p:spacer height="40"/>
+    <h3>Coordonnées</h3>
+    <p:spacer height="30"/>
+    <h:panelGrid columns="2" style="width: 100%">
+
+        <h:panelGrid columns="3">
+            <h:outputLabel value="Site web :" />  
+            <p:inputText value="#{accountController.account.website}"/>
+            <p:spacer/>
+
+            <h:outputLabel value="Email primaire:" />  
+            <p:inputText value="#{accountController.account.primaryEmail}" />
+            <p:spacer/> 
+
+
+            <h:outputLabel value="Email secondaire:" />  
+            <p:inputText value="#{accountController.account.secondaryEmail}" />
+            <p:spacer/> 
+
+        </h:panelGrid>
+        <h:panelGrid columns="3">
+            <h:outputLabel value="Telephone primaire :" />  
+            <p:inputText value="#{accountController.primaryPhoneNumber.number}"/>
+            <p:spacer/>
+
+            <h:outputLabel value="Telephone secondaire :" />  
+            <p:inputText value="#{accountController.secondaryPhoneNumber.number}" />
+            <p:spacer/> 
+
+
+            <h:outputLabel value="Fax :" />  
+            <p:inputText value="#{accountController.fax.number}" />
+            <p:spacer/> 
+
+        </h:panelGrid>
+    </h:panelGrid>
+    <p:spacer height="40"/>
+    <h3>Adresses</h3>
+    <p:spacer height="30"/>
+    <h:panelGrid columns="2" style="width: 100%">
+        <h:panelGrid columns="3">
+            <h:outputLabel value="Addresse siège"  styleClass="titlePanel"/>
+            <p:spacer/>
+            <p:spacer/>
+            <h:outputLabel value="Avenue / Rue :" />  
+            <p:inputText value="#{accountController.shippingAddress.street}" />
+            <p:spacer/> 
+
+            <h:outputLabel value="Code postale:" />  
+            <p:inputText value="#{accountController.shippingAddress.postalCode}" />
+            <p:spacer/> 
+
+            <h:outputLabel value="Ville :" />  
+            <p:inputText value="#{accountController.shippingAddress.city}" />
+            <p:spacer/> 
+
+            <h:outputLabel value="Gouvernement :" />  
+            <h:selectOneMenu value="#{accountController.shippingAddress.gouvernment}">
+                <f:selectItems value="#{enumValues.gouvernments}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
+            </h:selectOneMenu>
+            <p:spacer/> 
+        </h:panelGrid>
+        <h:panelGrid columns="3">
+            <h:outputLabel value="Addresse facturation" styleClass="titlePanel"/>
+            <p:spacer/>
+            <p:spacer/>
+            <h:outputLabel value="Avenue / Rue :" />  
+            <p:inputText value="#{accountController.billingAddress.street}" />
+            <p:spacer/> 
+
+            <h:outputLabel value="Code postale:" />  
+            <p:inputText value="#{accountController.billingAddress.postalCode}" />
+            <p:spacer/> 
+
+            <h:outputLabel value="Ville :" />  
+            <p:inputText value="#{accountController.billingAddress.city}" />
+            <p:spacer/> 
+
+            <h:outputLabel value="Gouvernement :" />  
+            <h:selectOneMenu  value="#{accountController.billingAddress.gouvernment}">
+                <f:selectItems value="#{enumValues.gouvernments}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
+            </h:selectOneMenu>
+            <p:spacer/> 
+        </h:panelGrid>
+
+    </h:panelGrid>
+
+    <p:spacer height="40"/>
+</ui:composition>
