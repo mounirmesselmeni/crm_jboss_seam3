@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-    <persistence-unit name="unit" transaction-type="JTA">
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <jta-data-source>crmDS</jta-data-source>
-        <class>com.insat.gl5.crm_pfa.model.security.IdentityObject</class>
-        <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectAttribute</class>
-        <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectCredential</class>
-        <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectCredentialType</class>
-        <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectRelationship</class>
-        <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectRelationshipType</class>
-        <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectType</class>
-        <class>com.insat.gl5.crm_pfa.model.security.IdentityPermission</class>
-        <class>com.insat.gl5.crm_pfa.model.security.IdentityRoleName</class>
-        <class>com.insat.gl5.crm_pfa.model.Account</class>
-        <class>com.insat.gl5.crm_pfa.model.Address</class>
-        <class>com.insat.gl5.crm_pfa.model.Category</class>
-        <class>com.insat.gl5.crm_pfa.model.Contact</class>
-        <class>com.insat.gl5.crm_pfa.model.Devis</class>
-        <class>com.insat.gl5.crm_pfa.model.Fidelity</class>
-        <class>com.insat.gl5.crm_pfa.model.LineItem</class>
-        <class>com.insat.gl5.crm_pfa.model.Opportunity</class>
-        <class>com.insat.gl5.crm_pfa.model.PhoneNumber</class>
-        <class>com.insat.gl5.crm_pfa.model.Product</class>
-        <class>com.insat.gl5.crm_pfa.model.Task</class>
-        <class>com.insat.gl5.crm_pfa.model.TVA</class>
-        <exclude-unlisted-classes>true</exclude-unlisted-classes>
-        <properties>
-            <property name="org.hibernate.SQL" value="DEBUG"/>
-            <property name="hibernate.show.sql" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-        </properties>
-    </persistence-unit>
+  <persistence-unit name="unit" transaction-type="JTA">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <jta-data-source>crmDS</jta-data-source>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObject</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectAttribute</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectCredential</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectCredentialType</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectRelationship</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectRelationshipType</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectType</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityPermission</class>
+    <class>com.insat.gl5.crm_pfa.model.security.IdentityRoleName</class>
+    <class>com.insat.gl5.crm_pfa.model.Account</class>
+    <class>com.insat.gl5.crm_pfa.model.Address</class>
+    <class>com.insat.gl5.crm_pfa.model.Category</class>
+    <class>com.insat.gl5.crm_pfa.model.Contact</class>
+    <class>com.insat.gl5.crm_pfa.model.Devis</class>
+    <class>com.insat.gl5.crm_pfa.model.Fidelity</class>
+    <class>com.insat.gl5.crm_pfa.model.Opportunity</class>
+    <class>com.insat.gl5.crm_pfa.model.PhoneNumber</class>
+    <class>com.insat.gl5.crm_pfa.model.Product</class>
+    <class>com.insat.gl5.crm_pfa.model.Task</class>
+    <class>com.insat.gl5.crm_pfa.model.TVA</class>
+    <class>com.insat.gl5.crm_pfa.model.EmailAdress</class>
+    <class>com.insat.gl5.crm_pfa.model.ItemToPurchase</class>
+    <class>com.insat.gl5.crm_pfa.model.MeetingConfirmation</class>
+    <class>com.insat.gl5.crm_pfa.model.Notification</class>
+    <class>com.insat.gl5.crm_pfa.model.NotificationContact</class>
+    <class>com.insat.gl5.crm_pfa.model.Ticket</class>
+    <class>com.insat.gl5.crm_pfa.model.TicketResponse</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <property name="org.hibernate.SQL" value="DEBUG"/>
+      <property name="hibernate.show.sql" value="true"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+    </properties>
+  </persistence-unit>
 </persistence>

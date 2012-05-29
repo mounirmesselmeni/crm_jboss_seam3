@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:s="http://jboss.org/seam/faces"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../../WEB-INF/template/generalTemplate.xhtml">
+
+    <ui:define name="body">
+        <p:panel header="List des catégories">
+            <p:messages autoUpdate="true"/>
+            <h:form>
+                <p:commandButton value="Ajouter" oncomplete="newCategory.show();"/>
+                <p:dataTable value="#{lstCategories}" var="category"
+                             paginator="true" paginatorPosition="bottom"
+                             rows="10">
+                    <p:column headerText="Nom">
+                        <h:outputText value="#{category.name}"/>
+                    </p:column>
+                    <p:column headerText="Actions" style="text-align:center;width: 5%">  
+                        <p:commandLink  title="Modifier" actionListener="#{categoryController.beginConversation()}"
+                                        oncomplete="editCategory.show();" update=":editCat">
+                            <f:setPropertyActionListener value="#{category}" target="#{categoryController.selectedCategory}"/>
+                            <h:graphicImage library="images" name="constellation/icons/fugue/pencil.png" width="16" height="16"/>
+                        </p:commandLink>  
+                        <p:spacer width="5"/>
+                        <p:commandLink  title="Supprimer" actionListener="#{categoryController.beginConversation()}"
+                                        oncomplete="suppConfirm.show();" update=":suppDlg">
+                            <f:setPropertyActionListener value="#{category}" target="#{categoryController.selectedCategory}"/>
+                            <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
+                        </p:commandLink>
+                        <p:spacer width="5"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <p:dialog modal="false" header="Nouvelle catégorie" widgetVar="newCategory" width="400" height="100">
+                <h:form>
+                    <h:panelGrid columns="3" style="width: 100%">
+                        <h:outputText value="Nom :" styleClass="titleLib"/>
+                        <p:inputText id="categoryName" value="#{categoryController.category.name}"/>
+                        <p:message for="categoryName"/>
+                    </h:panelGrid>
+                    <table width="100%" border="0">
+                        <tr >
+                            <td width="20%" height="20px">
+                                <p:commandButton   styleClass="btn_annul" value="Annuler" ajax="false" onclick="newCategory.hide();"
+                                                   immediate="true" />
+                            </td>
+                            <td width="60%" >
+                            </td>
+                            <td  width="20%" height="20px">
+                                <p:commandButton ajax="false"  value="Ajouter" styleClass="btn_val" 
+                                                 action="#{categoryController.create()}"
+                                                 />
+                            </td>
+                        </tr>  
+                    </table>
+                </h:form>
+            </p:dialog>
+            <p:dialog modal="false" id="editCat" header="Modifier catégorie" widgetVar="editCategory" width="400" height="100">
+                <h:form>
+                    <h:panelGrid columns="3" style="width: 100%">
+                        <h:outputText value="Nom :" styleClass="titleLib"/>
+                        <p:inputText id="categoryName" value="#{categoryController.selectedCategory.name}"/>
+                        <p:message for="categoryName"/>
+                    </h:panelGrid>
+                    <table width="100%" border="0">
+                        <tr >
+                            <td width="20%" height="20px">
+                                <p:commandButton styleClass="btn_annul" value="Annuler" ajax="false" 
+                                                 onclick="editCategory.hide();" immediate="true" />
+                            </td>
+                            <td width="60%" >
+                            </td>
+                            <td  width="20%" height="20px">
+                                <p:commandButton ajax="false"  value="Modifier" styleClass="btn_val" 
+                                                 action="#{categoryController.edit()}"/>
+                            </td>
+                        </tr>  
+                    </table>
+                </h:form>
+            </p:dialog>
+            <p:confirmDialog id="suppDlg" widgetVar="suppConfirm" header="Confirmation" 
+                             message="Etes vous sûre de vouloir supprimer la catégorie #{categoryController.selectedCategory.name} ?">
+                <h:form>
+                    <p:commandButton value="Non" oncomplete="suppConfirm.hide();" immediate="true"/>
+                    <p:commandButton value="Oui" action="#{categoryController.delete()}"/>
+                </h:form>
+            </p:confirmDialog>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

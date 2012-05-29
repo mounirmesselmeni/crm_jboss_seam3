@@ -63,7 +63,8 @@ public class ContactController extends ConversationController {
      * convert userDetails Email To LowerCase
      */
     private void convertEmailToLowerCase() {
-        this.getContact().setEmailAddress(this.getContact().getEmailAddress().toLowerCase());
+        
+//        this.getContact().setEmailAddress(this.getContact().getLogin().toLowerCase());
     }
 
     /**
@@ -88,7 +89,7 @@ public class ContactController extends ConversationController {
      * @return 
      */
     private boolean isUserExist() {
-        User u = this.profileService.searchUser(this.getContact().getEmailAddress());
+        User u = this.profileService.searchUser(this.getContact().getLogin());
         if (u != null) {
             this.messages.error("Utilisateur existe déja");
             return true;

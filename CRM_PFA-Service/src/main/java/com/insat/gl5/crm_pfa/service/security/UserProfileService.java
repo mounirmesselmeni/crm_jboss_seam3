@@ -67,13 +67,13 @@ public class UserProfileService implements Serializable {
 
     public Contact saveNewUser(Contact contact, String password, Collection<Role> roles) throws FeatureNotSupportedException, IdentityException {
         if (this.ident.getUser() != null) {
-            this.log.info("Save a new user '" + contact.getEmailAddress() + "'. Done by " + ident.getUser().getId());
+            this.log.info("Save a new user '" + contact.getLogin() + "'. Done by " + ident.getUser().getId());
         }
         User user = null;
         try {
-            user = this.identitySession.getPersistenceManager().createUser(contact.getEmailAddress());
+            user = this.identitySession.getPersistenceManager().createUser(contact.getLogin());
             this.identitySession.getAttributesManager().updatePassword(user, password);
-            this.em.persist(contact.getEmailAddress());
+            this.em.persist(contact.getLogin());
             this.identitySession.getAttributesManager().addAttribute(user.getId(), INFORMATION_USER, contact.getId().toString());
             for (Role role : roles) {
                 try {
@@ -100,9 +100,9 @@ public class UserProfileService implements Serializable {
      * @param Contact 
      */
     public void editProfiluser(Contact contact) {
-        this.log.info("Edit a profil '" + contact.getEmailAddress() + "'. Done by " + ident.getUser().getId());
+        this.log.info("Edit a profil '" + contact.getLogin() + "'. Done by " + ident.getUser().getId());
         try {
-            User user = searchUser(contact.getEmailAddress());
+            User user = searchUser(contact.getLogin());
             String pu = this.identitySession.getAttributesManager().getAttribute(user, INFORMATION_USER).getValue().toString();
             contact.setId(Long.parseLong(pu));
             this.em.merge(contact);

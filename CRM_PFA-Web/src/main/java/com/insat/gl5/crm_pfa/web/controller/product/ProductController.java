@@ -33,7 +33,7 @@ public class ProductController extends ConversationController {
      */
     public void createProduct() {
         try {
-            this.productService.create(product);
+            this.productService.createProduct(getProduct());
             messages.info("Produit ajouté.");
             endConversation();
         } catch (Exception ex) {
@@ -46,7 +46,7 @@ public class ProductController extends ConversationController {
      */
     public void editProduct() {
         try {
-            this.productService.edit(selectedProduct);
+            this.productService.editProduct(getSelectedProduct());
             messages.info("Produit à jour.");
         } catch (Exception ex) {
             messages.error("Erreur lors de la modification du produit.");
@@ -58,10 +58,38 @@ public class ProductController extends ConversationController {
      */
     public void deleteProduct() {
         try {
-            this.productService.delete(selectedProduct);
+            this.productService.deleteProduct(getSelectedProduct());
             messages.info("Produit supprimé.");
         } catch (Exception ex) {
             messages.error("Erreur de suppression du produit.");
         }
+    }
+
+    /**
+     * @return the product
+     */
+    public Product getProduct() {
+        return product;
+    }
+
+    /**
+     * @param product the product to set
+     */
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    /**
+     * @return the selectedProduct
+     */
+    public Product getSelectedProduct() {
+        return selectedProduct;
+    }
+
+    /**
+     * @param selectedProduct the selectedProduct to set
+     */
+    public void setSelectedProduct(Product selectedProduct) {
+        this.selectedProduct = selectedProduct;
     }
 }

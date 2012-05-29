@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:s="http://jboss.org/seam/faces"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:accordionPanel  activeIndex="0" >
+        <p:tab title="Informations générales">
+            <h:panelGrid columns="3">
+                <h:outputText value="Nom :"/>
+                <p:inputText id="productName" value="#{productController.product.name}" 
+                             required="true" requiredMessage="Valeur requise"/>
+                <p:message for="productName"/>
+                <h:outputText value="Référence :"/>
+                <p:inputText id="productReference" value="#{productController.product.reference}" 
+                             required="true" requiredMessage="Valeur requise"/>
+                <p:message for="productReference"/>
+                <h:outputText value="Catégorie :"/>
+                <p:selectOneMenu id="productCategory" value="#{productController.product.category}" 
+                                 required="true" requiredMessage="Valeur requise">
+                    <f:selectItems value="#{lstCategories}" var="category" itemLabel="#{category.name}" itemValue="#{category}"/>
+                </p:selectOneMenu>
+                <p:message for="productCategory"/>
+                <h:outputText value="Description :"/>
+                <p:inputTextarea id="productDescription" value="#{productController.product.description}" 
+                                 required="true" requiredMessage="Valeur requise"/>
+                <p:message for="productDescription"/>
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Image produit">
+            <h:panelGrid columns="3">
+
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Stock et prix">
+            <h:panelGrid columns="3">
+                <h:outputText value="Prix :"/>
+                <p:inputText id="productPrice" value="#{productController.product.price}" 
+                             required="true" requiredMessage="Valeur requise"/>
+                <p:message for="productPrice"/>
+                <h:outputText value="TVA :"/>
+                <p:selectOneMenu id="productTVA" value="#{productController.product.tva}" 
+                                 required="true" requiredMessage="Valeur requise">
+                    <f:selectItems value="#{lstTva}" var="tva" itemLabel="#{tva.taux} %" itemValue="#{tva}"/>
+                </p:selectOneMenu>
+                <p:message for="productTVA"/>
+                <h:outputText value="Quantité en stock :"/>
+                <p:inputText id="productQuantity" value="#{productController.product.quantity}" 
+                             required="true" requiredMessage="Valeur requise"/>
+                <p:message for="productQuantity"/>
+            </h:panelGrid>   
+        </p:tab>
+    </p:accordionPanel>
+</ui:composition>
