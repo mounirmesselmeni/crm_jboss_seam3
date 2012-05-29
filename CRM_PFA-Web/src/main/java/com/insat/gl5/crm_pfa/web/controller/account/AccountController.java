@@ -48,12 +48,12 @@ public class AccountController extends ConversationController {
             getBillingAddress().setType(AddressType.TRAVAIL);
             getShippingAddress().setType(AddressType.TRAVAIL);
             
-            getAccount().setBillingAddress(getBillingAddress());
-            getAccount().setShippingAddress(getShippingAddress());
-            
-            getAccount().setPrimaryPhoneNumber(getPrimaryPhoneNumber());
-            getAccount().setSecondaryPhoneNumber(getSecondaryPhoneNumber());
-            
+//            getAccount().setBillingAddress(getBillingAddress());
+//            getAccount().setShippingAddress(getShippingAddress());
+//            
+//            getAccount().setPrimaryPhoneNumber(getPrimaryPhoneNumber());
+//            getAccount().setSecondaryPhoneNumber(getSecondaryPhoneNumber());
+//            
             accountService.saveAccount(getAccount());
             messages.info("Compte {0} est enregistré avec succés !", getAccount().getName());
 
