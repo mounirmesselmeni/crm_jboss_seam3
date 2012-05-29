@@ -4,6 +4,7 @@ import com.insat.gl5.crm_pfa.enumeration.Salutation;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -22,6 +23,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 public class Contact extends BaseEntity {
 
+    @NotNull
+    @NotEmpty
+    @Column(unique=true)
+    private String login;
     private String firstName;
     private String lastName;
     @OneToMany(cascade= CascadeType.ALL)
@@ -122,5 +127,19 @@ public class Contact extends BaseEntity {
      */
     public void setLstAddresses(List<Address> lstAddresses) {
         this.lstAddresses = lstAddresses;
+    }
+
+    /**
+     * @return the login
+     */
+    public String getLogin() {
+        return login;
+    }
+
+    /**
+     * @param login the login to set
+     */
+    public void setLogin(String login) {
+        this.login = login;
     }
 }

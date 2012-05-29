@@ -47,7 +47,7 @@ public class ChangePasswordAction implements Serializable {
     }
 
     private boolean updatePassword() {
-        if (this.profileService.updatePassword(newPassword, currentUser.getEmailAddress(), oldPassword)) {
+        if (this.profileService.updatePassword(newPassword, currentUser.getLogin(), oldPassword)) {
             this.messages.info("Mot de passe changé");
             return true;
         }
