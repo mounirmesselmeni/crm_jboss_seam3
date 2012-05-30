@@ -72,4 +72,9 @@ public class AccountService extends GenericService{
         TypedQuery query = em.createQuery("SELECT a FROM Account a", Account.class);
         return query.getResultList();
     }
+    
+    public List<Account> getFiltredAccounts(String name){
+        TypedQuery query = em.createQuery("SELECT a FROM Account a WHERE a.name LIKE '%"+name+"'", Account.class);
+        return query.getResultList();
+    }
 }

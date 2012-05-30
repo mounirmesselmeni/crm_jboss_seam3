@@ -157,4 +157,10 @@ public class Contact extends BaseEntity {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
+    @Override
+    public String toString() {
+        return salutation + ". " + firstName + " " + lastName;
+    }
+    
 }

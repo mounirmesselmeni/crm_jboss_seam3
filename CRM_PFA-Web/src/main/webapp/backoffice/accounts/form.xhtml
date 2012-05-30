@@ -98,9 +98,9 @@
                                 <f:selectItems   value="#{enumValues.phoneNumberTypes}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
                                 <p:ajax event="change"/>
                             </p:selectOneMenu> 
-                            <p:inputText  value="#{modelP1.phoneNumber.number}"  size="20"  >
+                            <p:inputMask mask="99-999-999" value="#{modelP1.phoneNumber.number}"  size="20"  >
                                 <p:ajax event="blur"/>
-                            </p:inputText>
+                            </p:inputMask>
                             <p:commandLink  title="Ajouter" actionListener="#{accountController.addPhoneNumber()}" immediate="true">
                                 <h:graphicImage library="images" name="icons/add.png" width="16" height="16"/>
                             </p:commandLink> 
@@ -113,9 +113,9 @@
                                 <f:selectItems  value="#{enumValues.phoneNumberTypes}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
                                 <p:ajax event="change"/>
                             </p:selectOneMenu> 
-                            <p:inputText  value="#{modelP2.phoneNumber.number}"  size="20"  >
+                            <p:inputMask mask="99-999-999" value="#{modelP2.phoneNumber.number}"  size="20"  >
                                 <p:ajax event="blur"/>
-                            </p:inputText>
+                            </p:inputMask>
                             <p:commandLink  title="Supprimer" action="#{accountController.removePhoneNumber((modelP2.index))}" immediate="true">
                                 <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
                             </p:commandLink>
@@ -144,9 +144,9 @@
                                 <p:ajax event="blur"/>
                             </p:inputText>
                             <p:watermark for="streetA1" value="-- avenue/rue --" />  
-                            <p:inputText id="postalCodeA1" value="#{modelA1.address.postalCode}" size="12">
+                            <p:inputMask mask="9999" id="postalCodeA1" value="#{modelA1.address.postalCode}" size="12">
                                 <p:ajax event="blur"/>
-                            </p:inputText>
+                            </p:inputMask>
                             <p:watermark for="postalCodeA1" value="--code postal--" />  
                             <p:inputText id="cityA1" value="#{modelA1.address.city}" size="15" >
                                 <p:ajax event="blur"/>
@@ -172,9 +172,9 @@
                                 <p:ajax event="blur"/>
                             </p:inputText>
                             <p:watermark for="streetA2" value="-- avenue/rue --" />  
-                            <p:inputText id="postalCodeA2" value="#{modelA2.address.postalCode}" size="12">
+                            <p:inputMask mask="9999" id="postalCodeA2" value="#{modelA2.address.postalCode}" size="12">
                                 <p:ajax event="blur"/>
-                            </p:inputText>
+                            </p:inputMask>
                             <p:watermark for="postalCodeA2" value="--code postal--" />  
                             <p:inputText id="cityA2" value="#{modelA2.address.city}" size="15" >
                                 <p:ajax event="blur"/>

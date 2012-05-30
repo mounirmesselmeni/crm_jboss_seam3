@@ -5,11 +5,10 @@
                 xmlns:h="http://java.sun.com/jsf/html"  
                 xmlns:s="http://jboss.org/seam/faces"
                 xmlns:p="http://primefaces.org/ui"
-                template="./../../WEB-INF/template/generalTemplate.xhtml">
+                template="./../../WEB-INF/template/generalTemplate2.xhtml">
     
     <ui:define name="body">
         <p:panel header="Edit Contact">
-
             <h:form id="contactForm">
 
                 <ui:include src="form.xhtml" />			
@@ -18,13 +17,15 @@
                 <table width="100%" border="0">
                     <tr >
                         <td width="20%" height="20px">
-                    <p:commandButton   styleClass="btn_annul" value="Annuler" ajax="false" action="list"
+                    <p:commandButton   styleClass="btn_annul" value="Annuler" ajax="false" actionListener="#{fileUploadController.resetFile()}" 
+                                       action="#{contactController.cancel('list')}"
                                        immediate="true" />
                     </td>
                     <td width="60%" >
                     </td>
                     <td  width="20%" height="20px">
-                    <p:commandButton  ajax="false"  value="Ajouter" styleClass="btn_val"/>
+                    <p:commandButton  ajax="false"  value="Ajouter" styleClass="btn_val"
+                                      action="#{contactController.editContact()}"/>
                     </td>
                     </tr>  
                 </table>

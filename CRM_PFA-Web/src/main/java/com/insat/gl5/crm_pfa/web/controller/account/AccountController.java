@@ -48,8 +48,8 @@ public class AccountController extends ConversationController {
     @Inject
     private Messages messages;
     private boolean editMode;
-//    @Inject
-    private Account account = new Account();
+    @Inject
+    private Account account;
     private String redirect;
     private List<EmailViewModel> lstEmailViewModels;
     private List<AddressViewModel> lstAddressViewModels;
@@ -117,7 +117,7 @@ public class AccountController extends ConversationController {
         try {
 
             affectCoordinates();
-            account.setLogoURL(ACCOUNTS_DIRECTORY + account.getName() + ".png");
+            account.setLogoURL(account.getName() + ".png");
             accountService.saveAccount(getAccount());
             uploadLogo();
             messages.info("Compte {0} est enregistré avec succés !", getAccount().getName());
@@ -370,19 +370,19 @@ public class AccountController extends ConversationController {
 
     private void deleteLogo() throws IOException {
         // supprimer le logo
-        File logo = new File(account.getLogoURL());
+        File logo = new File(ACCOUNTS_DIRECTORY+account.getLogoURL());
         logo.delete();
     }
 
     private void updateLogo() {
         // Nouveau chemin
-        String newPath = ACCOUNTS_DIRECTORY + account.getName() + ".png";
+        String newPath = account.getName() + ".png";
         // Ancien chemin
         String lastPath = account.getLogoURL();
         // Mettre à jour le  chemin
         if (!newPath.equalsIgnoreCase(lastPath)) {
-            File lastURL = new File(lastPath);
-            File newURL = new File(newPath);
+            File lastURL = new File(ACCOUNTS_DIRECTORY + lastPath);
+            File newURL = new File(ACCOUNTS_DIRECTORY + newPath);
             lastURL.renameTo(newURL);
             account.setLogoURL(newPath);
         }
@@ -390,9 +390,9 @@ public class AccountController extends ConversationController {
 
     private void uploadLogo() throws IOException {
         if (fileUploadController.getFile() != null) {
-            fileUploadController.upload(account.getLogoURL());
+            fileUploadController.upload(ACCOUNTS_DIRECTORY+account.getLogoURL());
         } else {
-            fileUploadController.uploadFromURL("//resources//images//other//defaultLogo.png", account.getLogoURL());
+            fileUploadController.uploadFromURL("//resources//images//other//defaultLogo.png", ACCOUNTS_DIRECTORY+account.getLogoURL());
         }
     }
 
