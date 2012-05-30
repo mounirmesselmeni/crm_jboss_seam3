@@ -4,7 +4,6 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:s="http://jboss.org/seam/faces"
-                xmlns:o="http://java.sun.com/jsf/composite/crm"
                 xmlns:p="http://primefaces.org/ui">
 
     <p:messages id="messages" globalOnly="true"/>   
@@ -17,13 +16,16 @@
                     <h:outputLabel value="Nom :" styleClass="titleLib"/>  
                     <p:inputText id="newName" value="#{accountController.account.name}"
                                  required="true"
-                                 requiredMessage="Required"/>
+                                 requiredMessage="Required">
+                        <p:ajax event="blur"/>
+                    </p:inputText>
+
                     <p:message for="newName"/> 
 
                     <h:outputLabel value="Type :" styleClass="titleLib"/>  
-                    <h:selectOneMenu value="#{accountController.account.type}" styleClass="full-width">
+                    <p:selectOneMenu value="#{accountController.account.type}" styleClass="full-width">
                         <f:selectItems value="#{enumValues.customerTypes}" var="_c" itemValue="#{_c}" itemLabel="#{_c.displayName}" />  
-                    </h:selectOneMenu>
+                    </p:selectOneMenu>
                     <p:spacer/>
 
                     <h:outputLabel value="Logo" styleClass="titleLib"/>
@@ -41,97 +43,156 @@
             <td valign="top" align="right">
                 <h:panelGrid id="logo" width="100" >
                     <p:panel style="border-style: dotted" id="panelLogo" >  
-                        <h:graphicImage height="100" width="100" library="images" name="other/defaultLogo.png" rendered="#{fileUploadController.image eq null}"/>  
+                        <h:graphicImage height="100" width="100" library="images" name="other/defaultLogo.png" rendered="#{not accountController.editMode and  fileUploadController.image eq null}"/>  
+                        <p:graphicImage height="100" width="100" value="#{accountController.account.logoURL}" rendered="#{accountController.editMode and  fileUploadController.image eq null}"/>  
                         <p:graphicImage height="100" width="100" value="#{fileUploadController.image}" rendered="#{fileUploadController.image ne null}"/>  
-                        <p:graphicImage height="100" width="100" value="/accounts/#{accountController.account.name}/logo.png" rendered="#{fileUploadController.image eq null}"/>  
                     </p:panel>
                 </h:panelGrid >
             </td>
         </tr>
     </table>
-    <p:spacer height="40"/>
+    <p:spacer height="20"/>
     <h3>Coordonnées</h3>
-    <p:spacer height="30"/>
-    <h:panelGrid columns="2" style="width: 100%">
+    <p:spacer height="10"/>
 
+
+    <h:panelGrid columns="2" style="width: 100%">
         <h:panelGrid columns="3">
             <h:outputLabel value="Site web :" />  
             <p:inputText value="#{accountController.account.website}"/>
             <p:spacer/>
+            <h:outputLabel value="Emails :" />  
+            <p:outputPanel id="emailsPanel" autoUpdate="true" >
+                <h:panelGroup>
+                    <ui:repeat var="modelE1" value="#{accountController.lstEmailViewModels}" offset="0" size="0">
+                        <h:panelGrid columns="3">
 
-            <h:outputLabel value="Email primaire:" />  
-            <p:inputText value="#{accountController.account.primaryEmail}" />
-            <p:spacer/> 
+                            <p:inputText  value="#{modelE1.email.value}"  size="20"  >
+                                <p:ajax event="blur"/>
+                            </p:inputText>
+                            <p:commandLink  title="Ajouter" actionListener="#{accountController.addEmail()}"  immediate="true">
+                                <h:graphicImage library="images" name="icons/add.png"  width="16" height="16"/>
+                            </p:commandLink> 
+                        </h:panelGrid>
+                    </ui:repeat>
+                    <ui:repeat var="modelE2" value="#{accountController.lstEmailViewModels}"  offset="1" >
+                        <h:panelGrid columns="3">
 
-
-            <h:outputLabel value="Email secondaire:" />  
-            <p:inputText value="#{accountController.account.secondaryEmail}" />
-            <p:spacer/> 
-
-        </h:panelGrid>
-        <h:panelGrid columns="3">
-            <h:outputLabel value="Telephone primaire :" />  
-            <p:inputText value="#{accountController.primaryPhoneNumber.number}"/>
+                            <p:inputText  value="#{modelE2.email.value}"  size="20"  >
+                                <p:ajax event="blur"/>
+                            </p:inputText>
+                            <p:commandLink  title="Supprimer" action="#{accountController.removeEmail((modelE2.index))}" immediate="true">
+                                <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
+                            </p:commandLink>
+                        </h:panelGrid>
+                    </ui:repeat>
+                </h:panelGroup>
+            </p:outputPanel>
             <p:spacer/>
+            <h:outputLabel value="Téléphones :" />  
+            <p:outputPanel id="telephonesPanel" autoUpdate="true" >
+                <h:panelGroup>
+                    <ui:repeat var="modelP1" value="#{accountController.lstPhoneNumberViewModels}" offset="0" size="0">
+                        <h:panelGrid columns="3">
+                            <p:selectOneMenu  value="#{modelP1.phoneNumber.type}" >  
+                                <f:selectItems   value="#{enumValues.phoneNumberTypes}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
+                                <p:ajax event="change"/>
+                            </p:selectOneMenu> 
+                            <p:inputText  value="#{modelP1.phoneNumber.number}"  size="20"  >
+                                <p:ajax event="blur"/>
+                            </p:inputText>
+                            <p:commandLink  title="Ajouter" actionListener="#{accountController.addPhoneNumber()}" immediate="true">
+                                <h:graphicImage library="images" name="icons/add.png" width="16" height="16"/>
+                            </p:commandLink> 
+                        </h:panelGrid>
+                    </ui:repeat>
+                    <ui:repeat var="modelP2" value="#{accountController.lstPhoneNumberViewModels}"  offset="1" >
+                        <h:panelGrid columns="3">
 
-            <h:outputLabel value="Telephone secondaire :" />  
-            <p:inputText value="#{accountController.secondaryPhoneNumber.number}" />
+                            <p:selectOneMenu  value="#{modelP2.phoneNumber.type}" >  
+                                <f:selectItems  value="#{enumValues.phoneNumberTypes}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
+                                <p:ajax event="change"/>
+                            </p:selectOneMenu> 
+                            <p:inputText  value="#{modelP2.phoneNumber.number}"  size="20"  >
+                                <p:ajax event="blur"/>
+                            </p:inputText>
+                            <p:commandLink  title="Supprimer" action="#{accountController.removePhoneNumber((modelP2.index))}" immediate="true">
+                                <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
+                            </p:commandLink>
+                        </h:panelGrid>
+                    </ui:repeat>
+                </h:panelGroup>
+            </p:outputPanel>
             <p:spacer/> 
-
-
-            <h:outputLabel value="Fax :" />  
-            <p:inputText value="#{accountController.fax.number}" />
-            <p:spacer/> 
-
         </h:panelGrid>
     </h:panelGrid>
     <p:spacer height="40"/>
     <h3>Adresses</h3>
-    <p:spacer height="30"/>
+    <p:spacer height="10"/>
     <h:panelGrid columns="2" style="width: 100%">
         <h:panelGrid columns="3">
-            <h:outputLabel value="Addresse siège"  styleClass="titlePanel"/>
+            <h:outputLabel value="Addresse :" />
+            <p:outputPanel id="adressesPanel" autoUpdate="true" >
+                <h:panelGroup>
+                    <ui:repeat var="modelA1" value="#{accountController.lstAddressViewModels}" offset="0" size="0">
+                        <h:panelGrid columns="9">
+                            <p:selectOneMenu  value="#{modelA1.address.type}" >  
+                                <f:selectItems value="#{enumValues.addressTypes}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>
+                                <p:ajax event="change"/>
+                            </p:selectOneMenu> 
+                            <p:inputText id="streetA1" value="#{modelA1.address.street}"  size="20" >
+                                <p:ajax event="blur"/>
+                            </p:inputText>
+                            <p:watermark for="streetA1" value="-- avenue/rue --" />  
+                            <p:inputText id="postalCodeA1" value="#{modelA1.address.postalCode}" size="12">
+                                <p:ajax event="blur"/>
+                            </p:inputText>
+                            <p:watermark for="postalCodeA1" value="--code postal--" />  
+                            <p:inputText id="cityA1" value="#{modelA1.address.city}" size="15" >
+                                <p:ajax event="blur"/>
+                            </p:inputText>
+                            <p:watermark for="cityA1" value="-- ville --" />  
+                            <p:selectOneMenu value="#{modelA1.address.gouvernment}">
+                                <f:selectItems value="#{enumValues.gouvernments}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
+                                <p:ajax event="change"/>
+                            </p:selectOneMenu>
+
+                            <p:commandLink  title="Ajouter" actionListener="#{accountController.addAddress()}" immediate="true">
+                                <h:graphicImage library="images" name="icons/add.png" width="16" height="16"/>
+                            </p:commandLink> 
+                        </h:panelGrid>
+                    </ui:repeat>
+                    <ui:repeat var="modelA2" value="#{accountController.lstAddressViewModels}"  offset="1" >
+                        <h:panelGrid columns="9">
+                            <p:selectOneMenu  value="#{modelA2.address.type}" >  
+                                <f:selectItems value="#{enumValues.addressTypes}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>
+                                <p:ajax event="change"/>
+                            </p:selectOneMenu> 
+                            <p:inputText id="streetA2" value="#{modelA2.address.street}"  size="20" >
+                                <p:ajax event="blur"/>
+                            </p:inputText>
+                            <p:watermark for="streetA2" value="-- avenue/rue --" />  
+                            <p:inputText id="postalCodeA2" value="#{modelA2.address.postalCode}" size="12">
+                                <p:ajax event="blur"/>
+                            </p:inputText>
+                            <p:watermark for="postalCodeA2" value="--code postal--" />  
+                            <p:inputText id="cityA2" value="#{modelA2.address.city}" size="15" >
+                                <p:ajax event="blur"/>
+                            </p:inputText>
+                            <p:watermark for="cityA2" value="-- ville --" />  
+                            <p:selectOneMenu value="#{modelA2.address.gouvernment}">
+                                <f:selectItems value="#{enumValues.gouvernments}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
+                                <p:ajax event="change"/>
+                            </p:selectOneMenu>
+                            <p:commandLink  title="Supprimer" action="#{accountController.removeAddress((modelA2.index))}" immediate="true">
+                                <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
+                            </p:commandLink>
+                        </h:panelGrid>
+                    </ui:repeat>
+                </h:panelGroup>
+            </p:outputPanel>
             <p:spacer/>
-            <p:spacer/>
-            <h:outputLabel value="Avenue / Rue :" />  
-            <p:inputText value="#{accountController.shippingAddress.street}" />
-            <p:spacer/> 
 
-            <h:outputLabel value="Code postale:" />  
-            <p:inputText value="#{accountController.shippingAddress.postalCode}" />
-            <p:spacer/> 
-
-            <h:outputLabel value="Ville :" />  
-            <p:inputText value="#{accountController.shippingAddress.city}" />
-            <p:spacer/> 
-
-            <h:outputLabel value="Gouvernement :" />  
-            <h:selectOneMenu value="#{accountController.shippingAddress.gouvernment}">
-                <f:selectItems value="#{enumValues.gouvernments}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
-            </h:selectOneMenu>
-            <p:spacer/> 
-        </h:panelGrid>
-        <h:panelGrid columns="3">
-            <h:outputLabel value="Addresse facturation" styleClass="titlePanel"/>
-            <p:spacer/>
-            <p:spacer/>
-            <h:outputLabel value="Avenue / Rue :" />  
-            <p:inputText value="#{accountController.billingAddress.street}" />
-            <p:spacer/> 
-
-            <h:outputLabel value="Code postale:" />  
-            <p:inputText value="#{accountController.billingAddress.postalCode}" />
-            <p:spacer/> 
-
-            <h:outputLabel value="Ville :" />  
-            <p:inputText value="#{accountController.billingAddress.city}" />
-            <p:spacer/> 
-
-            <h:outputLabel value="Gouvernement :" />  
-            <h:selectOneMenu  value="#{accountController.billingAddress.gouvernment}">
-                <f:selectItems value="#{enumValues.gouvernments}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
-            </h:selectOneMenu>
-            <p:spacer/> 
         </h:panelGrid>
 
     </h:panelGrid>

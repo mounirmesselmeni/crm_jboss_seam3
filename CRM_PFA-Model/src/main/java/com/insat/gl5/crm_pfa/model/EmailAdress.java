@@ -25,7 +25,7 @@ public class EmailAdress extends BaseEntity {
 
     @Override
     public String toString() {
-        return "com.insat.gl5.crm_pfa.model.EmailAdress[ id=" + id + " ]";
+        return value;
     }
 
     /**

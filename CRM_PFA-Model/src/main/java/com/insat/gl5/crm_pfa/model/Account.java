@@ -23,6 +23,7 @@ public class Account extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CustomerType type;
     private String website;
+    private String logoURL;
     @OneToMany(cascade = CascadeType.ALL)
     private List<EmailAdress> lstEmails = new LinkedList<EmailAdress>();
     @OneToMany(cascade = CascadeType.ALL)
@@ -129,5 +130,19 @@ public class Account extends BaseEntity {
      */
     public void setFidelity(Fidelity fidelity) {
         this.fidelity = fidelity;
+    }
+
+    /**
+     * @return the logoURL
+     */
+    public String getLogoURL() {
+        return logoURL;
+    }
+
+    /**
+     * @param logoURL the logoURL to set
+     */
+    public void setLogoURL(String logoURL) {
+        this.logoURL = logoURL;
     }
 }

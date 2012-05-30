@@ -89,13 +89,15 @@ public abstract class BaseEntity implements Serializable {
         }
         modifiedOn = createdOn;
     }
-
     
     @PreUpdate
     public void updateTimeStamp() {
         modifiedOn = new Date();
     }
 
+    public boolean isPersistent(){
+        return getId()!=null;
+    }
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

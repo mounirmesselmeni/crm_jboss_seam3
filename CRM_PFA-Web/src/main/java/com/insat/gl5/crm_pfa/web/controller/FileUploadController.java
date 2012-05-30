@@ -4,10 +4,7 @@
  */
 package com.insat.gl5.crm_pfa.web.controller;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
+import java.io.*;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -65,9 +62,8 @@ public class FileUploadController implements Serializable {
                 FacesMessage msg = new FacesMessage("Succesful", "File :" + file.getFileName() + " is uploaded.");
                 FacesContext.getCurrentInstance().addMessage(null, msg);
 
+            resetFile();
             }
-            file = null;
-            image = null;
 
         } catch (IOException e) {
             FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -101,18 +97,43 @@ public class FileUploadController implements Serializable {
 
                 FacesMessage msg = new FacesMessage("Succesful", "File :" + file.getFileName() + " is uploaded.");
                 FacesContext.getCurrentInstance().addMessage(null, msg);
+            resetFile();
             }
-            file = null;
         } catch (IOException e) {
             FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "File was not uploaded! : " + e, "");
             FacesContext.getCurrentInstance().addMessage(null, error);
         }
     }
+    public void uploadFromURL(String url, String destinationPath) {
+        try {
+
+            File inputFile = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath(url));
+            File outputFile = new File(destinationPath);
+
+            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(inputFile));
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(outputFile));
+
+            int c;
+
+            while ((c = bis.read()) != -1) {
+                bos.write(c);
+            }
+
+            bis.close();
+            bos.close();
+            resetFile();
+        } catch (IOException ex) {
+
+            FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "File was not uploaded! : " + ex, "");
+            FacesContext.getCurrentInstance().addMessage(null, error);
+        }
+
+    }
 
     public void handleFileUpload(FileUploadEvent event) {
         try {
-
             file = event.getFile();
             image = new DefaultStreamedContent(file.getInputstream(), event.getFile().getContentType());
         } catch (Exception ex) {

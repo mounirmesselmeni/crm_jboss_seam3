@@ -68,6 +68,6 @@ public class Address extends BaseEntity {
 
     @Override
     public String toString() {
-        return type + ": " + street + " -" + postalCode + "-" + city + ", " + gouvernment;
+        return type + " : " + street + " - " + postalCode + " - " + city + ", " + gouvernment;
     }
 }
