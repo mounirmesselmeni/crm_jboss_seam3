@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:s="http://jboss.org/seam/faces"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../../WEB-INF/template/generalTemplate.xhtml">
+
+    <ui:define name="scripts">
+        
+    </ui:define>
+    <ui:define name="body">
+        <p:panel id="panel" header="Paramétrage des TVA">
+            <p:messages autoUpdate="true"/>
+            <h:form>
+                <p:commandButton id="addTvaBtn" value="Ajouter" oncomplete="newTva.show();"/>
+                <p:dataTable value="#{lstTva}" var="tva"
+                             paginator="true" paginatorPosition="bottom"
+                             rows="10">
+                    <p:column headerText="Taux">
+                        <h:outputText value="#{tva.taux} %"/>
+                    </p:column>
+                    <p:column headerText="Description">
+                        <h:outputText value="#{tva.description}"/>
+                    </p:column>
+                    <p:column headerText="Actions" style="text-align:center;width: 5%">  
+                        <p:commandLink  title="Modifier" actionListener="#{tvaController.beginConversation()}"
+                                        oncomplete="editTva.show();" update=":editTvaId">
+                            <f:setPropertyActionListener value="#{tva}" target="#{tvaController.selectedTva}"/>
+                            <h:graphicImage library="images" name="constellation/icons/fugue/pencil.png" width="16" height="16"/>
+                        </p:commandLink>  
+                        <p:spacer width="5"/>
+                        <p:commandLink  title="Supprimer" actionListener="#{tvaController.beginConversation()}"
+                                        oncomplete="suppConfirm.show();" update=":suppDlg">
+                            <f:setPropertyActionListener value="#{tva}" target="#{tvaController.selectedTva}"/>
+                            <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
+                        </p:commandLink>
+                        <p:spacer width="5"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <p:dialog modal="false" id="newTvaDlg" header="Nouvelle catégorie" widgetVar="newTva" width="400" height="150">
+                <h:form>
+                    <h:panelGrid columns="3" style="width: 100%">
+                        <h:outputText value="Taux (%) :" styleClass="titleLib"/>
+                        <p:inputText id="tvaTaux" value="#{tvaController.tva.taux}"/>
+                        <p:message for="tvaTaux"/>
+                        <h:outputText value="Description :" styleClass="titleLib"/>
+                        <p:inputTextarea id="tvaDescrption" value="#{tvaController.tva.description}"/>
+                        <p:message for="tvaDescrption"/>
+                    </h:panelGrid>
+                    <table width="100%" border="0">
+                        <tr >
+                            <td width="20%" height="20px">
+                                <p:commandButton   styleClass="btn_annul" value="Annuler" ajax="false" onclick="newTva.hide();"
+                                                   immediate="true" />
+                            </td>
+                            <td width="60%" >
+                            </td>
+                            <td  width="20%" height="20px">
+                                <p:commandButton ajax="true"  value="Ajouter" styleClass="btn_val"
+                                                 update=":panel"
+                                                 actionListener="#{tvaController.create()}" 
+                                                 oncomplete="handleLoginRequest(xhr, status, args)"
+                                                 />
+                            </td>
+                        </tr>  
+                    </table>
+                </h:form>
+            </p:dialog> 
+            <p:dialog modal="false" id="editTvaId" header="Modifier TVA" widgetVar="editTva" width="400" height="150">
+                <h:form>
+                    <h:panelGrid columns="3" style="width: 100%">
+                        <h:outputText value="Taux (%):" styleClass="titleLib"/>
+                        <p:inputText id="tvaTaux" value="#{tvaController.selectedTva.taux}"/>
+                        <p:message for="tvaTaux"/>
+                        <h:outputText value="Description :" styleClass="titleLib"/>
+                        <p:inputTextarea id="tvaDescrption" value="#{tvaController.selectedTva.description}"/>
+                        <p:message for="tvaDescrption"/>
+                    </h:panelGrid>
+                    <table width="100%" border="0">
+                        <tr >
+                            <td width="20%" height="20px">
+                                <p:commandButton styleClass="btn_annul" value="Annuler" ajax="false" 
+                                                 onclick="editTva.hide();" immediate="true" />
+                            </td>
+                            <td width="60%" >
+                            </td>
+                            <td  width="20%" height="20px">
+                                <p:commandButton ajax="false"  value="Modifier" styleClass="btn_val" 
+                                                 action="#{tvaController.edit()}"/>
+                            </td>
+                        </tr>  
+                    </table>
+                </h:form>
+            </p:dialog>
+            <p:confirmDialog id="suppDlg" widgetVar="suppConfirm" header="Confirmation" 
+                             message="Etes vous sûre de vouloir supprimer la tva de taux #{tva.selectedTva.taux} % ?">
+                <h:form>
+                    <p:commandButton value="Non" oncomplete="suppConfirm.hide();" immediate="true"/>
+                    <p:commandButton value="Oui" action="#{tvaController.delete()}"/>
+                </h:form>
+            </p:confirmDialog>
+        </p:panel> 
+    </ui:define>
+
+</ui:composition>

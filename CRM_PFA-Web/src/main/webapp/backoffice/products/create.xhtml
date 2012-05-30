@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:s="http://jboss.org/seam/faces"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../WEB-INF/template/generalTemplate.xhtml">
+
+    <ui:define name="body">
+        <p:panel header="Ajouter produit">
+            <h:form id="productForm">
+
+                <ui:include src="form.xhtml" />			
+
+                <p:spacer height="40"/>
+                <table width="100%" border="0">
+                    <tr >
+                        <td width="20%" height="20px">
+                    <p:commandButton   styleClass="btn_annul" value="Annuler" ajax="false" 
+                                       actionListener="#{fileUploadController.resetFile()}" 
+                                               action="#{contactController.cancel('list?faces-redirect=true')}"
+                                       immediate="true" />
+                    </td>
+                    <td width="60%" >
+                    </td>
+                    <td  width="20%" height="20px">
+                    <p:commandButton  
+                        ajax="false"  value="Ajouter"
+                        styleClass="btn_val" 
+                        actionListener="#{contactController.saveUser()}"
+                        action="list"
+                        />
+                    </td>
+                    </tr>  
+                </table>				
+            </h:form>
+            <div style="clear:both;" />
+        </p:panel>
+
+    </ui:define>
+</ui:composition>
