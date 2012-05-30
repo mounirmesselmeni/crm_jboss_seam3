@@ -5,7 +5,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:s="http://jboss.org/seam/faces"
                 xmlns:p="http://primefaces.org/ui"
-                template="./../../WEB-INF/template/generalTemplate.xhtml">
+                template="./../../WEB-INF/template/generalTemplate2.xhtml">
 
     <ui:define name="body">
         <p:panel header="Liste des produits">
@@ -18,7 +18,7 @@
                 <p:dataTable value="#{lstProducts}" var="product" paginator="true"
                              paginatorPosition="bottom">
                     <p:column headerText="Image">
-                        <p:graphicImage alt="#{product.name}" value="/products/#{product.image}"
+                        <p:graphicImage alt="#{product.name}" value="/CRMData/products/#{product.image}"
                                         width="50" height="50"/>
                     </p:column>
                     <p:column headerText="Nom">

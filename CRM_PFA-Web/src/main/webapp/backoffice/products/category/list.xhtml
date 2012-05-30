@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:s="http://jboss.org/seam/faces"
                 xmlns:p="http://primefaces.org/ui"
-                template="./../../../WEB-INF/template/generalTemplate.xhtml">
+                template="./../../../WEB-INF/template/generalTemplate2.xhtml">
 
     <ui:define name="body">
         <p:panel header="List des catégories">
@@ -35,7 +35,7 @@
                     </p:column>
                 </p:dataTable>
             </h:form>
-            <p:dialog modal="false" header="Nouvelle catégorie" widgetVar="newCategory" width="400" height="100">
+            <p:dialog modal="true" header="Nouvelle catégorie" widgetVar="newCategory" width="400" height="100">
                 <h:form>
                     <h:panelGrid columns="3" style="width: 100%">
                         <h:outputText value="Nom :" styleClass="titleLib"/>
@@ -59,7 +59,7 @@
                     </table>
                 </h:form>
             </p:dialog>
-            <p:dialog modal="false" id="editCat" header="Modifier catégorie" widgetVar="editCategory" width="400" height="100">
+            <p:dialog modal="true" id="editCat" header="Modifier catégorie" widgetVar="editCategory" width="400" height="100">
                 <h:form>
                     <h:panelGrid columns="3" style="width: 100%">
                         <h:outputText value="Nom :" styleClass="titleLib"/>

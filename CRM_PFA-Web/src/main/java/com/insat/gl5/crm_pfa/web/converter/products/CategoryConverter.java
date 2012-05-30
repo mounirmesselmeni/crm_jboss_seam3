@@ -6,6 +6,7 @@ package com.insat.gl5.crm_pfa.web.converter.products;
 
 import com.insat.gl5.crm_pfa.model.Category;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
  * @author Mounir Messelmeni <messelmeni.mounir@gmail.com>
  */
 @FacesConverter(forClass = Category.class)
+@RequestScoped
 public class CategoryConverter implements Converter {
 
     @Inject

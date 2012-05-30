@@ -34,16 +34,40 @@
         <div>
             <div id="left">
                 <ui:insert name="left">
-                     <p:accordionPanel activeIndex="-1">
-                    <ui:insert name="menu">
-                        <p:tab title="A compléter">
-                            Données du template
-                        </p:tab>
+                    <p:accordionPanel activeIndex="-1">
+                        <ui:insert name="menu">
+                            <p:tab title="Gestion des comptes">
+                                <h:form>
+                                    <h:panelGrid columns="1">
+                                        <p:commandLink value="Comptes" action="/backoffice/accounts/list" ajax="false"/>
+                                        <p:commandLink value="Contacts" action="/backoffice/contacts/list" ajax="false"/>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Gestion des produits">
+                                <h:form>
+                                    <h:panelGrid columns="1">
+                                        <p:commandLink value="Produits" action="/backoffice/products/list" ajax="false"/>
+                                        <p:commandLink value="Catégories" action="/backoffice/products/category/list" ajax="false"/>
+                                        <p:commandLink value="TVA" action="/backoffice/products/tva/list" ajax="false"/>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Gestion d'accès">
+                                <h:form>
+                                    <h:panelGrid columns="1">
+                                        <p:commandLink value="Créer utilisateur" action="/backoffice/users/createUser" ajax="false"
+                                                       actionListener="#{userManagement.beginConversation()}"/>
+                                        <p:commandLink value="Gestion des groupes" action="/backoffice/users/listGroups" ajax="false"/>
+                                        <p:commandLink value="Gestion des rôles" action="/backoffice/users/listRoleTypes" ajax="false"/>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                        </ui:insert>
+                    </p:accordionPanel>  
+                    <ui:insert name="switch">
+
                     </ui:insert>
-                </p:accordionPanel>  
-                <ui:insert name="switch">
-                    
-                </ui:insert>
                 </ui:insert>
             </div>
             <div id="content" class="left_content">

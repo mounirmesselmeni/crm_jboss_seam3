@@ -20,7 +20,7 @@ import org.picketlink.idm.common.exception.IdentityException;
  *
  * @author Mounir Messelmeni, contact: messelmeni.mounir@gmail.com
  */
-@FacesConverter(value = "roleTypeConverter")
+@FacesConverter(forClass = RoleType.class)
 @RequestScoped
 public class RoleTypeConverter implements Converter {
 

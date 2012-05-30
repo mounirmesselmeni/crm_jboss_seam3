@@ -30,6 +30,7 @@
     <class>com.insat.gl5.crm_pfa.model.NotificationContact</class>
     <class>com.insat.gl5.crm_pfa.model.Ticket</class>
     <class>com.insat.gl5.crm_pfa.model.TicketResponse</class>
+    <class>com.insat.gl5.crm_pfa.model.BackendUser</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="org.hibernate.SQL" value="DEBUG"/>

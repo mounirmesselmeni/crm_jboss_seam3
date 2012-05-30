@@ -1,113 +1,85 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:s="http://jboss.org/seam/faces"
                 xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/templates/templateAdmin.xhtml">
-    <ui:define name="content">
-        <p:panel>
-            <div style="position:relative; left:-25px;">
-                <table border="0" cellpadding="0" cellspacing="0">
-                    <tr>			
-                        <td class="bg_titre_page" style="vertical-align:top;"><img src="#{request.contextPath}/image/img_titre_gauche.png" /></td>
-                        <td class="bg_titre_page texte fs14 gras txt_entete_page" style="height:44px; vertical-align:top; padding-top:10px;">
-                    <h:outputText value="#{bundles.messages['profil.new']}"/></td>
-                    <td style="vertical-align:top;"><img src="#{request.contextPath}/image/img_titre_droite.png" /></td>
-                    </tr>
-                </table>
-            </div>
-            <p:messages id="messages" globalOnly="true"/>
+                template="./../../WEB-INF/template/generalTemplate2.xhtml">
+
+    <ui:define name="body">
+        <p:panel header="Nouveau utilisateur">
+            <p:messages autoUpdate="true"/>
             <h:form>
                 <h:panelGrid columns="3">
-                    <h:outputText value="#{bundles.messages['profil.name']}" styleClass="titleLib" />
-                    <p:inputText id="firstName" value="#{userManagementController.userDetails.firstName}" 
-                                 required="true" requiredMessage="#{bundles.messages['required']}"/>
-                    <p:message for="firstName"/>
-                    <h:outputText value="#{bundles.messages['profil.prenom']}" styleClass="titleLib" />
-                    <p:inputText id="lastName" value="#{userManagementController.userDetails.lastName}" 
-                                 required="true" requiredMessage="#{bundles.messages['required']}"/>
-                    <p:message for="lastName"/>
-                    <h:outputText value="#{bundles.messages['profil.email']}" styleClass="titleLib" />
-                    <p:inputText id="email" value="#{userManagementController.userDetails.email}" 
-                                 required="true" requiredMessage="#{bundles.messages['required']}"/>
-                    <p:message for="email"/>
-                    <h:outputText value="#{bundles.messages['profil.phone']}" styleClass="titleLib" />
-                    <p:inputText id="phoneNumber" value="#{userManagementController.userDetails.phoneNumber}" 
-                                 required="true" requiredMessage="#{bundles.messages['required']}"/>
-                    <p:message for="phoneNumber"/>
-                    <h:outputText value="#{bundles.messages['profil.address']}" styleClass="titleLib" />
-                    <p:inputText id="address" value="#{userManagementController.userDetails.address}" 
-                                 required="true" requiredMessage="#{bundles.messages['required']}"/>
-                    <p:message for="address"/>
-                    <h:outputText value="#{bundles.messages['profil.language']}" styleClass="titleLib" />
-                    <p:inputText id="language" value="#{userManagementController.userDetails.language}" 
-                                 required="true" requiredMessage="#{bundles.messages['required']}"/>
-                    <p:message for="language"/>
-                    <h:outputText value="#{bundles.messages['profil.password']}" styleClass="titleLib"/>
-                    <p:password id="password" feedback="true" value="#{userManagementController.password}" 
-                                required="true" requiredMessage="#{bundles.messages['required']}"/>
+                    <h:outputText value="Username :" styleClass="titleLib" />
+                    <p:inputText id="login" value="#{userManagement.user.login}" 
+                                 required="true" requiredMessage="Valeur requise"/>
+                    <p:message for="login"/>
+                    <h:outputText value="Mot de passe :" styleClass="titleLib"/>
+                    <p:password id="password" feedback="true" value="#{userManagement.password}" 
+                                required="true" requiredMessage="Valeur requise"/>
                     <p:message for="password"/>
-                    <h:outputText value="#{bundles.messages['profil.confirmpassword']}" styleClass="titleLib"/>
-                    <p:password id="confirmPassword" feedback="true" value="#{userManagementController.confirmPassword}" 
-                                required="true" requiredMessage="#{bundles.messages['required']}"
-                                weakLabel="#{bundles.messages['password.weakLabel']}"
-                                strongLabel="#{bundles.messages['password.goodLabel']}"
-                                goodLabel="#{bundles.messages['password.strongLabel']}"/>
+                    <h:outputText value="Confirmation mot de passe :" styleClass="titleLib"/>
+                    <p:password id="confirmPassword" feedback="true" value="#{userManagement.confirmPassword}" 
+                                required="true" requiredMessage="Valeur requise"/>
                     <p:message for="confirmPassword"/>
                     <p:outputPanel autoUpdate="true">
                         <h:panelGroup>
-                            <h4><h:outputText value="#{bundles.messages['roleMembership']}"/></h4>
-                            <ui:repeat value="#{userManagementController.roles}" var="role">
+                            <h4><h:outputText value="Rôles"/></h4>
+                            <ui:repeat value="#{userManagement.roles}" var="role">
                                 <b><h:outputText value="#{role.roleType.name}"/></b>
-                                <span> <h:outputText value="#{bundles.messages['inGroup']}"/> </span>
+                                <span> <h:outputText value="dans le groupe"/> </span>
                                 <b><h:outputText value="#{role.group.name}"/></b><br/>
                             </ui:repeat>
                         </h:panelGroup>
                     </p:outputPanel>
-                    <p:commandButton value="#{bundles.messages['role.add']}" oncomplete="newRoleType.show();" 
+                    <p:commandButton value="Ajouter" oncomplete="newRoleType.show();" immediate="true"
                                      ajax="true"/>
                 </h:panelGrid>
                 <p:spacer height="30"/>
                 <table width="100%" border="0">
                     <tr style="background-color:#D4D4D4">
                         <td width="20%" >
-                    <p:commandButton id="retour"  styleClass="btn_annul" value="#{bundles.messages['cancel']}" 
-                                     ajax="false" action="/profile/listUsers" immediate="true">
-                    </p:commandButton>
-                    </td>
-                    <td width="60%" >
-                    </td>
-                    <td  width="20%" height="20px">
-                    <p:commandButton id="val" action="#{userManagementController.saveUser()}" ajax="false" styleClass="btn_val" 
-                                     value="#{bundles.messages['save']}"/>
-                    </td>
+                            <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler"
+                                             actionListener="#{userManagement.endConversation()}"
+                                             ajax="true" immediate="true">
+                            </p:commandButton>
+                        </td>
+                        <td width="60%" >
+                        </td>
+                        <td  width="20%" height="20px">
+                            <p:commandButton id="val" action="#{userManagement.createUser()}" ajax="false" styleClass="btn_val" 
+                                             value="Valider"/>
+                        </td>
                     </tr>  
                 </table>
             </h:form>
         </p:panel>
-        <p:dialog widgetVar="newRoleType" modal="true" header="#{bundles.messages['role.add']}" >
+        <p:dialog widgetVar="newRoleType" modal="true" header="Ajouter rôle" >
             <h:form>
                 <h:panelGrid columns="3">
-                    <h:outputText value="#{bundles.messages['role.roleType']}"/>
-                    <p:selectOneMenu id="roleType" converter="roleTypeConverter" value="#{userManagementController.roleType}"
-                                     required="true" requiredMessage="#{bundles.messages['required']}">
+                    <h:outputText value="Type du rôle :"/>
+                    <p:selectOneMenu id="roleType" value="#{userManagement.roleType}"
+                                     required="true" requiredMessage="Valeur requise">
                         <f:selectItems value="#{lstRoleTypes}" var="roleType" itemLabel="#{roleType.name}"/>
                     </p:selectOneMenu>
                     <p:message for="roleType"/>
-                    <h:outputText value="#{bundles.messages['group.name']}"/>
-                    <p:selectOneMenu id="group" converter="groupConverter" value="#{userManagementController.roleGroup}"
-                                     required="true" requiredMessage="#{bundles.messages['required']}">
+                    <h:outputText value="Nom du groupe :"/>
+                    <p:selectOneMenu id="group" value="#{userManagement.roleGroup}"
+                                     required="true" requiredMessage="Valeur requise">
                         <f:selectItems value="#{lstGroups}" var="group" itemLabel="#{group.name}"/>
                     </p:selectOneMenu>
                     <p:message for="group"/>
                     <p:spacer/>
-                    <p:commandButton value="#{bundles.messages['validate']}" ajax="true" action="#{userManagementController.saveRole()}"
+                    <p:commandButton value="Valider" ajax="true" action="#{userManagement.saveRole()}"
                                      oncomplete="newRoleType.hide();"/>
-                    <p:commandButton value="#{bundles.messages['cancel']}" ajax="true"
+                    <p:commandButton value="Annuler" ajax="true"
                                      oncomplete="newRoleType.hide();"/>
                 </h:panelGrid>
             </h:form>
         </p:dialog>
     </ui:define>
+
 </ui:composition>

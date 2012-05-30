@@ -1,0 +1,80 @@
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.2"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.2
+                                                http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.2.xsd">
+    <url-mapping id="login"> 
+        <pattern value="/login" /> 
+        <view-id value="/login2.jsf" />
+    </url-mapping>
+    
+    <url-mapping id="logout">
+        <pattern value="/logout" /> 
+        <view-id value="/login2.jsf" />
+        <action>#{identity.logout}</action>
+    </url-mapping>
+    
+    <url-mapping id="Home"> 
+        <pattern value="/Home" /> 
+        <view-id value="/backoffice/home.jsf" />
+    </url-mapping> 
+    
+    <url-mapping id="ListGroups"> 
+        <pattern value="/backoffice/Groups/List" /> 
+        <view-id value="/backoffice/listGroups.jsf" />
+    </url-mapping> 
+    <url-mapping id="Userbackoffice"> 
+        <pattern value="/backoffice/User" /> 
+        <view-id value="/backoffice/mybackoffice.jsf" />
+    </url-mapping>
+    <url-mapping id="ChangePassword"> 
+        <pattern value="/backoffice/users/ChangePassword" /> 
+        <view-id value="/backoffice/changePassword.jsf" />
+    </url-mapping>
+    <url-mapping id="CreateGroup"> 
+        <pattern value="/backoffice/Groups/Create" /> 
+        <view-id value="/backoffice/createGroup.jsf" />
+    </url-mapping> 
+    <url-mapping id="ListRoleTypes"> 
+        <pattern value="/backoffice/RoleTypes/List" /> 
+        <view-id value="/backoffice/listRoleTypes.jsf" />
+    </url-mapping> 
+    <url-mapping id="CreateRoleType"> 
+        <pattern value="/backoffice/RoleTypes/Create" /> 
+        <view-id value="/backoffice/createRoleType.jsf" />
+    </url-mapping> 
+    <url-mapping id="CreateUser"> 
+        <pattern value="/backoffice/users/Create" /> 
+        <view-id value="/backoffice/createUser.jsf" />
+    </url-mapping> 
+    <url-mapping id="Listusers"> 
+        <pattern value="/backoffice/users/List" /> 
+        <view-id value="/backoffice/listusers.jsf" />
+    </url-mapping> 
+
+   <!-- Begin UrlMappings 
+      // These are examples of URL mappings, and should be customized for your application.
+
+      <url-mapping id="home"> 
+          <pattern value="/" /> 
+          <view-id value="/faces/index.jsf" />
+      </url-mapping> 
+      
+      <url-mapping id="store"> 
+          <pattern value="/store/" /> 
+          <view-id value="/faces/shop/store.jsf" />
+      </url-mapping> 
+      
+      <url-mapping id="viewCategory">
+          <pattern value="/store/#{ cat : bean.category }/" />
+          <view-id value="/faces/shop/store.jsf" />
+      </url-mapping>
+      
+      <url-mapping id="viewItem">
+          <pattern value="/store/#{ cat : bean.category }/#{ iid : bean.itemId }/" />
+          <view-id value="/faces/shop/item.jsf" /> 
+          <action>#{bean.loadItem}</action>
+      </url-mapping>
+   
+   -->
+
+</pretty-config>

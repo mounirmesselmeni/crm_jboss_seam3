@@ -4,6 +4,7 @@
  */
 package com.insat.gl5.crm_pfa.service.security;
 
+import com.insat.gl5.crm_pfa.model.BackendUser;
 import com.insat.gl5.crm_pfa.model.Contact;
 import com.insat.gl5.crm_pfa.model.security.IdentityObject;
 import com.insat.gl5.crm_pfa.model.security.IdentityRoleName;
@@ -84,6 +85,30 @@ public class UserProfileService implements Serializable {
                 }
             }
             return contact;
+        } catch (IdentityException ex) {
+            this.log.error("", ex);
+            throw ex;
+        }
+    }
+    public BackendUser saveNewUser(BackendUser backendUser, String password, Collection<Role> roles) throws FeatureNotSupportedException, IdentityException {
+        if (this.ident.getUser() != null) {
+            this.log.info("Save a new user '" + backendUser.getLogin() + "'. Done by " + ident.getUser().getId());
+        }
+        User user = null;
+        try {
+            user = this.identitySession.getPersistenceManager().createUser(backendUser.getLogin());
+            this.identitySession.getAttributesManager().updatePassword(user, password);
+            this.em.persist(backendUser);
+            this.identitySession.getAttributesManager().addAttribute(user.getId(), INFORMATION_USER, backendUser.getId().toString());
+            for (Role role : roles) {
+                try {
+                    identitySession.getRoleManager().createRole(role.getRoleType(), user, role.getGroup());
+                } catch (FeatureNotSupportedException ex) {
+                    this.log.error("FeatureNotSupportedException :", ex);
+                    throw ex;
+                }
+            }
+            return backendUser;
         } catch (IdentityException ex) {
             this.log.error("", ex);
             throw ex;

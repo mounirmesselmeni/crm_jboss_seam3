@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:s="http://jboss.org/seam/faces"
                 xmlns:p="http://primefaces.org/ui"
-                template="./../../../WEB-INF/template/generalTemplate.xhtml">
+                template="./../../../WEB-INF/template/generalTemplate2.xhtml">
 
     <ui:define name="scripts">
         
@@ -41,7 +41,7 @@
                     </p:column>
                 </p:dataTable>
             </h:form>
-            <p:dialog modal="false" id="newTvaDlg" header="Nouvelle catégorie" widgetVar="newTva" width="400" height="150">
+            <p:dialog modal="true" id="newTvaDlg" header="Nouvelle catégorie" widgetVar="newTva" width="400" height="150">
                 <h:form>
                     <h:panelGrid columns="3" style="width: 100%">
                         <h:outputText value="Taux (%) :" styleClass="titleLib"/>
@@ -70,7 +70,7 @@
                     </table>
                 </h:form>
             </p:dialog> 
-            <p:dialog modal="false" id="editTvaId" header="Modifier TVA" widgetVar="editTva" width="400" height="150">
+            <p:dialog modal="true" id="editTvaId" header="Modifier TVA" widgetVar="editTva" width="400" height="150">
                 <h:form>
                     <h:panelGrid columns="3" style="width: 100%">
                         <h:outputText value="Taux (%):" styleClass="titleLib"/>
