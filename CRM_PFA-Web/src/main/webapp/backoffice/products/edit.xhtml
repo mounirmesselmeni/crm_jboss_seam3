@@ -8,7 +8,7 @@
                 template="./../../WEB-INF/template/generalTemplate.xhtml">
 
     <ui:define name="body">
-        <p:panel header="Ajouter produit">
+        <p:panel header="Modifier produit">
             <p:messages autoUpdate="true"/>
             <h:form id="productForm" enctype="multipart/form-data">
 
@@ -18,20 +18,20 @@
                 <table width="100%" border="0">
                     <tr >
                         <td width="20%" height="20px">
-                            <p:commandButton   styleClass="btn_annul" value="Annuler" ajax="false" 
-                                               actionListener="#{fileUploadController.resetFile()}" 
-                                               action="list"
-                                               immediate="true" />
-                        </td>
-                        <td width="60%" >
-                        </td>
-                        <td  width="20%" height="20px">
-                            <p:commandButton  
-                                ajax="false"  value="Ajouter"
-                                styleClass="btn_val" 
-                                action="#{productController.createProduct()}"
-                                />
-                        </td>
+                    <p:commandButton   styleClass="btn_annul" value="Annuler" ajax="false" 
+                                       actionListener="#{fileUploadController.resetFile()}" 
+                                               action="#{contactController.cancel('list?faces-redirect=true')}"
+                                       immediate="true" />
+                    </td>
+                    <td width="60%" >
+                    </td>
+                    <td  width="20%" height="20px">
+                    <p:commandButton  
+                        ajax="false"  value="Ajouter"
+                        styleClass="btn_val" 
+                        action="#{productController.editProduct()}"
+                        />
+                    </td>
                     </tr>  
                 </table>				
             </h:form>

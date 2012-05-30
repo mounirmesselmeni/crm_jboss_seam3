@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:s="http://jboss.org/seam/faces"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../WEB-INF/template/generalTemplate.xhtml">
+
+    <ui:define name="body">
+        <p:panel header="Liste des produits">
+            <p:messages autoUpdate="true"/>
+            <h:form id="productForm">
+                <p:commandLink action="create?faces-redirect=true">
+                    <h:outputText value="Nouveau"/>
+                    <h:graphicImage library="images" name="constellation/icons/add.png" width="16" height="16"/>
+                </p:commandLink>
+                <p:dataTable value="#{lstProducts}" var="product" paginator="true"
+                             paginatorPosition="bottom">
+                    <p:column headerText="Image">
+                        <p:graphicImage alt="#{product.name}" value="/products/#{product.image}"
+                                        width="50" height="50"/>
+                    </p:column>
+                    <p:column headerText="Nom">
+                        <h:outputText value="#{product.name}"/>
+                    </p:column>
+                    <p:column headerText="Référence">
+                        <h:outputText value="#{product.reference}"/>
+                    </p:column>
+                    <p:column headerText="Prix">
+                        <h:outputText value="#{product.price}"/>
+                    </p:column>
+                    <p:column headerText="Quantité">
+                        <h:outputText value="#{product.quantity}"/>
+                    </p:column>
+                    <p:column headerText="Description">
+                        <h:outputText value="#{product.description}"/>
+                    </p:column>
+                    <p:column headerText="Actions" style="text-align:center;width: 5%">  
+                        <p:commandLink  title="Modifier" action="edit?faces-redirect=true" actionListener="#{productController.beginConversation()}">
+                            <f:setPropertyActionListener value="#{product}" target="#{productController.product}"/>
+                            <h:graphicImage library="images" name="constellation/icons/fugue/pencil.png" width="16" height="16"/>
+                        </p:commandLink>  
+                        <p:spacer width="5"/>
+                        <p:commandLink  title="Supprimer" actionListener="#{productController.beginConversation()}"
+                                        oncomplete="suppConfirm.show();" update=":suppDlg">
+                            <f:setPropertyActionListener value="#{product}" target="#{productController.product}"/>
+                            <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
+                        </p:commandLink>
+                        <p:spacer width="5"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <p:confirmDialog id="suppDlg" widgetVar="suppConfirm" header="Confirmation" 
+                             message="Etes vous sûre de vouloir supprimer le produit #{productController.product.name} ?">
+                <h:form>
+                    <p:commandButton value="Non" oncomplete="suppConfirm.hide();" immediate="true"/>
+                    <p:commandButton value="Oui" action="#{productController.deleteProduct()}"/>
+                </h:form>
+            </p:confirmDialog>
+            <div style="clear:both;" />
+        </p:panel>
+    </ui:define>
+</ui:composition>

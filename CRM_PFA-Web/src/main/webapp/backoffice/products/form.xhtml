@@ -8,31 +8,45 @@
 
     <p:accordionPanel  activeIndex="0" >
         <p:tab title="Informations générales">
-            <h:panelGrid columns="3">
-                <h:outputText value="Nom :"/>
-                <p:inputText id="productName" value="#{productController.product.name}" 
-                             required="true" requiredMessage="Valeur requise"/>
-                <p:message for="productName"/>
-                <h:outputText value="Référence :"/>
-                <p:inputText id="productReference" value="#{productController.product.reference}" 
-                             required="true" requiredMessage="Valeur requise"/>
-                <p:message for="productReference"/>
-                <h:outputText value="Catégorie :"/>
-                <p:selectOneMenu id="productCategory" value="#{productController.product.category}" 
-                                 required="true" requiredMessage="Valeur requise">
-                    <f:selectItems value="#{lstCategories}" var="category" itemLabel="#{category.name}" itemValue="#{category}"/>
-                </p:selectOneMenu>
-                <p:message for="productCategory"/>
-                <h:outputText value="Description :"/>
-                <p:inputTextarea id="productDescription" value="#{productController.product.description}" 
-                                 required="true" requiredMessage="Valeur requise"/>
-                <p:message for="productDescription"/>
-            </h:panelGrid>
-        </p:tab>
-        <p:tab title="Image produit">
-            <h:panelGrid columns="3">
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                        <h:panelGrid columns="3">
+                            <h:outputText value="Nom :"/>
+                            <p:inputText id="productName" value="#{productController.product.name}" 
+                                         required="true" requiredMessage="Valeur requise"/>
+                            <p:message for="productName"/>
+                            <h:outputText value="Référence :"/>
+                            <p:inputText id="productReference" value="#{productController.product.reference}" 
+                                         required="true" requiredMessage="Valeur requise"/>
+                            <p:message for="productReference"/>
+                            <h:outputText value="Catégorie :"/>
+                            <p:selectOneMenu id="productCategory" value="#{productController.product.category}" 
+                                             required="true" requiredMessage="Valeur requise">
+                                <f:selectItems value="#{lstCategories}" var="category" itemLabel="#{category.name}" itemValue="#{category}"/>
+                            </p:selectOneMenu>
+                            <p:message for="productCategory"/>
+                            <h:outputText value="Description :"/>
+                            <p:inputTextarea id="productDescription" value="#{productController.product.description}" />
+                            <p:message for="productDescription"/>
+                            <h:outputText value="Image :"/>
+                            <p:fileUpload mode="advanced" 
+                                          invalidFileMessage="Fichier non supporté"
+                                          auto="true" 
+                                          update="productImage"
+                                          sizeLimit="1000000"   
+                                          allowTypes="/(\.|\/)(gif|jpeg|png|jpg)$/"
+                                          fileUploadListener="#{fileUploadController.handleFileUpload}"/>
+                        </h:panelGrid>
+                    </td>
+                    <td style="width: 40%" align="right" valign="top">
 
-            </h:panelGrid>
+                        <p:outputPanel id="productImage">
+                            <p:graphicImage value="#{fileUploadController.image}" width="100" height="100"/>
+                        </p:outputPanel>
+                    </td>
+                </tr>
+            </table>
         </p:tab>
         <p:tab title="Stock et prix">
             <h:panelGrid columns="3">

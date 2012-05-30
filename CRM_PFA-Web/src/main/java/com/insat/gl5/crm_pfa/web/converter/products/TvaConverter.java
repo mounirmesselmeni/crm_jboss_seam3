@@ -29,7 +29,7 @@ public class TvaConverter implements Converter {
         }
         Float floatValue = Float.valueOf(string);
         for (TVA tva : lstTva) {
-            if (tva.getTaux() == floatValue) {
+            if (Float.compare(tva.getTaux(), floatValue) == 0) {
                 return tva;
             }
         }
