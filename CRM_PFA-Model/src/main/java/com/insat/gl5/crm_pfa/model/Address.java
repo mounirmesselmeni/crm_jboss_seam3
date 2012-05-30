@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * 
@@ -68,6 +69,6 @@ public class Address extends BaseEntity {
 
     @Override
     public String toString() {
-        return type + ": " + street + " -" + postalCode + "-" + city + ", " + gouvernment;
+        return type + " : " + street + " - " + postalCode + " - " + city + ", " + gouvernment;
     }
 }

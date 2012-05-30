@@ -29,6 +29,7 @@ public class Contact extends BaseEntity {
     private String login;
     private String firstName;
     private String lastName;
+    private String imageURL;
     @OneToMany(cascade= CascadeType.ALL)
     private List<EmailAdress> lstEmails = new LinkedList<EmailAdress>();
     @OneToMany(cascade= CascadeType.ALL)
@@ -142,4 +143,24 @@ public class Contact extends BaseEntity {
     public void setLogin(String login) {
         this.login = login;
     }
+
+    /**
+     * @return the imageURL
+     */
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    /**
+     * @param imageURL the imageURL to set
+     */
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    @Override
+    public String toString() {
+        return salutation + ". " + firstName + " " + lastName;
+    }
+    
 }

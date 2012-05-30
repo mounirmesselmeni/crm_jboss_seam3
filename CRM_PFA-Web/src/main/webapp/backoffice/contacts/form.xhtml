@@ -4,7 +4,6 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:s="http://jboss.org/seam/faces"
-                xmlns:o="http://java.sun.com/jsf/composite/crm"
                 xmlns:p="http://primefaces.org/ui">
 
     <p:accordionPanel  activeIndex="0" >
@@ -12,73 +11,81 @@
             <table width="100%">
                 <tr>
                     <td>
-                <h:panelGrid id="contactPanel"  columns="3" cellpadding="4">
+                        <h:panelGrid id="contactPanel"  columns="3" cellpadding="4">
 
-                    <h:outputLabel value="Société (Compte)"/>
+                            <h:outputLabel value="Société (Compte)"/>
+                            <p:selectOneMenu  required="true" converter="accountConverter"  value="#{contactController.contact.account}">
+                                <f:selectItems value="#{lstAccounts}" var="_s" itemValue="#{_s}" itemLabel="#{_s.name}" />
+                            </p:selectOneMenu>	
+                            <p:spacer/>
+                            <ui:remove>
 
-                    <p:autoComplete id="account" value="#{contactController.contact.account}" converter="accountConverter" 
-                                    forceSelection="true"  size="35"  style="float:left">
-                        <p:ajax event="itemSelect" />
-                    </p:autoComplete>
+                                <p:autoComplete id="account" value="#{contactController.contact.account}" converter="accountConverter"  
+                                                forceSelection="true"  size="35"  style="float:left"
+                                                completeMethod="#{contactController.complete}"
+                                                >
+                                    <p:ajax event="itemSelect" />
+                                    <p:commandLink value="Effacer" update="account"  style="float:left;margin-left:5px">
+                                        <ui:remove>
+                                            <f:setPropertyActionListener target="" value="#{null}" />
+                                        </ui:remove>
+                                    </p:commandLink>
+                                </p:autoComplete>
+                            </ui:remove>
 
-                    <p:commandLink value="Effacer" update="@form"  style="float:left;margin-left:5px">
-                        <ui:remove>
-                            <f:setPropertyActionListener target="" value="#{null}" />
-                        </ui:remove>
-                    </p:commandLink>
 
-                    <h:outputLabel value="Salutation"/>
-                    <p:selectOneRadio  required="false" >
-                        <f:selectItems value="#{enumValues.salutations}" var="_s" itemValue="#{_s}" itemLabel="#{_s.shortName}" />
-                    </p:selectOneRadio>	
-                    <p:spacer/> 
-                    <h:outputLabel value="Nom"/>
-                    <p:inputText id="inputName" value="#{contactController.contact.firstName}" required="true" size="35" requiredMessage="Required" />				
-                    <p:message for="inputName"/> 
+                            <h:outputLabel value="Salutation"/>
+                            <p:selectOneRadio  required="false"  value="#{contactController.contact.salutation}">
+                                <f:selectItems value="#{enumValues.salutations}" var="_s" itemValue="#{_s}" itemLabel="#{_s.shortName}" />
+                            </p:selectOneRadio>	
+                            <p:spacer/> 
+                            <h:outputLabel value="Nom"/>
+                            <p:inputText id="inputName" value="#{contactController.contact.firstName}" required="true" size="35" requiredMessage="Valeur requise" />				
+                            <p:message for="inputName"/> 
 
-                    <h:outputLabel value="Prénom"/>
-                    <p:inputText id="inputLastName"  value="#{contactController.contact.lastName}" required="true" size="35" requiredMessage="Required" />				
-                    <p:message for="inputLastName"/> 
+                            <h:outputLabel value="Prénom"/>
+                            <p:inputText id="inputLastName"  value="#{contactController.contact.lastName}" required="true" size="35" requiredMessage="Valeur requise" />				
+                            <p:message for="inputLastName"/> 
 
-                    <h:outputLabel value="Image" />
-                    <h:panelGrid>
-                        <p:fileUpload mode="advanced" 
-                                      invalidFileMessage="Fichier non supporté"
-                                      auto="true"
-                                      update="panelLogo"  
-                                      sizeLimit="1000000"   
-                                      allowTypes="/(\.|\/)(png)$/"
-                                      fileUploadListener="#{fileUploadController.handleFileUpload}"
-                                      />   
+                            <h:outputLabel value="Image" />
+                            <h:panelGrid>
+                                <p:fileUpload mode="advanced" 
+                                              invalidFileMessage="Fichier non supporté"
+                                              auto="true"
+                                              update="panelLogo"  
+                                              sizeLimit="1000000"   
+                                              allowTypes="/(\.|\/)(png)$/"
+                                              fileUploadListener="#{fileUploadController.handleFileUpload}"
+                                              />   
 
-                    </h:panelGrid>
-                    <p:spacer/>
-                </h:panelGrid>
-                </td>
-                <td valign="top" align="right">
-                <h:panelGrid id="logo" width="100" >
-                    <p:panel style="border-style: dotted" id="panelLogo" >  
-                        <h:graphicImage height="100" width="100" library="images" name="other/defaultLogo.png" rendered="#{fileUploadController.image eq null}"/>  
-                        <p:graphicImage height="100" width="100" value="#{fileUploadController.image}" rendered="#{fileUploadController.image ne null}"/>  
-                        <p:graphicImage height="100" width="100" value="/accounts/#{contactController.contact.fullName}/logo.png" rendered="#{fileUploadController.image eq null}"/>  
-                    </p:panel>
-                </h:panelGrid >
-                </td>
+                            </h:panelGrid>
+                            <p:spacer/>
+                        </h:panelGrid>
+                    </td>
+                    <td valign="top" align="right">
+                        <h:panelGrid id="logo" width="100" >
+                            <p:panel style="border-style: dotted" id="panelLogo" >  
+                                <h:graphicImage height="100" width="100" library="images" name="other/defaultLogo.png" rendered="#{not contactController.editMode and  fileUploadController.image eq null}"/>  
+                                <p:graphicImage height="100" width="100" value="#{accountController.account.logoURL}" rendered="#{contactController.editMode and  fileUploadController.image eq null}"/>  
+                                <p:graphicImage height="100" width="100" value="#{fileUploadController.image}" rendered="#{fileUploadController.image ne null}"/>  
+                            </p:panel>
+                        </h:panelGrid >
+                    </td>
                 </tr>
             </table>
         </p:tab>
-        <p:tab title="Credentials">
+        <p:tab title="Contrôle d'Accés">
             <h:panelGrid columns="3">
-                <h:outputLabel value="Email"/>
-                <p:inputText id="emailAddress" value="#{contactController.contact.emailAddress}" required="false" size="35"/>
+                <h:outputLabel value="Login"/>
+                <p:inputText id="login" value="#{contactController.contact.login}" required="false" size="35"/>
                 <p:spacer/>
                 <h:outputText value="Mot de passe" styleClass="titleLib"/>
                 <p:password id="password" feedback="true" value="#{contactController.password}" 
-                            required="true" requiredMessage="required"/>
+                            required="true" requiredMessage="Mot de passe requis"/>
                 <p:message for="password"/>
                 <h:outputText value="Confirmer le mot de passe" styleClass="titleLib"/>
                 <p:password id="confirmPassword" feedback="true" value="#{contactController.confirmPassword}" 
-                            required="true" requiredMessage="required"
+                            required="true" requiredMessage="Confirmez le mot de passe requis"
                             weakLabel="weak password"
                             goodLabel="good password"
                             strongLabel="strong password"/>
@@ -87,73 +94,154 @@
                 <p:spacer height="30"/>
             </h:panelGrid>
         </p:tab>
-        <p:tab title="Adresses">
-                <h:panelGrid columns="2" style="width: 100%">
-                    <h:panelGrid columns="3">
-                        <h:outputLabel value="Addresse primaire" styleClass="titlePanel"/>
-                        <p:spacer/>
-                        <p:spacer/>
-                        <h:outputLabel value="Type :" />  
-                        <p:selectOneRadio  >
-                            <f:selectItems value="#{enumValues.addressTypes}" var="_a" itemValue="#{_a}" itemLabel="#{_a.displayName}"/>  
+        <p:tab title="Coordonnées">
+            <h:panelGrid columns="2" style="width: 100%">
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="Emails :" />  
+                    <p:outputPanel id="emailsPanel" autoUpdate="true" >
+                        <h:panelGroup>
+                            <ui:repeat var="modelE1" value="#{contactController.lstEmailViewModels}" offset="0" size="0">
+                                <h:panelGrid columns="3">
 
-                        </p:selectOneRadio>
-                        <p:spacer/>
+                                    <p:inputText id="emailE1" value="#{modelE1.email.value}" required="true" requiredMessage="Valeur requise" size="20">
+                                        <p:ajax event="blur"/>
+                                    </p:inputText>
+                                    <p:commandLink  title="Ajouter" actionListener="#{contactController.addEmail()}"  immediate="true">
+                                        <h:graphicImage library="images" name="icons/add.png"  width="16" height="16"/>
+                                    </p:commandLink> 
+                                    <p:message for="emailE1"/>
+                                </h:panelGrid>
+                            </ui:repeat>
+                            <ui:repeat var="modelE2" value="#{contactController.lstEmailViewModels}"  offset="1" >
+                                <h:panelGrid columns="3">
 
-                        <h:outputLabel value="Avenue / Rue :" />  
-                        <p:inputText value="#{contactController.contact.primaryAddress.street}" />
-                        <p:spacer/> 
+                                    <p:inputText id="emailE2"  value="#{modelE2.email.value}" required="true" requiredMessage="Valeur requise"  size="20" >
+                                        <p:ajax event="blur"/>
+                                    </p:inputText>
+                                    <p:commandLink  title="Supprimer" action="#{contactController.removeEmail((modelE2.index))}" immediate="true">
+                                        <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
+                                    </p:commandLink>
+                                    <p:message for="emailE2"/>
+                                </h:panelGrid>
+                            </ui:repeat>
+                        </h:panelGroup>
+                    </p:outputPanel>
+                    <p:spacer/>
+                    <h:outputLabel value="Téléphones :" />  
+                    <p:outputPanel id="telephonesPanel" autoUpdate="true" >
+                        <h:panelGroup>
+                            <ui:repeat var="modelP1" value="#{contactController.lstPhoneNumberViewModels}" offset="0" size="0">
+                                <h:panelGrid columns="4">
+                                    <p:selectOneMenu  value="#{modelP1.phoneNumber.type}" >  
+                                        <f:selectItems   value="#{enumValues.phoneNumberTypes}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
+                                        <p:ajax event="change"/>
+                                    </p:selectOneMenu> 
+                                    <p:inputMask id="number1" mask="99 999 999" value="#{modelP1.phoneNumber.number}"  size="20" required="true" requiredMessage="Valeur requise" >
+                                        <p:ajax event="blur"/>
+                                    </p:inputMask>
+                                    <p:commandLink  title="Ajouter" actionListener="#{contactController.addPhoneNumber()}" immediate="true">
+                                        <h:graphicImage library="images" name="icons/add.png" width="16" height="16"/>
+                                    </p:commandLink> 
+                                    <p:message for="number1"/>
+                                </h:panelGrid>
+                            </ui:repeat>
+                            <ui:repeat var="modelP2" value="#{contactController.lstPhoneNumberViewModels}"  offset="1" >
+                                <h:panelGrid columns="4">
 
-                        <h:outputLabel value="Code postale:" />  
-                        <p:inputText value="#{contactController.contact.primaryAddress.postalCode}" />
-                        <p:spacer/> 
+                                    <p:selectOneMenu  value="#{modelP2.phoneNumber.type}" >  
+                                        <f:selectItems  value="#{enumValues.phoneNumberTypes}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
+                                        <p:ajax event="change"/>
+                                    </p:selectOneMenu> 
+                                    <p:inputMask id="number2" mask="99 999 999" value="#{modelP2.phoneNumber.number}"  size="20" required="true" requiredMessage="Valeur requise" >
+                                        <p:ajax event="blur"/>
+                                    </p:inputMask>
+                                    <p:commandLink  title="Supprimer" action="#{contactController.removePhoneNumber((modelP2.index))}" immediate="true">
+                                        <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
+                                    </p:commandLink>
+                                    <p:message for="number2"/>
+                                </h:panelGrid>
+                            </ui:repeat>
+                        </h:panelGroup>
+                    </p:outputPanel>
+                    <p:spacer/> 
+                </h:panelGrid>
+            </h:panelGrid>
+            <p:spacer height="40"/>
+            <h3>Adresses</h3>
+            <p:spacer height="10"/>
+            <h:panelGrid columns="2" style="width: 100%">
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="Addresse :" />
+                    <p:outputPanel id="adressesPanel" autoUpdate="true" >
+                        <h:panelGroup>
+                            <ui:repeat var="modelA1" value="#{contactController.lstAddressViewModels}" offset="0" size="0">
+                                <h:panelGrid columns="10">
+                                    <p:selectOneMenu  value="#{modelA1.address.type}" >  
+                                        <f:selectItems value="#{enumValues.addressTypes}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>
+                                        <p:ajax event="change"/>
+                                    </p:selectOneMenu> 
+                                    <p:inputText id="streetA1" value="#{modelA1.address.street}" required="true"  requiredMessage="Valeur requise" size="20" >
+                                        <p:ajax event="blur"/>
+                                    </p:inputText>
+                                    <p:watermark for="streetA1" value="-- avenue/rue --" />  
+                                    <p:inputMask id="postalCodeA1" mask="9999" value="#{modelA1.address.postalCode}" size="12">
+                                        <p:ajax event="blur"/>
+                                    </p:inputMask>
+                                    <p:watermark for="postalCodeA1" value="--code postal--" />  
+                                    <p:inputText id="cityA1" value="#{modelA1.address.city}" size="15" >
+                                        <p:ajax event="blur"/>
+                                    </p:inputText>
+                                    <p:watermark for="cityA1" value="-- ville --" />  
+                                    <p:selectOneMenu value="#{modelA1.address.gouvernment}">
+                                        <f:selectItems value="#{enumValues.gouvernments}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
+                                        <p:ajax event="change"/>
+                                    </p:selectOneMenu>
 
-                        <h:outputLabel value="Ville :" />  
-                        <p:inputText value="#{contactController.contact.primaryAddress.city}" />
-                        <p:spacer/> 
+                                    <p:commandLink  title="Ajouter" actionListener="#{contactController.addAddress()}" immediate="true">
+                                        <h:graphicImage library="images" name="icons/add.png" width="16" height="16"/>
+                                    </p:commandLink> 
+                                    <p:message for="streetA1"/>
+                                </h:panelGrid>
+                            </ui:repeat>
+                            <ui:repeat var="modelA2" value="#{contactController.lstAddressViewModels}"  offset="1" >
+                                <h:panelGrid columns="9">
+                                    <p:selectOneMenu  value="#{modelA2.address.type}" >  
+                                        <f:selectItems value="#{enumValues.addressTypes}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>
+                                        <p:ajax event="change"/>
+                                    </p:selectOneMenu> 
+                                    <p:inputText id="streetA2" value="#{modelA2.address.street}" required="true" requiredMessage="Valeur requise"  size="20" >
+                                        <p:ajax event="blur"/>
+                                    </p:inputText>
+                                    <p:watermark for="streetA2" value="-- avenue/rue --" />  
+                                    <p:inputMask id="postalCodeA2" mask="9999" value="#{modelA2.address.postalCode}" size="12">
+                                        <p:ajax event="blur"/>
+                                    </p:inputMask>
+                                    <p:watermark for="postalCodeA2" value="--code postal--" />  
+                                    <p:inputText id="cityA2" value="#{modelA2.address.city}" size="15" >
+                                        <p:ajax event="blur"/>
+                                    </p:inputText>
+                                    <p:watermark for="cityA2" value="-- ville --" />  
+                                    <p:selectOneMenu value="#{modelA2.address.gouvernment}">
+                                        <f:selectItems value="#{enumValues.gouvernments}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
+                                        <p:ajax event="change"/>
+                                    </p:selectOneMenu>
+                                    <p:commandLink  title="Supprimer" action="#{contactController.removeAddress((modelA2.index))}" immediate="true">
+                                        <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
+                                    </p:commandLink>
+                                    <p:message for="streetA2"/>
+                                </h:panelGrid>
+                            </ui:repeat>
+                        </h:panelGroup>
+                    </p:outputPanel>
+                    <p:spacer/>
 
-                        <h:outputLabel value="Gouvernement :" />  
-                        <p:selectOneMenu >
-                            <f:selectItems value="#{enumValues.gouvernments}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
-                        </p:selectOneMenu>
-                        <p:spacer/> 
-                    </h:panelGrid>
-                    <h:panelGrid columns="3">
-                        <h:outputLabel value="Addresse secondaire" styleClass="titlePanel"/>
-                        <p:spacer/>
-                        <p:spacer/>
-                        <h:outputLabel value="Type :" />  
-                        <p:selectOneRadio  >
-                            <f:selectItems value="#{enumValues.addressTypes}" var="_a" itemValue="#{_a}" itemLabel="#{_a.displayName}"/>  
+                </h:panelGrid>
 
-                        </p:selectOneRadio>
-                        <p:spacer/>
-
-                        <h:outputLabel value="Avenue / Rue :" />  
-                        <p:inputText value="#{contactController.contact.secondaryAddress.street}" />
-                        <p:spacer/> 
-
-                        <h:outputLabel value="Code postale:" />  
-                        <p:inputText value="#{contactController.contact.secondaryAddress.postalCode}" />
-                        <p:spacer/> 
-
-                        <h:outputLabel value="Ville :" />  
-                        <p:inputText value="#{contactController.contact.secondaryAddress.city}" />
-                        <p:spacer/> 
-
-                        <h:outputLabel value="Gouvernement :" />  
-                        <p:selectOneMenu  >
-                            <f:selectItems value="#{enumValues.gouvernments}" var="_g" itemValue="#{_g}" itemLabel="#{_g.displayName}"/>  
-                        </p:selectOneMenu>
-                        <p:spacer/> 
-                    </h:panelGrid>
             </h:panelGrid>
         </p:tab>
     </p:accordionPanel>
 
     <ui:remove>
-
-
         <p:outputPanel autoUpdate="true">
             <h:panelGroup>
                 <h4><h:outputText value="Roles"/></h4>

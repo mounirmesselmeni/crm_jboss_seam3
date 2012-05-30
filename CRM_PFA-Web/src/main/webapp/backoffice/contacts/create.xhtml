@@ -5,7 +5,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:s="http://jboss.org/seam/faces"
                 xmlns:p="http://primefaces.org/ui"
-                template="./../../WEB-INF/template/generalTemplate.xhtml">
+                template="./../../WEB-INF/template/generalTemplate2.xhtml">
 
     <ui:define name="body">
         <p:panel header="Ajouter Contact">
@@ -26,9 +26,9 @@
                     </td>
                     <td  width="20%" height="20px">
                     <p:commandButton  
-                        ajax="false"  value="Ajouter"
+                        ajax="false"  value="Sauvegarder"
                         styleClass="btn_val" 
-                        actionListener="#{contactController.saveUser()}"
+                        actionListener="#{contactController.saveContact()}"
                         action="list"
                         />
                     </td>

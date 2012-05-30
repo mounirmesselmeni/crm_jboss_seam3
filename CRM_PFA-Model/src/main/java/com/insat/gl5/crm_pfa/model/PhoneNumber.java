@@ -21,7 +21,7 @@ public class PhoneNumber extends BaseEntity {
     @NotNull
     @Enumerated(EnumType.STRING)
     private PhoneNumberType type;
-    private boolean verified;
+    
 
     public PhoneNumber() {
     }
@@ -47,12 +47,9 @@ public class PhoneNumber extends BaseEntity {
         this.type = type;
     }
 
-    public boolean isVerified() {
-        return verified;
-    }
-
-    public void setVerified(boolean verified) {
-        this.verified = verified;
+    @Override
+    public String toString() {
+        return type + " : " + number;
     }
 
 }

@@ -7,7 +7,7 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="body">
-        <p:panel header="Nouveau compte (Société)">
+        <p:panel header="Edition du compte : #{accountController.account.name}">
             <h:form id="formNew"  enctype="multipart/form-data">
                 <ui:include src="form.xhtml" />	
 
@@ -23,13 +23,14 @@
                         </td>
                         <td  width="20%" height="20px" align="right">
                             <p:commandButton  
-                                ajax="false"  value="Sauvegarder"
-                                styleClass="btn_val" action="#{accountController.saveAccount()}"
+                                ajax="false"  value="Editer" actionListener="#{fileUploadController.resetFile()}"
+                                styleClass="btn_val" action="#{accountController.editAccount()}"
                                 />
                         </td>
                     </tr>  
                 </table>
             </h:form>
+
         </p:panel>
     </ui:define>
 
