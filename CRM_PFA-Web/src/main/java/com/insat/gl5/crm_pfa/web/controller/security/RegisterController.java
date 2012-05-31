@@ -10,6 +10,8 @@ import com.insat.gl5.crm_pfa.service.ContactService;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -53,13 +55,20 @@ public class RegisterController extends ConversationController {
      */
     public String validateAccount() {
         Contact contact = getContactFromActivationCode();
-        if(contact == null){
+        if (contact == null) {
             return null;
         }
         this.userManagement.setRoles(new LinkedList<Role>());
         initClientRole();
         this.userManagement.saveRole();
-        return this.userManagement.createClientAccount(contact);
+        String returnString = this.userManagement.createClientAccount(contact);
+        if (returnString != null) {
+            try {
+                contactService.deleteActivationCode(getActivation());
+            } catch (Exception ex) {
+            }
+        }
+        return returnString;
     }
 
     /**
@@ -115,7 +124,8 @@ public class RegisterController extends ConversationController {
             return null;
         }
     }
-    private ActivationCode getActivation(){
+
+    private ActivationCode getActivation() {
         try {
             ActivationCode ac = contactService.getActivationCode(activationCode);
             return ac;
