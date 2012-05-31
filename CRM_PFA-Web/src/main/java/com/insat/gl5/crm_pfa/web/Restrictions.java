@@ -8,8 +8,8 @@ package com.insat.gl5.crm_pfa.web;
  *
  * @author Mounir Messelmeni <messelmeni.mounir@gmail.com>
  */
-import com.insat.gl5.crm_pfa.service.qualifier.Admin;
-import com.insat.gl5.crm_pfa.service.qualifier.Commercial;
+import com.insat.gl5.crm_pfa.web.qualifier.Admin;
+import com.insat.gl5.crm_pfa.web.qualifier.Commercial;
 import org.jboss.seam.security.Identity;
 import org.jboss.seam.security.annotations.Secures;
 

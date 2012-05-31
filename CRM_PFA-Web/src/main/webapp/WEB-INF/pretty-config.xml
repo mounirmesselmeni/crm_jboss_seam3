@@ -19,8 +19,8 @@
     </url-mapping> 
     
     <url-mapping id="ListGroups"> 
-        <pattern value="/backoffice/Groups/List" /> 
-        <view-id value="/backoffice/listGroups.jsf" />
+        <pattern value="/backoffice/users/groups/List" /> 
+        <view-id value="/backoffice/users/listGroups.jsf" />
     </url-mapping> 
     <url-mapping id="Userbackoffice"> 
         <pattern value="/backoffice/User" /> 
@@ -32,11 +32,11 @@
     </url-mapping>
     <url-mapping id="CreateGroup"> 
         <pattern value="/backoffice/Groups/Create" /> 
-        <view-id value="/backoffice/createGroup.jsf" />
+        <view-id value="/backoffice/users/createGroup.jsf" />
     </url-mapping> 
     <url-mapping id="ListRoleTypes"> 
-        <pattern value="/backoffice/RoleTypes/List" /> 
-        <view-id value="/backoffice/listRoleTypes.jsf" />
+        <pattern value="/backoffice/users/roleTypes/List" /> 
+        <view-id value="/backoffice/users/listRoleTypes.jsf" />
     </url-mapping> 
     <url-mapping id="CreateRoleType"> 
         <pattern value="/backoffice/RoleTypes/Create" /> 
@@ -44,7 +44,7 @@
     </url-mapping> 
     <url-mapping id="CreateUser"> 
         <pattern value="/backoffice/users/Create" /> 
-        <view-id value="/backoffice/createUser.jsf" />
+        <view-id value="/backoffice/users/createUser.jsf" />
     </url-mapping> 
     <url-mapping id="Listusers"> 
         <pattern value="/backoffice/users/List" /> 

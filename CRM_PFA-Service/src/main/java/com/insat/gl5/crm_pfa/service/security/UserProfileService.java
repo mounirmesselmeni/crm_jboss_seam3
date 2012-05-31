@@ -171,6 +171,19 @@ public class UserProfileService implements Serializable {
         }
         return null;
     }
+    public BackendUser loadBackendUser(String userId) {
+        try {
+            Query query = this.em.createQuery("select p from BackendUser p where p.login = ?1");
+            query.setParameter(1, userId);
+            if (!query.getResultList().isEmpty()) {
+                return (BackendUser) query.getSingleResult();
+            }
+
+        } catch (Exception ex) {
+            this.log.error("", ex);
+        }
+        return null;
+    }
 
     public User searchUser(String username) {
         try {

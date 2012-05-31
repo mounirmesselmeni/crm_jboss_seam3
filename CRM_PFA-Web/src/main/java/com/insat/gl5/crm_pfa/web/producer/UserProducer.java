@@ -4,7 +4,9 @@
  */
 package com.insat.gl5.crm_pfa.web.producer;
 
+import com.insat.gl5.crm_pfa.model.BackendUser;
 import com.insat.gl5.crm_pfa.model.Contact;
+import com.insat.gl5.crm_pfa.service.qualifier.CurrentContact;
 import com.insat.gl5.crm_pfa.service.qualifier.CurrentUser;
 import com.insat.gl5.crm_pfa.service.security.UserProfileService;
 import java.util.Collection;
@@ -38,17 +40,31 @@ public class UserProducer {
     private Logger logger;
 
     /**
+     * Current Contact
+     * @return 
+     */
+    @Produces
+    @CurrentContact
+    @Named("currentContact")
+    public Contact getCurrentContact() {
+        if (identity.getUser() == null) {
+            return null;
+        }
+        return profileService.loadProfilUser(identity.getUser().getId());
+    }
+
+    /**
      * Current User
      * @return 
      */
     @Produces
     @CurrentUser
     @Named("currentUser")
-    public Contact getCurrentUser() {
+    public BackendUser getCurrentUser() {
         if (identity.getUser() == null) {
             return null;
         }
-        return profileService.loadProfilUser(identity.getUser().getId());
+        return profileService.loadBackendUser(identity.getUser().getId());
     }
 
     /**

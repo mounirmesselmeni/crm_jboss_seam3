@@ -4,6 +4,7 @@
  */
 package com.insat.gl5.crm_pfa.web;
 
+import com.insat.gl5.crm_pfa.web.qualifier.Admin;
 import org.jboss.seam.faces.security.AccessDeniedView;
 import org.jboss.seam.faces.security.LoginView;
 import org.jboss.seam.faces.view.config.ViewConfig;
@@ -20,8 +21,12 @@ public interface Pages {
     static enum Configuration {
 
         @ViewPattern("/backoffice/*")
-        @LoggedIn
+        @Admin
         BACKOFFICE,
+        
+        @ViewPattern("/frontoffice/*")
+        @LoggedIn
+        FRONTOFFICE,
         
         @ViewPattern("/*")
         @AccessDeniedView("/denied.xhtml")
