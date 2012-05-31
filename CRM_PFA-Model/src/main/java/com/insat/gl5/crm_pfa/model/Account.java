@@ -33,6 +33,9 @@ public class Account extends BaseEntity {
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "fidelityId")
     private Fidelity fidelity;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private BackendUser backendUser;
 
     /**
      * @return the name
@@ -145,4 +148,19 @@ public class Account extends BaseEntity {
     public void setLogoURL(String logoURL) {
         this.logoURL = logoURL;
     }
+
+    /**
+     * @return the backendUser
+     */
+    public BackendUser getBackendUser() {
+        return backendUser;
+    }
+
+    /**
+     * @param backendUser the backendUser to set
+     */
+    public void setBackendUser(BackendUser backendUser) {
+        this.backendUser = backendUser;
+    }
+
 }

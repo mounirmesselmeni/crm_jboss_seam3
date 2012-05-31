@@ -4,7 +4,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                template="./../../WEB-INF/template/generalTemplate.xhtml">
+                template="./../../WEB-INF/template/generalTemplate2.xhtml">
 
     <ui:define name="body">
         <f:metadata>
@@ -14,8 +14,7 @@
         <p:panel id="groupList" header="Liste des groupes">
             <p:messages autoUpdate="true" showSummary="true"/>
             <h:form>
-                <h:commandButton image="/icone/add.png" />
-                <p:commandLink value="Nouveau" ajax="false" style="font-weight: bold" oncomplete="newGroupDialog.show()"/>
+                <p:commandLink value="Nouveau" ajax="true" style="font-weight: bold" oncomplete="newGroupDialog.show()"/>
                 <p:dataTable value="#{lstGroups}" var="group">
                     <p:column headerText="Nom" >
                         <h:outputText value="#{group.name}"/>
@@ -24,21 +23,21 @@
                         <h:outputText value="#{group.groupType}"/>
                     </p:column>
                     <p:column headerText="Actions" style="text-align: center;">
-                        <p:commandButton oncomplete="editGroupDialog.show()" 
-                                         title="Modifier">
-                            <p:graphicImage value="/icone/edit.png"/>   
+                        <p:commandLink oncomplete="editGroupDialog.show()" 
+                                       title="Modifier">
+                            <h:graphicImage library="images" name="constellation/icons/fugue/pencil.png" width="16" height="16"/>
                             <f:setPropertyActionListener value="#{group.name}" 
                                                          target="#{groupController.groupName}" />
                             <f:setPropertyActionListener value="#{group.name}" 
                                                          target="#{groupController.oldName}" />
-                        </p:commandButton>
+                        </p:commandLink>
                         <p:spacer width="10"/>
-                        <p:commandButton oncomplete="confirmation.show()" 
-                                         title="Supprimer">  
+                        <p:commandLink oncomplete="confirmation.show()" 
+                                       title="Supprimer">  
                             <f:setPropertyActionListener value="#{group.name}" 
                                                          target="#{groupController.groupName}" />  
-                            <p:graphicImage value="/icone/remove.png"/>   
-                        </p:commandButton>  
+                            <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>   
+                        </p:commandLink>  
                     </p:column>
                 </p:dataTable>
             </h:form>
@@ -52,11 +51,11 @@
                                  onclick="confirmation.hide()"/>  
             </h:form>
         </p:confirmDialog>
-        <p:dialog widgetVar="editGroupDialog" modal="false">
+        <p:dialog widgetVar="editGroupDialog" modal="true" header="Modifier groupe" width="400">
             <h:form>
                 <p:outputPanel autoUpdate="true">
                     <h:panelGrid columns="3">
-                        <h:outputText value="Nom"/>
+                        <h:outputText value="Nom :"/>
                         <p:inputText id="groupName" value="#{groupController.groupName}" required="true" requiredMessage="Value required"/>
                         <p:message for="groupName"/>
                         <p:spacer />
@@ -66,27 +65,27 @@
                 </p:outputPanel>
                 <table width="100%" border="0">
                     <tr >
+                        <td>
+                            <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler"
+                                             ajax="false" oncomplete="editGroupDialog.hide();" immediate="true">
+                            </p:commandButton>
+                        </td>
                         <td width="20%" >
-                    <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler"
-                                     ajax="false" oncomplete="editGroupDialog.hide();" immediate="true">
-                    </p:commandButton>
-                    </td>
-                    <td width="60%" >
-                    </td>
-                    <td  width="20%" height="20px">
-                    <p:commandButton id="val" action="#{groupController.updateGroup()}" ajax="false" 
-                                     styleClass="btn_val" oncomplete="editGroupDialog.hide();"
-                                     value="Mettre à jour"/>
-                    </td>
+                        </td>
+                        <td>
+                            <p:commandButton id="val" action="#{groupController.updateGroup()}" ajax="false" 
+                                             styleClass="btn_val" oncomplete="editGroupDialog.hide();"
+                                             value="Mettre à jour"/>
+                        </td>
                     </tr>  
                 </table>
             </h:form>
         </p:dialog>
-        <p:dialog widgetVar="newGroupDialog" modal="false">
+        <p:dialog widgetVar="newGroupDialog" modal="true" header="Ajouter groupe" width="400">
             <h:form>
                 <p:outputPanel autoUpdate="true">
                     <h:panelGrid columns="3">
-                        <h:outputText value="Nom"/>
+                        <h:outputText value="Nom :"/>
                         <p:inputText id="groupName" value="#{groupController.groupName}" required="true" requiredMessage="Value required"/>
                         <p:message for="groupName"/>
                         <p:spacer />
@@ -96,18 +95,18 @@
                 </p:outputPanel>
                 <table width="100%" border="0">
                     <tr >
+                        <td>
+                            <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler"
+                                             ajax="false" oncomplete="newGroupDialog.hide();" immediate="true">
+                            </p:commandButton>
+                        </td>
                         <td width="20%" >
-                    <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler"
-                                     ajax="false" oncomplete="newGroupDialog.hide();" immediate="true">
-                    </p:commandButton>
-                    </td>
-                    <td width="60%" >
-                    </td>
-                    <td  width="20%" height="20px">
-                    <p:commandButton id="val" action="#{groupController.saveGroup()}" ajax="false" 
-                                     styleClass="btn_val" oncomplete="newGroupDialog.hide();"
-                                     value="Sauvegarder"/>
-                    </td>
+                        </td>
+                        <td>
+                            <p:commandButton id="val" action="#{groupController.saveGroup()}" ajax="false" 
+                                             styleClass="btn_val" oncomplete="newGroupDialog.hide();"
+                                             value="Sauvegarder"/>
+                        </td>
                     </tr>  
                 </table>
             </h:form>

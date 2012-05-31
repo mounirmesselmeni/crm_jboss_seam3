@@ -18,7 +18,7 @@ import org.picketlink.idm.impl.api.model.SimpleGroup;
  *
  * @author Mounir Messelmeni, contact: messelmeni.mounir@gmail.com
  */
-@FacesConverter(value = "groupConverter")
+@FacesConverter(forClass = Group.class)
 @RequestScoped
 public class GroupConverter implements Converter {
 

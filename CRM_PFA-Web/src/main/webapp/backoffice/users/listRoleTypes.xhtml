@@ -4,7 +4,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                template="./WEB-INF/template/generalTemplate.xhtml">
+                template="./../../WEB-INF/template/generalTemplate2.xhtml">
 
     <ui:define name="body">
         <f:metadata>
@@ -12,10 +12,8 @@
                      listener="#{roleTypeController.beginConversation()}" />
         </f:metadata>
         <p:panel header="Liste des rôles">
-            
             <p:messages autoUpdate="true" showSummary="true"/>
             <h:form>
-                <h:commandButton image="/icone/add.png" />
                 <p:commandLink value="Nouveau rôle" oncomplete="newRoleDialog.show()" style="font-weight: bold">
                 </p:commandLink>
                 <p:dataTable value="#{lstRoleTypes}" var="roleType">
@@ -23,21 +21,21 @@
                         <h:outputText value="#{roleType.name}"/>
                     </p:column>
                     <p:column headerText="Actions" style="text-align: center;">
-                        <p:commandButton oncomplete="editRoleType.show()" 
+                        <p:commandLink oncomplete="editRoleType.show()" 
                                          title="Modifier">
-                            <p:graphicImage value="/icone/edit.png"/>   
+                            <h:graphicImage library="images" name="constellation/icons/fugue/pencil.png" width="16" height="16"/>   
                             <f:setPropertyActionListener value="#{roleType.name}" 
                                                          target="#{roleTypeController.roleType}" />
                             <f:setPropertyActionListener value="#{roleType.name}" 
                                                          target="#{roleTypeController.oldName}" />
-                        </p:commandButton>
+                        </p:commandLink>
                         <p:spacer width="10"/>
-                        <p:commandButton oncomplete="confirmation.show()" 
-                                         title="#{bundles.messages['delete']}">
-                            <p:graphicImage value="/icone/remove.png"/>   
+                        <p:commandLink oncomplete="confirmation.show()" 
+                                         title="Supprimer">
+                            <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>     
                             <f:setPropertyActionListener value="#{roleType.name}" 
                                                          target="#{roleTypeController.roleType}" />  
-                        </p:commandButton>  
+                        </p:commandLink>  
                     </p:column>
                 </p:dataTable>
             </h:form>
@@ -51,11 +49,11 @@
                                  onclick="confirmation.hide()"/>  
             </h:form>
         </p:confirmDialog>
-        <p:dialog widgetVar="editRoleType" modal="true">
+        <p:dialog widgetVar="editRoleType" modal="true" header="Modifier rôle" width="370">
             <h:form>
                 <p:outputPanel autoUpdate="true">
-                    <h:panelGrid columns="3">
-                        <h:outputText value="Nom"/>
+                    <h:panelGrid columns="3" style="width: 100%">
+                        <h:outputText value="Nom :"/>
                         <p:inputText id="roleType" value="#{roleTypeController.roleType}" 
                                      required="true" requiredMessage="required"/>
                         <p:message for="roleType"/>
@@ -66,27 +64,27 @@
                 </p:outputPanel>
                 <table width="100%" border="0">
                     <tr >
+                        <td>
+                            <p:commandButton id="retour"  value="Annuler" 
+                                             ajax="false" oncomplete="editRoleType.hide();" immediate="true">
+                            </p:commandButton>
+                        </td>
                         <td width="20%" >
-                    <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler" 
-                                     ajax="false" oncomplete="editRoleType.hide();" immediate="true">
-                    </p:commandButton>
-                    </td>
-                    <td width="60%" >
-                    </td>
-                    <td  width="20%" height="20px">
-                    <p:commandButton id="val" action="#{roleTypeController.updateRoleType()}" ajax="false" 
-                                     styleClass="btn_val" oncomplete="editRoleType.hide();"
-                                     value="Mettre à jour"/>
-                    </td>
+                        </td>
+                        <td>
+                            <p:commandButton id="val" action="#{roleTypeController.updateRoleType()}" ajax="false" 
+                                              oncomplete="editRoleType.hide();"
+                                             value="Mettre à jour"/>
+                        </td>
                     </tr>  
                 </table>
             </h:form>
         </p:dialog>
-              <p:dialog widgetVar="newRoleDialog" modal="true">
+        <p:dialog widgetVar="newRoleDialog" modal="true" header="Nouveau rôle">
             <h:form>
                 <p:outputPanel autoUpdate="true">
                     <h:panelGrid columns="3">
-                        <h:outputText value="Nom"/>
+                        <h:outputText value="Nom :"/>
                         <p:inputText id="roleType" value="#{roleTypeController.roleType}" 
                                      required="true" requiredMessage="required"/>
                         <p:message for="roleType"/>
@@ -97,18 +95,18 @@
                 </p:outputPanel>
                 <table width="100%" border="0">
                     <tr >
+                        <td>
+                            <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler" 
+                                             ajax="false" oncomplete="newRoleDialog.hide();" immediate="true">
+                            </p:commandButton>
+                        </td>
                         <td width="20%" >
-                    <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler" 
-                                     ajax="false" oncomplete="newRoleDialog.hide();" immediate="true">
-                    </p:commandButton>
-                    </td>
-                    <td width="60%" >
-                    </td>
-                    <td  width="20%" height="20px">
-                    <p:commandButton id="val" action="#{roleTypeController.save()}" ajax="false" 
-                                     styleClass="btn_val" oncomplete="newRoleDialog.hide();"
-                                     value="Sauvegarder"/>
-                    </td>
+                        </td>
+                        <td>
+                            <p:commandButton id="val" action="#{roleTypeController.save()}" ajax="false" 
+                                             styleClass="btn_val" oncomplete="newRoleDialog.hide();"
+                                             value="Sauvegarder"/>
+                        </td>
                     </tr>  
                 </table>
             </h:form>

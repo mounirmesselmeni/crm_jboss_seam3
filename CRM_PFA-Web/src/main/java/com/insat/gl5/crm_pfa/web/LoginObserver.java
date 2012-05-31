@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import org.jboss.seam.international.status.Messages;
+import org.jboss.seam.security.Identity;
 import org.jboss.seam.security.events.LoginFailedEvent;
 import org.jboss.solder.logging.Logger;
 
@@ -23,6 +24,9 @@ public class LoginObserver {
     private Logger log;
     @Inject
     private Messages messages;
+    @Inject
+    private Identity identity;
+
     /**
      * Handling login success event
      * @param event 
@@ -33,13 +37,19 @@ public class LoginObserver {
             FacesContext context = FacesContext.getCurrentInstance();
             HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
             //Redirect to the home page
-            context.getExternalContext().redirect(request.getContextPath() + "/home.jsf");
+            if (identity.hasRole("admin", "crm", "GROUP")
+                    || identity.hasRole("commercial", "crm", "GROUP")) {
+                context.getExternalContext().redirect(request.getContextPath() + "/home.jsf");
+            }else if(identity.hasRole("client", "crm", "GROUP")){
+                context.getExternalContext().redirect(request.getContextPath() + "/frontoffice/index.jsf");
+            }
             //Sending welcome message
             messages.info("Bienvenue");
         } catch (IOException ex) {
             log.error(ex.getMessage());
         }
     }
+
     /**
      * Handling Login failed event
      * @param event
