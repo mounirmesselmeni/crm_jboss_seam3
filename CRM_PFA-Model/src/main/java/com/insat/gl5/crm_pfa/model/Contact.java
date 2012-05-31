@@ -4,7 +4,6 @@ import com.insat.gl5.crm_pfa.enumeration.Salutation;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -21,20 +20,14 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Mu7ammed 3li -- mohamed.ali.affes@gmail.com --
  */
 @Entity
-public class Contact extends BaseEntity {
+public class Contact extends CrmUser {
 
-    @NotNull
-    @NotEmpty
-    @Column(unique=true)
-    private String login;
     private String firstName;
     private String lastName;
     private String imageURL;
-    @OneToMany(cascade= CascadeType.ALL)
-    private List<EmailAdress> lstEmails = new LinkedList<EmailAdress>();
-    @OneToMany(cascade= CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<PhoneNumber> lstPhoneNumbers = new LinkedList<PhoneNumber>();
-    @OneToMany(cascade= CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Address> lstAddresses = new LinkedList<Address>();
     @Enumerated(EnumType.STRING)
     private Salutation salutation;
@@ -89,20 +82,6 @@ public class Contact extends BaseEntity {
     }
 
     /**
-     * @return the lstEmails
-     */
-    public List<EmailAdress> getLstEmails() {
-        return lstEmails;
-    }
-
-    /**
-     * @param lstEmails the lstEmails to set
-     */
-    public void setLstEmails(List<EmailAdress> lstEmails) {
-        this.lstEmails = lstEmails;
-    }
-
-    /**
      * @return the lstPhoneNumbers
      */
     public List<PhoneNumber> getLstPhoneNumbers() {
@@ -131,20 +110,6 @@ public class Contact extends BaseEntity {
     }
 
     /**
-     * @return the login
-     */
-    public String getLogin() {
-        return login;
-    }
-
-    /**
-     * @param login the login to set
-     */
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    /**
      * @return the imageURL
      */
     public String getImageURL() {
@@ -162,5 +127,4 @@ public class Contact extends BaseEntity {
     public String toString() {
         return salutation + ". " + firstName + " " + lastName;
     }
-    
 }

@@ -4,16 +4,18 @@
  */
 package com.insat.gl5.crm_pfa.web.controller.security;
 
+import com.insat.gl5.crm_pfa.model.ActivationCode;
 import com.insat.gl5.crm_pfa.model.Contact;
+import com.insat.gl5.crm_pfa.service.ContactService;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 import org.jboss.seam.international.status.Messages;
 import org.picketlink.idm.api.Group;
 import org.picketlink.idm.api.Role;
@@ -37,12 +39,14 @@ public class RegisterController extends ConversationController {
     private List<RoleType> lstRoleTypes;
     @Inject
     private List<Group> lstGroups;
+    @Inject
+    private ContactService contactService;
 
     /**
      * Verifier le code d'activation
      */
     public void activate() {
-        activationOk = activationCode.equals("2222");
+        activationOk = (getActivation() != null);
     }
 
     /**
@@ -51,10 +55,20 @@ public class RegisterController extends ConversationController {
      */
     public String validateAccount() {
         Contact contact = getContactFromActivationCode();
+        if (contact == null) {
+            return null;
+        }
         this.userManagement.setRoles(new LinkedList<Role>());
         initClientRole();
         this.userManagement.saveRole();
-        return this.userManagement.createClientAccount(contact);
+        String returnString = this.userManagement.createClientAccount(contact);
+        if (returnString != null) {
+            try {
+                contactService.deleteActivationCode(getActivation());
+            } catch (Exception ex) {
+            }
+        }
+        return returnString;
     }
 
     /**
@@ -102,6 +116,22 @@ public class RegisterController extends ConversationController {
     }
 
     private Contact getContactFromActivationCode() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            ActivationCode ac = contactService.getActivationCode(activationCode);
+            return ac.getContact();
+        } catch (NoResultException ex) {
+            messages.error("Code d'activation invalide.");
+            return null;
+        }
+    }
+
+    private ActivationCode getActivation() {
+        try {
+            ActivationCode ac = contactService.getActivationCode(activationCode);
+            return ac;
+        } catch (NoResultException ex) {
+            messages.error("Code d'activation invalide.");
+            return null;
+        }
     }
 }

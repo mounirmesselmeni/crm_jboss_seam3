@@ -4,9 +4,8 @@
  */
 package com.insat.gl5.crm_pfa.web.controller.security;
 
-import com.insat.gl5.crm_pfa.model.BackendUser;
 import com.insat.gl5.crm_pfa.model.Contact;
-import com.insat.gl5.crm_pfa.web.qualifier.Admin;
+import com.insat.gl5.crm_pfa.model.BackendUser;
 import com.insat.gl5.crm_pfa.service.security.UserProfileService;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
 import java.util.Collection;
@@ -59,6 +58,7 @@ public class UserManagement extends ConversationController {
         return null;
 
     }
+
     public String createClientAccount(Contact contact) {
         if (verifyConfirmPassword()) {
             return null;
@@ -67,7 +67,7 @@ public class UserManagement extends ConversationController {
             this.profileService.saveNewUser(contact, this.password, this.roles);
             this.user = new BackendUser();
             endConversation();
-            return "/home";
+            return "/frontoffice/index.jsf";
         } catch (FeatureNotSupportedException ex) {
             this.messages.error("FeatureNotSupportedException");
         } catch (IdentityException ex) {

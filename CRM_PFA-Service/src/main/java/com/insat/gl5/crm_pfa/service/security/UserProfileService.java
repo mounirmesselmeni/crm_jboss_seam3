@@ -4,8 +4,8 @@
  */
 package com.insat.gl5.crm_pfa.service.security;
 
-import com.insat.gl5.crm_pfa.model.BackendUser;
 import com.insat.gl5.crm_pfa.model.Contact;
+import com.insat.gl5.crm_pfa.model.BackendUser;
 import com.insat.gl5.crm_pfa.model.security.IdentityObject;
 import com.insat.gl5.crm_pfa.model.security.IdentityRoleName;
 import java.io.Serializable;
@@ -74,7 +74,6 @@ public class UserProfileService implements Serializable {
         try {
             user = this.identitySession.getPersistenceManager().createUser(contact.getLogin());
             this.identitySession.getAttributesManager().updatePassword(user, password);
-            this.em.persist(contact.getLogin());
             this.identitySession.getAttributesManager().addAttribute(user.getId(), INFORMATION_USER, contact.getId().toString());
             for (Role role : roles) {
                 try {
@@ -90,16 +89,16 @@ public class UserProfileService implements Serializable {
             throw ex;
         }
     }
-    public BackendUser saveNewUser(BackendUser backendUser, String password, Collection<Role> roles) throws FeatureNotSupportedException, IdentityException {
+    public BackendUser saveNewUser(BackendUser crmUser, String password, Collection<Role> roles) throws FeatureNotSupportedException, IdentityException {
         if (this.ident.getUser() != null) {
-            this.log.info("Save a new user '" + backendUser.getLogin() + "'. Done by " + ident.getUser().getId());
+            this.log.info("Save a new user '" + crmUser.getLogin() + "'. Done by " + ident.getUser().getId());
         }
         User user = null;
         try {
-            user = this.identitySession.getPersistenceManager().createUser(backendUser.getLogin());
+            user = this.identitySession.getPersistenceManager().createUser(crmUser.getLogin());
             this.identitySession.getAttributesManager().updatePassword(user, password);
-            this.em.persist(backendUser);
-            this.identitySession.getAttributesManager().addAttribute(user.getId(), INFORMATION_USER, backendUser.getId().toString());
+            this.em.persist(crmUser);
+            this.identitySession.getAttributesManager().addAttribute(user.getId(), INFORMATION_USER, crmUser.getId().toString());
             for (Role role : roles) {
                 try {
                     identitySession.getRoleManager().createRole(role.getRoleType(), user, role.getGroup());
@@ -108,7 +107,7 @@ public class UserProfileService implements Serializable {
                     throw ex;
                 }
             }
-            return backendUser;
+            return crmUser;
         } catch (IdentityException ex) {
             this.log.error("", ex);
             throw ex;
@@ -160,7 +159,7 @@ public class UserProfileService implements Serializable {
      */
     public Contact loadProfilUser(String userId) {
         try {
-            Query query = this.em.createQuery("select p from Contact p where p.emailAddress = ?1");
+            Query query = this.em.createQuery("select p from Contact p where p.login = ?1");
             query.setParameter(1, userId);
             if (!query.getResultList().isEmpty()) {
                 return (Contact) query.getSingleResult();
@@ -171,7 +170,7 @@ public class UserProfileService implements Serializable {
         }
         return null;
     }
-    public BackendUser loadBackendUser(String userId) {
+    public BackendUser loadCrmUser(String userId) {
         try {
             Query query = this.em.createQuery("select p from BackendUser p where p.login = ?1");
             query.setParameter(1, userId);

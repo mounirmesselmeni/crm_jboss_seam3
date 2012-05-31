@@ -8,6 +8,8 @@ import com.insat.gl5.crm_pfa.model.Account;
 import com.insat.gl5.crm_pfa.model.ActivationCode;
 import com.insat.gl5.crm_pfa.model.Contact;
 import java.util.List;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -118,5 +120,10 @@ public class ContactService extends GenericService{
             log.error("Error in Deleting ActivationCode "+activationCode+" : -->", ex);
             throw ex;
         }
+    }
+    public ActivationCode getActivationCode(String code) throws NoResultException{
+       Query query = em.createQuery("select a from ActivationCode a where a.code =?1");
+       query.setParameter(1, code);
+       return (ActivationCode) query.getSingleResult();
     }
 }
