@@ -67,7 +67,7 @@ public class UserManagement extends ConversationController {
             this.profileService.saveNewUser(contact, this.password, this.roles);
             this.user = new BackendUser();
             endConversation();
-            return "/home";
+            return "/frontoffice/index.jsf";
         } catch (FeatureNotSupportedException ex) {
             this.messages.error("FeatureNotSupportedException");
         } catch (IdentityException ex) {

@@ -74,7 +74,6 @@ public class UserProfileService implements Serializable {
         try {
             user = this.identitySession.getPersistenceManager().createUser(contact.getLogin());
             this.identitySession.getAttributesManager().updatePassword(user, password);
-            this.em.persist(contact.getLogin());
             this.identitySession.getAttributesManager().addAttribute(user.getId(), INFORMATION_USER, contact.getId().toString());
             for (Role role : roles) {
                 try {
@@ -160,7 +159,7 @@ public class UserProfileService implements Serializable {
      */
     public Contact loadProfilUser(String userId) {
         try {
-            Query query = this.em.createQuery("select p from Contact p where p.emailAddress = ?1");
+            Query query = this.em.createQuery("select p from Contact p where p.login = ?1");
             query.setParameter(1, userId);
             if (!query.getResultList().isEmpty()) {
                 return (Contact) query.getSingleResult();
