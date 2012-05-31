@@ -30,12 +30,10 @@ public class Account extends BaseEntity {
     private List<Address> lstAddresses = new LinkedList<Address>();
     @OneToMany(cascade = CascadeType.ALL)
     private List<PhoneNumber> lstPhoneNumbers = new LinkedList<PhoneNumber>();
-    @OneToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name = "fidelityId")
+    @OneToOne(cascade = CascadeType.ALL)
     private Fidelity fidelity;
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private BackendUser backendUser;
+    private BackendUser crmUser;
 
     /**
      * @return the name
@@ -150,17 +148,16 @@ public class Account extends BaseEntity {
     }
 
     /**
-     * @return the backendUser
+     * @return the crmUser
      */
-    public BackendUser getBackendUser() {
-        return backendUser;
+    public BackendUser getCrmUser() {
+        return crmUser;
     }
 
     /**
-     * @param backendUser the backendUser to set
+     * @param crmUser the crmUser to set
      */
-    public void setBackendUser(BackendUser backendUser) {
-        this.backendUser = backendUser;
+    public void setCrmUser(BackendUser crmUser) {
+        this.crmUser = crmUser;
     }
-
 }

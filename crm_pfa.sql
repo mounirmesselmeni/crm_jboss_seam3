@@ -32,18 +32,18 @@ CREATE TABLE `Account` (
   `website` varchar(255) DEFAULT NULL,
   `createdBy_id` bigint(20) DEFAULT NULL,
   `modifiedBy_id` bigint(20) DEFAULT NULL,
-  `fidelityId` bigint(20) DEFAULT NULL,
-  `userId` bigint(20) DEFAULT NULL,
+  `crmUser_id` bigint(20) DEFAULT NULL,
+  `fidelity_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK1D0C220DEAD4D688` (`fidelityId`),
   KEY `FK1D0C220D64589BBA` (`createdBy_id`),
+  KEY `FK1D0C220D123FCEEF` (`crmUser_id`),
+  KEY `FK1D0C220DB25605B` (`fidelity_id`),
   KEY `FK1D0C220D69C35C79` (`modifiedBy_id`),
-  KEY `FK1D0C220D2F6FCAA4` (`userId`),
-  CONSTRAINT `FK1D0C220D2F6FCAA4` FOREIGN KEY (`userId`) REFERENCES `BackendUser` (`id`),
-  CONSTRAINT `FK1D0C220D64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK1D0C220D69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FK1D0C220DEAD4D688` FOREIGN KEY (`fidelityId`) REFERENCES `Fidelity` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  CONSTRAINT `FK1D0C220D123FCEEF` FOREIGN KEY (`crmUser_id`) REFERENCES `BackendUser` (`id`),
+  CONSTRAINT `FK1D0C220D64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK1D0C220DB25605B` FOREIGN KEY (`fidelity_id`) REFERENCES `Fidelity` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,7 +52,6 @@ CREATE TABLE `Account` (
 
 LOCK TABLES `Account` WRITE;
 /*!40000 ALTER TABLE `Account` DISABLE KEYS */;
-INSERT INTO `Account` VALUES (1,'2012-05-30 11:43:18','2012-05-30 11:43:18','Mounir.png','Mounir','CLIENT','www.elmes.com',NULL,NULL,NULL,NULL),(2,'2012-05-30 11:48:39','2012-05-30 11:48:39','Mounir2.png','Mounir2','FOURNISSEUR','www.elmes.com',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `Account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,21 +213,11 @@ DROP TABLE IF EXISTS `BackendUser`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `BackendUser` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `createdOn` datetime DEFAULT NULL,
-  `modifiedOn` datetime DEFAULT NULL,
-  `login` varchar(255) DEFAULT NULL,
-  `createdBy_id` bigint(20) DEFAULT NULL,
-  `modifiedBy_id` bigint(20) DEFAULT NULL,
-  `emailId` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK5492A45F64589BBA` (`createdBy_id`),
-  KEY `FK5492A45F5F052EE8` (`emailId`),
-  KEY `FK5492A45F69C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK5492A45F5F052EE8` FOREIGN KEY (`emailId`) REFERENCES `EmailAdress` (`id`),
-  CONSTRAINT `FK5492A45F64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FK5492A45F69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+  KEY `FK5492A45FF1C94363` (`id`),
+  CONSTRAINT `FK5492A45FF1C94363` FOREIGN KEY (`id`) REFERENCES `CrmUser` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +226,7 @@ CREATE TABLE `BackendUser` (
 
 LOCK TABLES `BackendUser` WRITE;
 /*!40000 ALTER TABLE `BackendUser` DISABLE KEYS */;
-INSERT INTO `BackendUser` VALUES (3,'2012-05-30 15:23:50','2012-05-30 15:23:50','admin',NULL,NULL,NULL),(4,'2012-05-30 15:26:45','2012-05-30 15:26:45','admin2',NULL,NULL,NULL),(5,'2012-05-30 15:30:41','2012-05-30 15:30:41','admin3',NULL,NULL,NULL),(6,'2012-05-30 17:16:34','2012-05-30 17:16:34','test',NULL,NULL,NULL),(7,'2012-05-30 17:17:12','2012-05-30 17:17:12','admin575574',NULL,NULL,NULL),(8,'2012-05-30 17:19:12','2012-05-30 17:19:12','adminfgff',NULL,NULL,NULL),(9,'2012-05-30 17:33:18','2012-05-30 17:33:18','adminqdfsd',NULL,NULL,NULL),(10,'2012-05-30 17:33:58','2012-05-30 17:33:58','qzefzzqf',NULL,NULL,NULL),(11,'2012-05-30 17:39:30','2012-05-30 17:39:30','adminqdfqd',NULL,NULL,NULL),(12,'2012-05-30 18:58:16','2012-05-30 18:58:16','user',NULL,NULL,NULL);
+INSERT INTO `BackendUser` VALUES (1);
 /*!40000 ALTER TABLE `BackendUser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,8 +247,8 @@ CREATE TABLE `Category` (
   PRIMARY KEY (`id`),
   KEY `FK6DD211E64589BBA` (`createdBy_id`),
   KEY `FK6DD211E69C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK6DD211E64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FK6DD211E69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`)
+  CONSTRAINT `FK6DD211E69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK6DD211E64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -280,26 +269,18 @@ DROP TABLE IF EXISTS `Contact`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Contact` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `createdOn` datetime DEFAULT NULL,
-  `modifiedOn` datetime DEFAULT NULL,
   `firstName` varchar(255) NOT NULL,
   `imageURL` varchar(255) DEFAULT NULL,
   `lastName` varchar(255) NOT NULL,
-  `login` varchar(255) NOT NULL,
   `salutation` varchar(255) DEFAULT NULL,
-  `createdBy_id` bigint(20) DEFAULT NULL,
-  `modifiedBy_id` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
   `accountId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `login` (`login`),
-  KEY `FK9BEFBC0064589BBA` (`createdBy_id`),
+  KEY `FK9BEFBC00F1C94363` (`id`),
   KEY `FK9BEFBC00FCBDB4` (`accountId`),
-  KEY `FK9BEFBC0069C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK9BEFBC0064589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FK9BEFBC0069C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FK9BEFBC00FCBDB4` FOREIGN KEY (`accountId`) REFERENCES `Account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  CONSTRAINT `FK9BEFBC00FCBDB4` FOREIGN KEY (`accountId`) REFERENCES `Account` (`id`),
+  CONSTRAINT `FK9BEFBC00F1C94363` FOREIGN KEY (`id`) REFERENCES `CrmUser` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -308,7 +289,6 @@ CREATE TABLE `Contact` (
 
 LOCK TABLES `Contact` WRITE;
 /*!40000 ALTER TABLE `Contact` DISABLE KEYS */;
-INSERT INTO `Contact` VALUES (2,'2012-05-30 11:58:38','2012-05-30 11:58:38','Messelmeni','admin.png','Mounir','admin','MR',NULL,NULL,1);
 /*!40000 ALTER TABLE `Contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -340,33 +320,6 @@ LOCK TABLES `Contact_Address` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Contact_EmailAdress`
---
-
-DROP TABLE IF EXISTS `Contact_EmailAdress`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Contact_EmailAdress` (
-  `Contact_id` bigint(20) NOT NULL,
-  `lstEmails_id` bigint(20) NOT NULL,
-  UNIQUE KEY `lstEmails_id` (`lstEmails_id`),
-  KEY `FKF5177353F51CF139` (`Contact_id`),
-  KEY `FKF5177353120D7607` (`lstEmails_id`),
-  CONSTRAINT `FKF5177353120D7607` FOREIGN KEY (`lstEmails_id`) REFERENCES `EmailAdress` (`id`),
-  CONSTRAINT `FKF5177353F51CF139` FOREIGN KEY (`Contact_id`) REFERENCES `Contact` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Contact_EmailAdress`
---
-
-LOCK TABLES `Contact_EmailAdress` WRITE;
-/*!40000 ALTER TABLE `Contact_EmailAdress` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Contact_EmailAdress` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `Contact_PhoneNumber`
 --
 
@@ -391,6 +344,65 @@ CREATE TABLE `Contact_PhoneNumber` (
 LOCK TABLES `Contact_PhoneNumber` WRITE;
 /*!40000 ALTER TABLE `Contact_PhoneNumber` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Contact_PhoneNumber` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CrmUser`
+--
+
+DROP TABLE IF EXISTS `CrmUser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CrmUser` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `createdOn` datetime DEFAULT NULL,
+  `modifiedOn` datetime DEFAULT NULL,
+  `login` varchar(255) DEFAULT NULL,
+  `createdBy_id` bigint(20) DEFAULT NULL,
+  `modifiedBy_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKA0F25AA964589BBA` (`createdBy_id`),
+  KEY `FKA0F25AA969C35C79` (`modifiedBy_id`),
+  CONSTRAINT `FKA0F25AA969C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FKA0F25AA964589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CrmUser`
+--
+
+LOCK TABLES `CrmUser` WRITE;
+/*!40000 ALTER TABLE `CrmUser` DISABLE KEYS */;
+INSERT INTO `CrmUser` VALUES (1,'2012-05-31 18:45:36','2012-05-31 18:45:36','commercial1',NULL,NULL);
+/*!40000 ALTER TABLE `CrmUser` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CrmUser_EmailAdress`
+--
+
+DROP TABLE IF EXISTS `CrmUser_EmailAdress`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CrmUser_EmailAdress` (
+  `CrmUser_id` bigint(20) NOT NULL,
+  `lstEmails_id` bigint(20) NOT NULL,
+  UNIQUE KEY `lstEmails_id` (`lstEmails_id`),
+  KEY `FKD99C5C7CA2C46CB9` (`CrmUser_id`),
+  KEY `FKD99C5C7C120D7607` (`lstEmails_id`),
+  CONSTRAINT `FKD99C5C7C120D7607` FOREIGN KEY (`lstEmails_id`) REFERENCES `EmailAdress` (`id`),
+  CONSTRAINT `FKD99C5C7CA2C46CB9` FOREIGN KEY (`CrmUser_id`) REFERENCES `CrmUser` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CrmUser_EmailAdress`
+--
+
+LOCK TABLES `CrmUser_EmailAdress` WRITE;
+/*!40000 ALTER TABLE `CrmUser_EmailAdress` DISABLE KEYS */;
+/*!40000 ALTER TABLE `CrmUser_EmailAdress` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -471,9 +483,9 @@ CREATE TABLE `EmailAdress` (
   UNIQUE KEY `emailAdress` (`emailAdress`),
   KEY `FKB3F5591264589BBA` (`createdBy_id`),
   KEY `FKB3F5591269C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FKB3F5591264589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FKB3F5591269C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  CONSTRAINT `FKB3F5591269C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FKB3F5591264589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -482,7 +494,6 @@ CREATE TABLE `EmailAdress` (
 
 LOCK TABLES `EmailAdress` WRITE;
 /*!40000 ALTER TABLE `EmailAdress` DISABLE KEYS */;
-INSERT INTO `EmailAdress` VALUES (1,'2012-05-30 11:43:18','2012-05-30 11:43:18','messelmeni.moundyuir@gmail.com',NULL,NULL),(2,'2012-05-30 11:43:18','2012-05-30 11:43:18','mounirelmes@gmail.com',NULL,NULL),(3,'2012-05-30 11:48:39','2012-05-30 11:48:39','elmes@elmes.co',NULL,NULL),(5,'2012-05-30 11:58:38','2012-05-30 11:58:38','dhgdghd@sgdgs.com',NULL,NULL);
 /*!40000 ALTER TABLE `EmailAdress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -505,9 +516,9 @@ CREATE TABLE `Fidelity` (
   KEY `FKCA67276664589BBA` (`createdBy_id`),
   KEY `FKCA6727663E011A19` (`account_id`),
   KEY `FKCA67276669C35C79` (`modifiedBy_id`),
+  CONSTRAINT `FKCA67276669C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FKCA6727663E011A19` FOREIGN KEY (`account_id`) REFERENCES `Account` (`id`),
-  CONSTRAINT `FKCA67276664589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FKCA67276669C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`)
+  CONSTRAINT `FKCA67276664589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -535,7 +546,7 @@ CREATE TABLE `IdentityObject` (
   UNIQUE KEY `name` (`name`,`IDENTITY_OBJECT_TYPE_ID`),
   KEY `FKB760C5BD3DDCEF05` (`IDENTITY_OBJECT_TYPE_ID`),
   CONSTRAINT `FKB760C5BD3DDCEF05` FOREIGN KEY (`IDENTITY_OBJECT_TYPE_ID`) REFERENCES `IdentityObjectType` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -544,7 +555,7 @@ CREATE TABLE `IdentityObject` (
 
 LOCK TABLES `IdentityObject` WRITE;
 /*!40000 ALTER TABLE `IdentityObject` DISABLE KEYS */;
-INSERT INTO `IdentityObject` VALUES (4,'admin',2),(5,'admin2',2),(6,'admin3',2),(8,'admin575574',2),(9,'adminfgff',2),(12,'adminqdfqd',2),(10,'adminqdfsd',2),(1,'crm',1),(11,'qzefzzqf',2),(7,'test',2),(13,'user',2);
+INSERT INTO `IdentityObject` VALUES (3,'',NULL),(2,'commercial1',2),(1,'crm',1);
 /*!40000 ALTER TABLE `IdentityObject` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -564,7 +575,7 @@ CREATE TABLE `IdentityObjectAttribute` (
   UNIQUE KEY `name` (`name`,`IDENTITY_OBJECT_ID`),
   KEY `FKEB1F295FC42863A4` (`IDENTITY_OBJECT_ID`),
   CONSTRAINT `FKEB1F295FC42863A4` FOREIGN KEY (`IDENTITY_OBJECT_ID`) REFERENCES `IdentityObject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -573,7 +584,7 @@ CREATE TABLE `IdentityObjectAttribute` (
 
 LOCK TABLES `IdentityObjectAttribute` WRITE;
 /*!40000 ALTER TABLE `IdentityObjectAttribute` DISABLE KEYS */;
-INSERT INTO `IdentityObjectAttribute` VALUES (1,'informationUser','5',6),(2,'informationUser','6',7),(3,'informationUser','7',8),(4,'informationUser','8',9),(5,'informationUser','9',10),(6,'informationUser','10',11),(7,'informationUser','11',12),(8,'informationUser','12',13);
+INSERT INTO `IdentityObjectAttribute` VALUES (1,'informationUser','1',2);
 /*!40000 ALTER TABLE `IdentityObjectAttribute` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -595,7 +606,7 @@ CREATE TABLE `IdentityObjectCredential` (
   KEY `FK37DC41F48B732EF3` (`CREDENTIAL_TYPE_ID`),
   CONSTRAINT `FK37DC41F48B732EF3` FOREIGN KEY (`CREDENTIAL_TYPE_ID`) REFERENCES `IdentityObjectCredentialType` (`id`),
   CONSTRAINT `FK37DC41F4C42863A4` FOREIGN KEY (`IDENTITY_OBJECT_ID`) REFERENCES `IdentityObject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -604,7 +615,7 @@ CREATE TABLE `IdentityObjectCredential` (
 
 LOCK TABLES `IdentityObjectCredential` WRITE;
 /*!40000 ALTER TABLE `IdentityObjectCredential` DISABLE KEYS */;
-INSERT INTO `IdentityObjectCredential` VALUES (3,'admin',4,1),(4,'admin',5,1),(5,'admin',6,1),(6,'test',7,1),(7,'ffff',8,1),(8,'ttt',9,1),(9,'dddd',10,1),(10,'aaaa',11,1),(11,'aaaa',12,1),(12,'user',13,1);
+INSERT INTO `IdentityObjectCredential` VALUES (1,'admin',2,1);
 /*!40000 ALTER TABLE `IdentityObjectCredential` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -651,10 +662,10 @@ CREATE TABLE `IdentityObjectRelationship` (
   KEY `FK8C4CDC953DE562F1` (`FROM_IDENTITY_ID`),
   KEY `FK8C4CDC95A06CA842` (`TO_IDENTITY_ID`),
   KEY `FK8C4CDC95EB830EB5` (`RELATIONSHIP_TYPE_ID`),
+  CONSTRAINT `FK8C4CDC95EB830EB5` FOREIGN KEY (`RELATIONSHIP_TYPE_ID`) REFERENCES `IdentityObjectRelationshipType` (`id`),
   CONSTRAINT `FK8C4CDC953DE562F1` FOREIGN KEY (`FROM_IDENTITY_ID`) REFERENCES `IdentityObject` (`id`),
-  CONSTRAINT `FK8C4CDC95A06CA842` FOREIGN KEY (`TO_IDENTITY_ID`) REFERENCES `IdentityObject` (`id`),
-  CONSTRAINT `FK8C4CDC95EB830EB5` FOREIGN KEY (`RELATIONSHIP_TYPE_ID`) REFERENCES `IdentityObjectRelationshipType` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  CONSTRAINT `FK8C4CDC95A06CA842` FOREIGN KEY (`TO_IDENTITY_ID`) REFERENCES `IdentityObject` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -663,7 +674,7 @@ CREATE TABLE `IdentityObjectRelationship` (
 
 LOCK TABLES `IdentityObjectRelationship` WRITE;
 /*!40000 ALTER TABLE `IdentityObjectRelationship` DISABLE KEYS */;
-INSERT INTO `IdentityObjectRelationship` VALUES (1,'admin',1,2,4),(2,'admin',1,2,6),(3,'commercial',1,2,7),(4,'client',1,2,13);
+INSERT INTO `IdentityObjectRelationship` VALUES (1,'commercial',1,1,2);
 /*!40000 ALTER TABLE `IdentityObjectRelationship` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -688,7 +699,7 @@ CREATE TABLE `IdentityObjectRelationshipType` (
 
 LOCK TABLES `IdentityObjectRelationshipType` WRITE;
 /*!40000 ALTER TABLE `IdentityObjectRelationshipType` DISABLE KEYS */;
-INSERT INTO `IdentityObjectRelationshipType` VALUES (1,'JBOSS_IDENTITY_MEMBERSHIP'),(2,'JBOSS_IDENTITY_ROLE');
+INSERT INTO `IdentityObjectRelationshipType` VALUES (2,'JBOSS_IDENTITY_MEMBERSHIP'),(1,'JBOSS_IDENTITY_ROLE');
 /*!40000 ALTER TABLE `IdentityObjectRelationshipType` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1181,17 +1192,17 @@ CREATE TABLE `TicketResponse` (
   `content` longtext,
   `createdBy_id` bigint(20) DEFAULT NULL,
   `modifiedBy_id` bigint(20) DEFAULT NULL,
-  `contact_id` bigint(20) DEFAULT NULL,
+  `crmUser_id` bigint(20) DEFAULT NULL,
   `ticket_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKA55AE38D64589BBA` (`createdBy_id`),
   KEY `FKA55AE38DA42FA6DB` (`ticket_id`),
-  KEY `FKA55AE38DF51CF139` (`contact_id`),
+  KEY `FKA55AE38D123FCEEF` (`crmUser_id`),
   KEY `FKA55AE38D69C35C79` (`modifiedBy_id`),
   CONSTRAINT `FKA55AE38D69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FKA55AE38D123FCEEF` FOREIGN KEY (`crmUser_id`) REFERENCES `BackendUser` (`id`),
   CONSTRAINT `FKA55AE38D64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FKA55AE38DA42FA6DB` FOREIGN KEY (`ticket_id`) REFERENCES `Ticket` (`id`),
-  CONSTRAINT `FKA55AE38DF51CF139` FOREIGN KEY (`contact_id`) REFERENCES `Contact` (`id`)
+  CONSTRAINT `FKA55AE38DA42FA6DB` FOREIGN KEY (`ticket_id`) REFERENCES `Ticket` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1213,4 +1224,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-05-31 14:49:01
+-- Dump completed on 2012-05-31 18:49:26
