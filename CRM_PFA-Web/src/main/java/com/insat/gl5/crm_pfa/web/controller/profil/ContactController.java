@@ -6,9 +6,10 @@ package com.insat.gl5.crm_pfa.web.controller.profil;
 
 import com.insat.gl5.crm_pfa.enumeration.Salutation;
 import com.insat.gl5.crm_pfa.model.*;
-import com.insat.gl5.crm_pfa.service.AccountService;
 import com.insat.gl5.crm_pfa.service.ContactService;
 import com.insat.gl5.crm_pfa.service.CoordinatesService;
+import com.insat.gl5.crm_pfa.service.mail.MailService;
+import com.insat.gl5.crm_pfa.service.mail.Person;
 import com.insat.gl5.crm_pfa.service.security.UserProfileService;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
 import com.insat.gl5.crm_pfa.web.controller.FileUploadController;
@@ -17,6 +18,7 @@ import com.insat.gl5.crm_pfa.web.viewModel.EmailViewModel;
 import com.insat.gl5.crm_pfa.web.viewModel.PhoneNumberViewModel;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,16 +55,14 @@ public class ContactController extends ConversationController {
     @Inject
     private ContactService contactService;
     @Inject
-    private AccountService accountService;
-    @Inject
     private CoordinatesService coordinatesService;
+    @Inject
+    private MailService mailService;
     @Inject
     private FileUploadController fileUploadController;
     private boolean editMode;
     @Inject
     private Contact contact;
-    @Inject
-    private List<Account> accounts;
     private String password = null, confirmPassword = null;
     private Collection<Role> roles = new LinkedList<Role>();
     private RoleType roleType;
@@ -206,10 +206,18 @@ public class ContactController extends ConversationController {
             contactService.saveContact(getContact());
             uploadLogo();
             messages.info("Contact {0} est enregistré avec succés !", getContact());
+            ActivationCode activationCode = new ActivationCode(contact);
+            contactService.saveActivationCode(activationCode);
+            Person receiver = new Person(contact.getFirstName(), contact.getLstEmails().get(0).getValue());
+            mailService.sendJoinInvitation(receiver,activationCode.getCode(), contact.getLogin());
             setContact(null);
-
+        }catch(MalformedURLException ex){
+            messages.error("Erreur d'envoi mail");
+            System.out.println("--->"+ex.getMessage());
+            return null;
         } catch (Exception e) {
             messages.error("Erreur d'enregistrement du contact {0}", getContact());
+            System.out.println("--->"+e.getMessage());
             return null;
         }
         endConversation();
@@ -524,23 +532,18 @@ public class ContactController extends ConversationController {
     }
 
     private void uploadLogo() throws IOException {
+         // Création du répertoire du client
+        File dir = new File(CONTACTS_DIRECTORY);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
         if (fileUploadController.getFile() != null) {
             fileUploadController.upload(CONTACTS_DIRECTORY+contact.getImageURL());
         } else {
             fileUploadController.uploadFromURL("//resources//images//other//defaultLogo.png", CONTACTS_DIRECTORY+contact.getImageURL());
         }
     }
-
-    public List<Account> complete(String query) {  
-        
-        List<Account> filtredAccounts = accountService.getFiltredAccounts(query);  
-        
-        if(filtredAccounts != null){
-            return filtredAccounts;
-        }  
-          
-        return null;  
-    }  
+  
     /**
      * @return
      * the

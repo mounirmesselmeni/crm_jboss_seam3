@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+ <table width="100%">
+<tr>
+<td  valign="top" width="70%">
+
+<p><b>Cher <a href="mailto:$receiver.email">$receiver.name</a>,</b></p>
+<p>Vous avez été invité par <a href="mailto:$sender.email">$sender.name</a> pour joindre l'application CRM-PFA.</p>
+<p>Accépter l'invitation en visitant : .</p>
+<p> http://localhost:8080/CRM_PFA-Web/register.jsf </p>
+<br/>
+<p>Votre login est : <b>$login</b></p>
+<p>Votre clé d'activation est : <b>$activationCode</b></p>
+<br/>
+<p>Cette invitation expire dans 5 jours.</p>
+<br/>
+<br/>
+<p>Cordialement,</p>
+<p>L'équipe de CRM-PFA.</p>
+
+</td>
+
+<td valign="top" width="30%">
+
+</td>
+</tr>
+</table>
+</body>
+</html>

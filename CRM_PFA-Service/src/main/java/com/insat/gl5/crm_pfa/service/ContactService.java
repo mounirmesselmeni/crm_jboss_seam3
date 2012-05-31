@@ -4,6 +4,7 @@
  */
 package com.insat.gl5.crm_pfa.service;
 
+import com.insat.gl5.crm_pfa.model.ActivationCode;
 import com.insat.gl5.crm_pfa.model.Contact;
 import java.util.List;
 import javax.persistence.TypedQuery;
@@ -76,5 +77,36 @@ public class ContactService extends GenericService{
     
     private String getDisplayText(Contact contact){
         return contact.getFirstName()+ " "+contact.getLastName();
+    }
+    
+      /**
+     * Save new ActivationCode
+     *
+     * @param activationCode  
+     */
+    public void saveActivationCode(ActivationCode activationCode) throws Exception {
+
+        try {
+            persist(activationCode);
+            log.info("Create ActivationCode " + activationCode + SUCCESS);
+        } catch (Exception ex) {
+            log.error("Error in Creating ActivationCode "+activationCode+ " : -->", ex);
+            throw ex;
+        }
+    }
+
+    /**
+     * Delete an ActivationCode
+     *
+     * @param activationCode 
+     */
+    public void deleteActivationCode(ActivationCode activationCode) throws Exception {
+        try {
+            delete(activationCode);
+            log.info("Delete ActivationCode " + activationCode+ SUCCESS);
+        } catch (Exception ex) {
+            log.error("Error in Deleting ActivationCode "+activationCode+" : -->", ex);
+            throw ex;
+        }
     }
 }

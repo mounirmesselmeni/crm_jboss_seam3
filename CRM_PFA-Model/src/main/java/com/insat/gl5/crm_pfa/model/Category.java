@@ -53,7 +53,7 @@ public class Category extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Category{" + "name=" + name + '}';
+        return name ;
     }
 
 }

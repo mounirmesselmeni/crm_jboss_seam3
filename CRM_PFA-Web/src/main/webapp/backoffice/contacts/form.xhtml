@@ -18,21 +18,6 @@
                                 <f:selectItems value="#{lstAccounts}" var="_s" itemValue="#{_s}" itemLabel="#{_s.name}" />
                             </p:selectOneMenu>	
                             <p:spacer/>
-                            <ui:remove>
-
-                                <p:autoComplete id="account" value="#{contactController.contact.account}" converter="accountConverter"  
-                                                forceSelection="true"  size="35"  style="float:left"
-                                                completeMethod="#{contactController.complete}"
-                                                >
-                                    <p:ajax event="itemSelect" />
-                                    <p:commandLink value="Effacer" update="account"  style="float:left;margin-left:5px">
-                                        <ui:remove>
-                                            <f:setPropertyActionListener target="" value="#{null}" />
-                                        </ui:remove>
-                                    </p:commandLink>
-                                </p:autoComplete>
-                            </ui:remove>
-
 
                             <h:outputLabel value="Salutation"/>
                             <p:selectOneRadio  required="false"  value="#{contactController.contact.salutation}">
@@ -79,18 +64,6 @@
                 <h:outputLabel value="Login"/>
                 <p:inputText id="login" value="#{contactController.contact.login}" required="false" size="35"/>
                 <p:spacer/>
-                <h:outputText value="Mot de passe" styleClass="titleLib"/>
-                <p:password id="password" feedback="true" value="#{contactController.password}" 
-                            required="true" requiredMessage="Mot de passe requis"/>
-                <p:message for="password"/>
-                <h:outputText value="Confirmer le mot de passe" styleClass="titleLib"/>
-                <p:password id="confirmPassword" feedback="true" value="#{contactController.confirmPassword}" 
-                            required="true" requiredMessage="Confirmez le mot de passe requis"
-                            weakLabel="weak password"
-                            goodLabel="good password"
-                            strongLabel="strong password"/>
-                <p:message for="confirmPassword"/>
-
                 <p:spacer height="30"/>
             </h:panelGrid>
         </p:tab>

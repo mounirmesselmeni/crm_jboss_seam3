@@ -26,8 +26,7 @@ import org.jboss.seam.mail.core.EmailContact;
 
 /**
  * 
- * @author Cody Lerum
- * 
+ * @author Mu7ammed 3li -- mohamed.ali.affes@gmail.com --
  */
 @Model
 public class Person implements EmailContact

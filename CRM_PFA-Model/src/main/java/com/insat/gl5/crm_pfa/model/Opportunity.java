@@ -22,16 +22,17 @@ public class Opportunity extends BaseEntity {
     private OpportunityType type;
     @Temporal(TemporalType.DATE)
     private Date closeDate;
-    private int probability;
-    private int amount;
     @ManyToOne
     @JoinColumn(name = "accountId")
-    private Account account;
+    private Account relatedTo;
+    @ManyToOne
+    @JoinColumn(name = "contactId")
+    private Contact assignedTo;
     @OneToMany(cascade = CascadeType.ALL)
     private List<ItemToPurchase> itemsToPurchase = new LinkedList<ItemToPurchase>();
 
     public double getTotalFidelityPrice() {
-        double total = getTotalPrice() * account.getFidelity().getScore();
+        double total = getTotalPrice() * getRelatedTo().getFidelity().getScore();
         return total;
     }
 
@@ -86,48 +87,6 @@ public class Opportunity extends BaseEntity {
     }
 
     /**
-     * @return the probability
-     */
-    public int getProbability() {
-        return probability;
-    }
-
-    /**
-     * @param probability the probability to set
-     */
-    public void setProbability(int probability) {
-        this.probability = probability;
-    }
-
-    /**
-     * @return the amount
-     */
-    public int getAmount() {
-        return amount;
-    }
-
-    /**
-     * @param amount the amount to set
-     */
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    /**
-     * @return the account
-     */
-    public Account getAccount() {
-        return account;
-    }
-
-    /**
-     * @param account the account to set
-     */
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    /**
      * @return the type
      */
     public OpportunityType getType() {
@@ -154,4 +113,38 @@ public class Opportunity extends BaseEntity {
     public void setItemsToPurchase(List<ItemToPurchase> itemsToPurchase) {
         this.itemsToPurchase = itemsToPurchase;
     }
+
+    /**
+     * @return the relatedTo
+     */
+    public Account getRelatedTo() {
+        return relatedTo;
+    }
+
+    /**
+     * @param relatedTo the relatedTo to set
+     */
+    public void setRelatedTo(Account relatedTo) {
+        this.relatedTo = relatedTo;
+    }
+
+    /**
+     * @return the assignedTo
+     */
+    public Contact getAssignedTo() {
+        return assignedTo;
+    }
+
+    /**
+     * @param assignedTo the assignedTo to set
+     */
+    public void setAssignedTo(Contact assignedTo) {
+        this.assignedTo = assignedTo;
+    }
+
+    @Override
+    public String toString() {
+        return name ;
+    }
+    
 }

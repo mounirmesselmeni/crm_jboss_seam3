@@ -115,7 +115,7 @@ public class Product extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Product{" + "name=" + name + '}';
+        return   name ;
     }
 
     /**

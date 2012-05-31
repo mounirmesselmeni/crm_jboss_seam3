@@ -4,9 +4,13 @@
  */
 package com.insat.gl5.crm_pfa.service;
 
+import com.insat.gl5.crm_pfa.model.Account;
 import com.insat.gl5.crm_pfa.model.Category;
 import com.insat.gl5.crm_pfa.model.Product;
 import com.insat.gl5.crm_pfa.model.TVA;
+import java.util.List;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -93,5 +97,41 @@ public class ProductService extends GenericService {
             this.log.error(ex.getMessage());
             throw ex;
         }
+    }
+     /**
+     * Get a list of all products figured in database
+     *
+     * @return 
+     */
+    public List<Product> getAllProducts() {
+        TypedQuery query = em.createQuery("SELECT p FROM Product p", Product.class);
+        return query.getResultList();
+    }
+    
+     public List<String> getFiltredProductNames(String name){
+        Query query = em.createQuery("SELECT p.name FROM Product p WHERE p.name LIKE '%"+name+"'");
+        return query.getResultList();
+    }
+     
+    public List<Product> findProductsByName(String name) {
+        TypedQuery query = em.createQuery("SELECT p FROM Product p WHERE p.name =?1", Product.class).setParameter(1, name);
+        return query.getResultList();
+    }
+    
+    public List<Product> findProductsByLikeName(String name) {
+        TypedQuery query = em.createQuery("SELECT p FROM Product p WHERE p.name LIKE '"+name+"%'", Product.class);
+        return query.getResultList();
+    }
+    public List<Product> findProductsByCategory(Category category) {
+        TypedQuery query = em.createQuery("SELECT p FROM Product p WHERE p.category =?1", Product.class).setParameter(1, category);
+        return query.getResultList();
+    }
+    public List<Product> findProductsByLikeNameAndCategory(String name,Category category) {
+        TypedQuery query = em.createQuery("SELECT p FROM Product p WHERE  p.name LIKE '"+name+"%' AND p.category =?1", Product.class).setParameter(1, category);
+        return query.getResultList();
+    }
+    public List<Product> findProductsByNameAndCategory(String name,Category category) {
+        TypedQuery query = em.createQuery("SELECT p FROM Product p WHERE  p.name = ?1 AND p.category =?2", Product.class).setParameter(1, name).setParameter(2, category);
+        return query.getResultList();
     }
 }

@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../WEB-INF/template/generalTemplate2.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="body">
+        <p:panel header="Liste des opportunités">
+            <h:form id="form1">
+                <p:messages id="messages" globalOnly="true"/>
+                <p:spacer width="3"/>
+                <h:commandButton image="/resources/images/icons/add.png" action="create?faces-redirect=true" />
+                <p:spacer width="5"/>
+                <p:commandLink  ajax="false" value="Nouvelle Opportunité" actionListener="#{opportunityController.initProducts()}" action="create?faces-redirect=true"
+                                style="font-weight: bold">
+                    <f:setPropertyActionListener target="#{opportunityController.redirect}" value="list?faces-redirect=true"/>
+                </p:commandLink>
+                <p:spacer height="10"/>
+
+                <h:panelGrid width="100%">
+                    <p:spacer height="7" />
+                    <p:dataTable id="datatable" var="opportunity" value="#{lstOpportunities}"
+                                 paginator="true" paginatorPosition="bottom" rows="10">  
+                        <f:facet name="header" >
+                            Liste des opportunités
+                        </f:facet>
+                        <p:column headerText="Référance" style="width:10%">
+                            <h:outputText value="OPP#{opportunity.id}" />  
+                        </p:column>  
+                        <p:column headerText="Nom" style="width:10%">  
+                            <h:outputText value="#{opportunity.name}" />  
+                        </p:column>  
+                        <p:column headerText="Type" style="width:30%">  
+                            <h:outputText value="#{opportunity.type}" />  
+                        </p:column>  
+                        <p:column headerText="Déscription" style="width:30%">  
+                            <h:outputText value="#{opportunity.description}" />  
+                        </p:column>  
+                        <p:column headerText="Liée à" style="width:20%">  
+                                <h:outputText value="#{opportunity.relatedTo.name}" />
+                        </p:column>  
+                        <p:column headerText="Date de clôture prévue" style="width:30%">  
+                                <h:outputText value="#{opportunity.closeDate}" converter="dateConverter"/>
+                        </p:column>  
+                        <p:column headerText="Liste des produits" style="width:20%">
+                            <ui:repeat value="#{opportunity.itemsToPurchase}" var="item">
+                                <h:outputText value="#{item}" />
+                                <br/>
+                            </ui:repeat>
+                        </p:column>
+                        <p:column headerText="Assignée à" style="width:20%">  
+                                <h:outputText value="#{opportunity.assignedTo}" />
+                        </p:column>  
+                        <p:column headerText="Actions" style="text-align:center;width: 15%">  
+
+                            <p:commandLink  title="Modifier" ajax="false" actionListener="#{opportunityController.loadProducts()}" action="edit?faces-redirect=true">
+                                <h:graphicImage library="images" name="constellation/icons/fugue/pencil.png" width="16" height="16"/>
+                                <f:setPropertyActionListener target="#{opportunityController.redirect}" value="list?faces-redirect=true"/>
+                                <f:setPropertyActionListener target="#{opportunityController.opportunity}" value="#{opportunity}"/>
+                            </p:commandLink>  
+                            <p:spacer width="5"/>
+                            <p:commandLink  title="Supprimer" update=":outPutPanel" oncomplete="confirmation.show()"
+                                            actionListener="#{opportunityController.beginConversation()}">
+                                <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
+                                <f:setPropertyActionListener value="#{opportunity}" target="#{opportunityController.opportunity}" />
+                            </p:commandLink>
+
+                            <p:spacer width="5"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:panelGrid>
+
+            </h:form>
+
+            <p:outputPanel id="outPutPanel">
+                <p:confirmDialog width="400"  message="Voulez vous supprimer #{opportunityController.opportunity}?" severity="alert" 
+                           header="Confirmation" widgetVar="confirmation">  
+                    <h:form id="formDelete"  >
+                        
+                        <table width="100%" border="0">
+                            <tr >
+                                <td width="20%" height="20px">
+                                    <p:commandButton id="btnNo" value="Non" onclick="confirmation.hide()" 
+                                                     actionListener="#{opportunityController.cancel()}"/> 
+                                </td>
+                                <td width="60%" >
+                                </td>
+                                <td  width="20%" height="20px">
+
+                                    <p:commandButton id="btnYes" value="Oui" update=":form1:datatable" 
+                                                     actionListener="#{opportunityController.deleteOpportunity()}" 
+                                                     onclick="confirmation.hide()"/>  
+                                </td>
+                            </tr>  
+                        </table>
+                    </h:form>
+                </p:confirmDialog>
+            </p:outputPanel>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

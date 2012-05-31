@@ -73,7 +73,6 @@ public class OpportunityService extends GenericService{
     }
     
     private String getDisplayText(Opportunity Opportunity){
-        return Opportunity.getType().getDisplayName()+" : "+Opportunity.getName() +", "
-                + Opportunity.getAmount()+", "+Opportunity.getProbability()+"%";
+        return Opportunity.getType().getDisplayName()+" : "+Opportunity.getName() ;
     }
 }

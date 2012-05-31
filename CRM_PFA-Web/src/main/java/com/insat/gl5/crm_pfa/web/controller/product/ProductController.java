@@ -34,7 +34,7 @@ public class ProductController extends ConversationController {
     @Inject
     protected FileUploadController fileUploadController;
     protected final String PRODUCTS_DIRECTORY =
-            FacesContext.getCurrentInstance().getExternalContext().getRealPath("/products/") + "/";
+            FacesContext.getCurrentInstance().getExternalContext().getRealPath("/CRMData/products/") + "/";
 
     /**
      * Creation d'un nouveau produit

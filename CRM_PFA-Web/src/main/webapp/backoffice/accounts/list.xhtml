@@ -84,10 +84,10 @@
 
             </h:form>
             <p:outputPanel id="outPutPanel">
-                <p:dialog  width="400"   
+                <p:confirmDialog message=" Voulez vous supprimer #{accountController.account.name}?"  width="400"   
                                  header="Confirmation" widgetVar="confirmation">  
                     <h:form id="formDelete"  >
-                        Voulez vous supprimer #{accountController.account.name}?
+                       
                         <table width="100%" border="0">
                             <tr >
                                 <td width="20%" height="20px">
@@ -105,7 +105,7 @@
                             </tr>  
                         </table>
                     </h:form>
-                </p:dialog>
+                </p:confirmDialog>
             </p:outputPanel>
             <br/>
             <br/>

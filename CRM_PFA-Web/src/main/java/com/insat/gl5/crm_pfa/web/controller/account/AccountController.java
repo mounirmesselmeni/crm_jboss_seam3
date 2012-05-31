@@ -5,12 +5,9 @@
 package com.insat.gl5.crm_pfa.web.controller.account;
 
 import com.insat.gl5.crm_pfa.model.Account;
-<<<<<<< HEAD
 import com.insat.gl5.crm_pfa.model.Address;
 import com.insat.gl5.crm_pfa.model.EmailAdress;
 import com.insat.gl5.crm_pfa.model.PhoneNumber;
-=======
->>>>>>> 3061e3e27032997a9d6b8469216df9fea7fb369c
 import com.insat.gl5.crm_pfa.service.AccountService;
 import com.insat.gl5.crm_pfa.service.CoordinatesService;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
@@ -392,6 +389,11 @@ public class AccountController extends ConversationController {
     }
 
     private void uploadLogo() throws IOException {
+         // Création du répertoire du client
+        File dir = new File(ACCOUNTS_DIRECTORY);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
         if (fileUploadController.getFile() != null) {
             fileUploadController.upload(ACCOUNTS_DIRECTORY+account.getLogoURL());
         } else {
