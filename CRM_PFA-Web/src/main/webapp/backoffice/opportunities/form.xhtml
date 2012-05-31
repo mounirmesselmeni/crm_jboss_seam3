@@ -27,9 +27,14 @@
                         <f:selectItems value="#{enumValues.opportunityTypes}" var="_c" itemValue="#{_c}" itemLabel="#{_c.displayName}" />  
                     </p:selectOneMenu>
                     <h:outputLabel value="Liée à :" styleClass="titleLib"/> 
-                    <p:selectOneMenu value="#{opportunityController.opportunity.relatedTo}" converter="accountConverter" styleClass="full-width">
+                    <p:selectOneMenu value="#{opportunityController.selectedAccount}" converter="accountConverter" styleClass="full-width">
                         <f:selectItem  itemValue="#{null}" itemLabel="Sélectionnez" />  
                         <f:selectItems value="#{lstAccounts}" var="_a" itemValue="#{_a}" itemLabel="#{_a.name}" />  
+                        <p:ajax event="change" update="contact"/>
+                    </p:selectOneMenu>
+                    <p:selectOneMenu id="contact" value="#{opportunityController.opportunity.relatedTo}" converter="contactConverter" styleClass="full-width">
+                        <f:selectItem  itemValue="#{null}" itemLabel="Sélectionnez" />  
+                        <f:selectItems value="#{opportunityController.contactsByAccount}" var="_a" itemValue="#{_a}" itemLabel="#{_a.lastName}" />  
                     </p:selectOneMenu>
                     <h:outputLabel value="Date de clôture prévue :" styleClass="titleLib"/>  
                     <p:calendar id="startDate" pattern="dd/MM/yyyy" value="#{opportunityController.opportunity.closeDate}"  
@@ -50,7 +55,7 @@
                         <td colspan="2">
                             <h:panelGrid columns="8" cellspacing="8">
                                 <h:outputText value="Catégorie" styleClass="fs12 gras"/>
-                                <p:selectOneMenu   value="#{opportunityController.filterCategory}"
+                                <p:selectOneMenu   value="#{itemsToPurchaseController.filterCategory}"
                                                    styleClass="fs12">
                                     <f:selectItem itemLabel="-- Toutes --" itemValue="#{null}"/> 
                                     <f:selectItems value="#{lstCategories}" var="c" 
@@ -59,15 +64,11 @@
                                 </p:selectOneMenu>
                                 <p:spacer width="10"/>
                                 <h:outputText value="Recherche par nom" styleClass="fs12 gras"/>
-                                <p:inputText id="nom" value="#{opportunityController.filterProductName}" >
+                                <p:inputText id="nom" value="#{itemsToPurchaseController.filterProductName}" >
                                     <p:ajax event="blur"/>
                                 </p:inputText>
-                                <ui:remove>
-                                <p:autoComplete id="nom" value="#{opportunityController.filterProductName}" forceSelection="true"   
-                                                completeMethod="#{opportunityController.complete(query)}"/>  
-                                </ui:remove>
                                 <p:commandLink title="Filtrer" immediate="true" update="groupProducts"
-                                               action="#{opportunityController.populateProducts()}">
+                                               action="#{itemsToPurchaseController.populateProducts()}">
                                     <h:graphicImage library="images" name="icons/filter.png"/>   
                                 </p:commandLink>
 
@@ -78,7 +79,7 @@
                     <tr>
                         <td valign="top" style="width: 250px">
                             <h:panelGroup id="groupProducts">
-                            <p:galleria id="contentGalleria" rendered="#{opportunityController.products.size() gt 0}" value="#{opportunityController.products}" 
+                            <p:galleria id="contentGalleria" rendered="#{itemsToPurchaseController.products.size() gt 0}" value="#{itemsToPurchaseController.products}" 
                                         var="product" frameWidth="70" frameHeight="100"  
                                         panelWidth="240" panelHeight="280" transitionInterval="0"  
                                         styleClass="ui-widget-content ui-corner-all">  
@@ -89,7 +90,7 @@
                                             <f:facet name="header">  
                                                 <p:commandLink  title="Ajouter " oncomplete="cartDialog.show()" immediate="true">
                                                     <p:graphicImage value="/CRMData/products/#{product.image}"  width="120" height="140"/>  
-                                                    <f:setPropertyActionListener target="#{opportunityController.selctedProduct}" value="#{product}"/>
+                                                    <f:setPropertyActionListener target="#{itemsToPurchaseController.selctedProduct}" value="#{product}"/>
                                                 </p:commandLink>
                                             </f:facet>  
                                             <h:outputText value="Référence"/>
@@ -106,18 +107,18 @@
                                     </center>
                                 </p:galleriaContent>  
                             </p:galleria>
-                            <h:outputLabel value="Pas de produits trouvés" rendered="#{opportunityController.products.size() eq 0}"/>
+                            <h:outputLabel value="Pas de produits trouvés" rendered="#{itemsToPurchaseController.products.size() eq 0}"/>
                             </h:panelGroup>
                         </td>
                         <td valign="top" style="width: 400px">
                             <p:panel header="Items séléctionnés" id="cartPanel" >
-                                <ui:repeat  value="#{opportunityController.itemsToPurchase}" var="item">
+                                <ui:repeat  value="#{itemsToPurchaseController.itemsToPurchase}" var="item">
 
                                     <h:panelGrid columns="4" style="width: 100%">
                                         <p:graphicImage value="/CRMData/products/#{item.product.image}"  width="30" height="50"/>   
                                         <h:outputLabel value="#{item.product} "/>
                                         <h:outputLabel value=" Quantité: #{item.quantity}"/>
-                                        <p:commandLink  title="Supprimer"  immediate="true" action="#{opportunityController.removeItem(item)}" update="@form">
+                                        <p:commandLink  title="Supprimer"  immediate="true" action="#{itemsToPurchaseController.removeItem(item)}" update="@form">
                                             <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
                                         </p:commandLink>
                                     </h:panelGrid>        
@@ -137,15 +138,15 @@
                  >
             <h:panelGrid columns="2" style="width: 100%">
                 <h:outputText value="Référence"/>
-                <h:outputText value="#{opportunityController.selctedProduct.reference}"/>
+                <h:outputText value="#{itemsToPurchaseController.selctedProduct.reference}"/>
                 <h:outputText value="Libellé"/>
-                <h:outputText value="#{opportunityController.selctedProduct.name}"/>
+                <h:outputText value="#{itemsToPurchaseController.selctedProduct.name}"/>
                 <h:outputText value="Prix ordinaire"/>
-                <h:outputText value="#{opportunityController.selctedProduct.price}"/>
+                <h:outputText value="#{itemsToPurchaseController.selctedProduct.price}"/>
                 <h:outputText value="Prix d'opportunité"/>
                 <p:spacer/>
                 <h:outputText value="Quantité :" styleClass="titleLib"/>
-                <p:inputText value="#{opportunityController.quantity}"/>
+                <p:inputText value="#{itemsToPurchaseController.quantity}"/>
             </h:panelGrid>
             <table width="100%" border="0">
                 <tr >
@@ -157,7 +158,7 @@
                     </td>
                     <td  width="20%" height="20px">
                         <p:commandButton   value="Ajouter" styleClass="btn_val" oncomplete="cartDialog.hide()" update="@form" immediate="true"
-                                           action="#{opportunityController.addItem()}">
+                                           action="#{itemsToPurchaseController.addItem()}">
                         </p:commandButton>
                     </td>
                 </tr>  

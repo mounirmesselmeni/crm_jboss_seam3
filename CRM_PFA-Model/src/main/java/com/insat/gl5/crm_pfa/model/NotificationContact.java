@@ -4,6 +4,7 @@
  */
 package com.insat.gl5.crm_pfa.model;
 
+import com.insat.gl5.crm_pfa.enumeration.DirectionEnum;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -18,7 +19,9 @@ public class NotificationContact extends BaseEntity {
     private Contact contact;
     @ManyToOne
     private Notification notification;
-
+    @ManyToOne
+    private BackendUser backendUser;
+    private  DirectionEnum direction;
     /**
      * @return the contact
      */
@@ -45,5 +48,33 @@ public class NotificationContact extends BaseEntity {
      */
     public void setNotification(Notification notification) {
         this.notification = notification;
+    }
+
+    /**
+     * @return the backendUser
+     */
+    public BackendUser getBackendUser() {
+        return backendUser;
+    }
+
+    /**
+     * @param backendUser the backendUser to set
+     */
+    public void setBackendUser(BackendUser backendUser) {
+        this.backendUser = backendUser;
+    }
+
+    /**
+     * @return the direction
+     */
+    public DirectionEnum getDirection() {
+        return direction;
+    }
+
+    /**
+     * @param direction the direction to set
+     */
+    public void setDirection(DirectionEnum direction) {
+        this.direction = direction;
     }
 }

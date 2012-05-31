@@ -32,19 +32,17 @@
                         <p:column headerText="Nom" style="width:10%">  
                             <h:outputText value="#{opportunity.name}" />  
                         </p:column>  
-                        <p:column headerText="Type" style="width:30%">  
+                        <p:column headerText="Type" style="width:10%">  
                             <h:outputText value="#{opportunity.type}" />  
                         </p:column>  
-                        <p:column headerText="Déscription" style="width:30%">  
-                            <h:outputText value="#{opportunity.description}" />  
-                        </p:column>  
+                        
                         <p:column headerText="Liée à" style="width:20%">  
                                 <h:outputText value="#{opportunity.relatedTo.name}" />
                         </p:column>  
-                        <p:column headerText="Date de clôture prévue" style="width:30%">  
+                        <p:column headerText="Date de clôture prévue" style="width:20%">  
                                 <h:outputText value="#{opportunity.closeDate}" converter="dateConverter"/>
                         </p:column>  
-                        <p:column headerText="Liste des produits" style="width:20%">
+                        <p:column headerText="Liste des produits" style="width:30%">
                             <ui:repeat value="#{opportunity.itemsToPurchase}" var="item">
                                 <h:outputText value="#{item}" />
                                 <br/>
@@ -55,10 +53,9 @@
                         </p:column>  
                         <p:column headerText="Actions" style="text-align:center;width: 15%">  
 
-                            <p:commandLink  title="Modifier" ajax="false" actionListener="#{opportunityController.loadProducts()}" action="edit?faces-redirect=true">
+                            <p:commandLink  title="Modifier" ajax="false" actionListener="#{opportunityController.loadProducts(opportunity)}" action="edit?faces-redirect=true">
                                 <h:graphicImage library="images" name="constellation/icons/fugue/pencil.png" width="16" height="16"/>
                                 <f:setPropertyActionListener target="#{opportunityController.redirect}" value="list?faces-redirect=true"/>
-                                <f:setPropertyActionListener target="#{opportunityController.opportunity}" value="#{opportunity}"/>
                             </p:commandLink>  
                             <p:spacer width="5"/>
                             <p:commandLink  title="Supprimer" update=":outPutPanel" oncomplete="confirmation.show()"

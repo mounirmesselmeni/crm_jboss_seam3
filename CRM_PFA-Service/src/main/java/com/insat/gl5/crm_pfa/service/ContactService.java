@@ -4,6 +4,7 @@
  */
 package com.insat.gl5.crm_pfa.service;
 
+import com.insat.gl5.crm_pfa.model.Account;
 import com.insat.gl5.crm_pfa.model.ActivationCode;
 import com.insat.gl5.crm_pfa.model.Contact;
 import java.util.List;
@@ -72,6 +73,15 @@ public class ContactService extends GenericService{
      */
     public List<Contact> getAllContacts() {
         TypedQuery query = em.createQuery("SELECT c FROM Contact c", Contact.class);
+        return query.getResultList();
+    }
+     /**
+     * Get a list of all contacts by account
+     *
+     * @return 
+     */
+    public List<Contact> getContactsByAccount(Account account) {
+        TypedQuery query = em.createQuery("SELECT c FROM Contact c WHERE c.account =?1", Contact.class).setParameter(1, account);
         return query.getResultList();
     }
     

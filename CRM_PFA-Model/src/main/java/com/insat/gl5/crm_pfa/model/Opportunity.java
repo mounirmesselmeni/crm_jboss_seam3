@@ -23,16 +23,16 @@ public class Opportunity extends BaseEntity {
     @Temporal(TemporalType.DATE)
     private Date closeDate;
     @ManyToOne
-    @JoinColumn(name = "accountId")
-    private Account relatedTo;
-    @ManyToOne
     @JoinColumn(name = "contactId")
-    private Contact assignedTo;
+    private Contact relatedTo;
+    @ManyToOne
+    @JoinColumn(name = "backendUserId")
+    private BackendUser assignedTo;
     @OneToMany(cascade = CascadeType.ALL)
     private List<ItemToPurchase> itemsToPurchase = new LinkedList<ItemToPurchase>();
 
     public double getTotalFidelityPrice() {
-        double total = getTotalPrice() * getRelatedTo().getFidelity().getScore();
+        double total = getTotalPrice() * getRelatedTo().getAccount().getFidelity().getScore();
         return total;
     }
 
@@ -114,37 +114,38 @@ public class Opportunity extends BaseEntity {
         this.itemsToPurchase = itemsToPurchase;
     }
 
+
+    @Override
+    public String toString() {
+        return name ;
+    }
+
     /**
      * @return the relatedTo
      */
-    public Account getRelatedTo() {
+    public Contact getRelatedTo() {
         return relatedTo;
     }
 
     /**
      * @param relatedTo the relatedTo to set
      */
-    public void setRelatedTo(Account relatedTo) {
+    public void setRelatedTo(Contact relatedTo) {
         this.relatedTo = relatedTo;
     }
 
     /**
      * @return the assignedTo
      */
-    public Contact getAssignedTo() {
+    public BackendUser getAssignedTo() {
         return assignedTo;
     }
 
     /**
      * @param assignedTo the assignedTo to set
      */
-    public void setAssignedTo(Contact assignedTo) {
+    public void setAssignedTo(BackendUser assignedTo) {
         this.assignedTo = assignedTo;
-    }
-
-    @Override
-    public String toString() {
-        return name ;
     }
     
 }

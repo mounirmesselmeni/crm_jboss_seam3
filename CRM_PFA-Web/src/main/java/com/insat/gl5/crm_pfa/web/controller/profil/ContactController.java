@@ -208,7 +208,7 @@ public class ContactController extends ConversationController {
             messages.info("Contact {0} est enregistré avec succés !", getContact());
             ActivationCode activationCode = new ActivationCode(contact);
             contactService.saveActivationCode(activationCode);
-            Person receiver = new Person(contact.getFirstName(), contact.getLstEmails().get(0).getValue());
+            Person receiver = new Person(contact.getLastName(), contact.getLstEmails().get(0).getValue());
             mailService.sendJoinInvitation(receiver,activationCode.getCode(), contact.getLogin());
             setContact(null);
         }catch(MalformedURLException ex){
