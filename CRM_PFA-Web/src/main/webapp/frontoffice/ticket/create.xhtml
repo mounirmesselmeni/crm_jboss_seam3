@@ -9,10 +9,44 @@
 
     <ui:define name="body">
         <p:panel header="Nouvelle ticket">
+            <p:messages autoUpdate="true"/>
             <h:form>
-                
+                <h:panelGrid columns="3" style="width: 100%;">
+                    <h:outputText value="Type :"/>
+                    <p:selectOneMenu id="ticketType" value="#{ticketController.ticket.type}" styleClass="full-width"
+                                     required="true" requiredMessage="Valeur requise" style="width: 350px;">
+                        <f:selectItems value="#{enumValues.ticketTypes}" var="ticketType" itemValue="#{ticketType}" itemLabel="#{ticketType.displayName}"/>
+                    </p:selectOneMenu>
+                    <p:message for="ticketType"/>
+                    <h:outputText value="Sujet :"/>
+                    <p:inputText id="ticketSubject" value="#{ticketController.ticket.subject}" 
+                                 required="true" requiredMessage="Valeur requise" style="width: 350px;"/>
+                    <p:message for="ticketSubject"/>
+                    <h:outputText value="Contenu :"/>
+                    <p:inputTextarea id="ticketContent" value="#{ticketController.ticket.content}" 
+                                     required="true" requiredMessage="Valeur requise" style="width: 350px;height: 200px"/>
+                    <p:message for="ticketContent"/>
+                </h:panelGrid>
+                <p:spacer height="20"/>
+                <table width="100%" border="0">
+                    <tr >
+                        <td width="20%" height="20px">
+                            <p:commandButton   styleClass="btn_annul" value="Annuler" ajax="false" actionListener="#{fileUploadController.resetFile()}" 
+                                               action="#{ticketController.cancel('list')}"
+                                               immediate="true" />
+                        </td>
+                        <td width="60%" >
+                        </td>
+                        <td  width="20%" height="20px" align="right">
+                            <p:commandButton  
+                                ajax="false"  value="Créer"
+                                styleClass="btn_val" action="#{ticketController.createTicket()}"
+                                />
+                        </td>
+                    </tr>  
+                </table>
             </h:form>
         </p:panel>
     </ui:define>
-    
+
 </ui:composition>

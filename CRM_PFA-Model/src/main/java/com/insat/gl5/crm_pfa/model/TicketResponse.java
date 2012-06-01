@@ -17,7 +17,7 @@ public class TicketResponse extends BaseEntity{
     @Lob
     private String content;
     @ManyToOne
-    private BackendUser crmUser;
+    private BackendUser backendUser;
     @ManyToOne
     private Ticket ticket;
 
@@ -50,16 +50,16 @@ public class TicketResponse extends BaseEntity{
     }
 
     /**
-     * @return the crmUser
+     * @return the backendUser
      */
-    public BackendUser getCrmUser() {
-        return crmUser;
+    public BackendUser getBackendUser() {
+        return backendUser;
     }
 
     /**
-     * @param crmUser the crmUser to set
+     * @param backendUser the backendUser to set
      */
-    public void setCrmUser(BackendUser crmUser) {
-        this.crmUser = crmUser;
+    public void setBackendUser(BackendUser backendUser) {
+        this.backendUser = backendUser;
     }
 }

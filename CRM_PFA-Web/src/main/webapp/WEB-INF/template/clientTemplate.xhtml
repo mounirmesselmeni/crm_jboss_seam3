@@ -29,7 +29,11 @@
                         <p:menuitem value="A propos" icon="/resources/images/menu/A_propos.png" onclick="dlg3.show();"/>
                     </p:dock>
                 </h:form>
-                <h:outputText value="Bienvenue #{currentContact.firstName} #{currentContact.lastName}"/>
+                <h:form>
+                    <h:outputText value="Bienvenue #{currentContact.firstName} #{currentContact.lastName}"/>
+                    <br/>
+                    <p:commandLink value="Logout" action="#{identity.logout()}" ajax="false"/>
+                </h:form>
             </ui:insert>
         </div>
         <div>

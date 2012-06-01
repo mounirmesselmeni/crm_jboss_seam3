@@ -39,11 +39,11 @@ CREATE TABLE `Account` (
   KEY `FK1D0C220D123FCEEF` (`crmUser_id`),
   KEY `FK1D0C220DB25605B` (`fidelity_id`),
   KEY `FK1D0C220D69C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK1D0C220D69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK1D0C220D123FCEEF` FOREIGN KEY (`crmUser_id`) REFERENCES `BackendUser` (`id`),
   CONSTRAINT `FK1D0C220D64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK1D0C220D69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK1D0C220DB25605B` FOREIGN KEY (`fidelity_id`) REFERENCES `Fidelity` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,6 +52,7 @@ CREATE TABLE `Account` (
 
 LOCK TABLES `Account` WRITE;
 /*!40000 ALTER TABLE `Account` DISABLE KEYS */;
+INSERT INTO `Account` VALUES (1,'2012-06-01 00:34:12','2012-06-01 00:34:12','Samsung.png','Samsung','CLIENT','www.samsung.com',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `Account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,8 +69,8 @@ CREATE TABLE `Account_Address` (
   UNIQUE KEY `lstAddresses_id` (`lstAddresses_id`),
   KEY `FK9AA39FA23E011A19` (`Account_id`),
   KEY `FK9AA39FA2F24D2298` (`lstAddresses_id`),
-  CONSTRAINT `FK9AA39FA2F24D2298` FOREIGN KEY (`lstAddresses_id`) REFERENCES `Address` (`id`),
-  CONSTRAINT `FK9AA39FA23E011A19` FOREIGN KEY (`Account_id`) REFERENCES `Account` (`id`)
+  CONSTRAINT `FK9AA39FA23E011A19` FOREIGN KEY (`Account_id`) REFERENCES `Account` (`id`),
+  CONSTRAINT `FK9AA39FA2F24D2298` FOREIGN KEY (`lstAddresses_id`) REFERENCES `Address` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -79,6 +80,7 @@ CREATE TABLE `Account_Address` (
 
 LOCK TABLES `Account_Address` WRITE;
 /*!40000 ALTER TABLE `Account_Address` DISABLE KEYS */;
+INSERT INTO `Account_Address` VALUES (1,1);
 /*!40000 ALTER TABLE `Account_Address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,6 +108,7 @@ CREATE TABLE `Account_EmailAdress` (
 
 LOCK TABLES `Account_EmailAdress` WRITE;
 /*!40000 ALTER TABLE `Account_EmailAdress` DISABLE KEYS */;
+INSERT INTO `Account_EmailAdress` VALUES (1,1);
 /*!40000 ALTER TABLE `Account_EmailAdress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,6 +136,7 @@ CREATE TABLE `Account_PhoneNumber` (
 
 LOCK TABLES `Account_PhoneNumber` WRITE;
 /*!40000 ALTER TABLE `Account_PhoneNumber` DISABLE KEYS */;
+INSERT INTO `Account_PhoneNumber` VALUES (1,1);
 /*!40000 ALTER TABLE `Account_PhoneNumber` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,8 +159,8 @@ CREATE TABLE `ActivationCode` (
   KEY `FK741EF44364589BBA` (`createdBy_id`),
   KEY `FK741EF443F51CF139` (`contact_id`),
   KEY `FK741EF44369C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK741EF44369C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK741EF44364589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK741EF44369C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK741EF443F51CF139` FOREIGN KEY (`contact_id`) REFERENCES `Contact` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -191,9 +195,9 @@ CREATE TABLE `Address` (
   PRIMARY KEY (`id`),
   KEY `FK1ED033D464589BBA` (`createdBy_id`),
   KEY `FK1ED033D469C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK1ED033D469C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FK1ED033D464589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `FK1ED033D464589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK1ED033D469C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,6 +206,7 @@ CREATE TABLE `Address` (
 
 LOCK TABLES `Address` WRITE;
 /*!40000 ALTER TABLE `Address` DISABLE KEYS */;
+INSERT INTO `Address` VALUES (1,'2012-06-01 00:34:12','2012-06-01 00:34:12','sdtsdft','TUNIS','8888','dghgshg','TRAVAIL',NULL,NULL),(2,'2012-06-01 00:34:54','2012-06-01 00:34:54','qefdfs','TUNIS','8888','dfqfdsfqdsff','TRAVAIL',NULL,NULL);
 /*!40000 ALTER TABLE `Address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,8 +252,8 @@ CREATE TABLE `Category` (
   PRIMARY KEY (`id`),
   KEY `FK6DD211E64589BBA` (`createdBy_id`),
   KEY `FK6DD211E69C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK6DD211E69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FK6DD211E64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`)
+  CONSTRAINT `FK6DD211E64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK6DD211E69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -278,8 +283,8 @@ CREATE TABLE `Contact` (
   PRIMARY KEY (`id`),
   KEY `FK9BEFBC00F1C94363` (`id`),
   KEY `FK9BEFBC00FCBDB4` (`accountId`),
-  CONSTRAINT `FK9BEFBC00FCBDB4` FOREIGN KEY (`accountId`) REFERENCES `Account` (`id`),
-  CONSTRAINT `FK9BEFBC00F1C94363` FOREIGN KEY (`id`) REFERENCES `CrmUser` (`id`)
+  CONSTRAINT `FK9BEFBC00F1C94363` FOREIGN KEY (`id`) REFERENCES `CrmUser` (`id`),
+  CONSTRAINT `FK9BEFBC00FCBDB4` FOREIGN KEY (`accountId`) REFERENCES `Account` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -289,6 +294,7 @@ CREATE TABLE `Contact` (
 
 LOCK TABLES `Contact` WRITE;
 /*!40000 ALTER TABLE `Contact` DISABLE KEYS */;
+INSERT INTO `Contact` VALUES ('Messelmeni','mounir.png','Mounir','MR',2,1);
 /*!40000 ALTER TABLE `Contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,6 +322,7 @@ CREATE TABLE `Contact_Address` (
 
 LOCK TABLES `Contact_Address` WRITE;
 /*!40000 ALTER TABLE `Contact_Address` DISABLE KEYS */;
+INSERT INTO `Contact_Address` VALUES (2,2);
 /*!40000 ALTER TABLE `Contact_Address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,8 +339,8 @@ CREATE TABLE `Contact_PhoneNumber` (
   UNIQUE KEY `lstPhoneNumbers_id` (`lstPhoneNumbers_id`),
   KEY `FK5D707C78F51CF139` (`Contact_id`),
   KEY `FK5D707C78FB189207` (`lstPhoneNumbers_id`),
-  CONSTRAINT `FK5D707C78FB189207` FOREIGN KEY (`lstPhoneNumbers_id`) REFERENCES `PhoneNumber` (`id`),
-  CONSTRAINT `FK5D707C78F51CF139` FOREIGN KEY (`Contact_id`) REFERENCES `Contact` (`id`)
+  CONSTRAINT `FK5D707C78F51CF139` FOREIGN KEY (`Contact_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK5D707C78FB189207` FOREIGN KEY (`lstPhoneNumbers_id`) REFERENCES `PhoneNumber` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -343,6 +350,7 @@ CREATE TABLE `Contact_PhoneNumber` (
 
 LOCK TABLES `Contact_PhoneNumber` WRITE;
 /*!40000 ALTER TABLE `Contact_PhoneNumber` DISABLE KEYS */;
+INSERT INTO `Contact_PhoneNumber` VALUES (2,2);
 /*!40000 ALTER TABLE `Contact_PhoneNumber` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -363,9 +371,9 @@ CREATE TABLE `CrmUser` (
   PRIMARY KEY (`id`),
   KEY `FKA0F25AA964589BBA` (`createdBy_id`),
   KEY `FKA0F25AA969C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FKA0F25AA969C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FKA0F25AA964589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  CONSTRAINT `FKA0F25AA964589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FKA0F25AA969C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -374,7 +382,7 @@ CREATE TABLE `CrmUser` (
 
 LOCK TABLES `CrmUser` WRITE;
 /*!40000 ALTER TABLE `CrmUser` DISABLE KEYS */;
-INSERT INTO `CrmUser` VALUES (1,'2012-05-31 18:45:36','2012-05-31 18:45:36','commercial1',NULL,NULL);
+INSERT INTO `CrmUser` VALUES (1,'2012-06-01 00:33:06','2012-06-01 00:33:06','admin',NULL,NULL),(2,'2012-06-01 00:34:54','2012-06-01 00:34:54','mounir',NULL,NULL);
 /*!40000 ALTER TABLE `CrmUser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,6 +410,7 @@ CREATE TABLE `CrmUser_EmailAdress` (
 
 LOCK TABLES `CrmUser_EmailAdress` WRITE;
 /*!40000 ALTER TABLE `CrmUser_EmailAdress` DISABLE KEYS */;
+INSERT INTO `CrmUser_EmailAdress` VALUES (2,2);
 /*!40000 ALTER TABLE `CrmUser_EmailAdress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -423,8 +432,8 @@ CREATE TABLE `Devis` (
   KEY `FK3EDEFDF64589BBA` (`createdBy_id`),
   KEY `FK3EDEFDFF51CF139` (`contact_id`),
   KEY `FK3EDEFDF69C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK3EDEFDF69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK3EDEFDF64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK3EDEFDF69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK3EDEFDFF51CF139` FOREIGN KEY (`contact_id`) REFERENCES `Contact` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -451,8 +460,8 @@ CREATE TABLE `Devis_ItemToPurchase` (
   UNIQUE KEY `itemsToPurchase_id` (`itemsToPurchase_id`),
   KEY `FKD0AF588F93D12FAE` (`itemsToPurchase_id`),
   KEY `FKD0AF588FEBD94499` (`Devis_id`),
-  CONSTRAINT `FKD0AF588FEBD94499` FOREIGN KEY (`Devis_id`) REFERENCES `Devis` (`id`),
-  CONSTRAINT `FKD0AF588F93D12FAE` FOREIGN KEY (`itemsToPurchase_id`) REFERENCES `ItemToPurchase` (`id`)
+  CONSTRAINT `FKD0AF588F93D12FAE` FOREIGN KEY (`itemsToPurchase_id`) REFERENCES `ItemToPurchase` (`id`),
+  CONSTRAINT `FKD0AF588FEBD94499` FOREIGN KEY (`Devis_id`) REFERENCES `Devis` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -483,9 +492,9 @@ CREATE TABLE `EmailAdress` (
   UNIQUE KEY `emailAdress` (`emailAdress`),
   KEY `FKB3F5591264589BBA` (`createdBy_id`),
   KEY `FKB3F5591269C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FKB3F5591269C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FKB3F5591264589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `FKB3F5591264589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FKB3F5591269C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -494,6 +503,7 @@ CREATE TABLE `EmailAdress` (
 
 LOCK TABLES `EmailAdress` WRITE;
 /*!40000 ALTER TABLE `EmailAdress` DISABLE KEYS */;
+INSERT INTO `EmailAdress` VALUES (1,'2012-06-01 00:34:12','2012-06-01 00:34:12','fsgg@sfsf.com',NULL,NULL),(2,'2012-06-01 00:34:54','2012-06-01 00:34:54','messelmeni.mounir@gmail.com',NULL,NULL);
 /*!40000 ALTER TABLE `EmailAdress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -516,9 +526,9 @@ CREATE TABLE `Fidelity` (
   KEY `FKCA67276664589BBA` (`createdBy_id`),
   KEY `FKCA6727663E011A19` (`account_id`),
   KEY `FKCA67276669C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FKCA67276669C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FKCA6727663E011A19` FOREIGN KEY (`account_id`) REFERENCES `Account` (`id`),
-  CONSTRAINT `FKCA67276664589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`)
+  CONSTRAINT `FKCA67276664589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FKCA67276669C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -555,7 +565,7 @@ CREATE TABLE `IdentityObject` (
 
 LOCK TABLES `IdentityObject` WRITE;
 /*!40000 ALTER TABLE `IdentityObject` DISABLE KEYS */;
-INSERT INTO `IdentityObject` VALUES (3,'',NULL),(2,'commercial1',2),(1,'crm',1);
+INSERT INTO `IdentityObject` VALUES (2,'admin',2),(1,'crm',1),(3,'mounir',2);
 /*!40000 ALTER TABLE `IdentityObject` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -575,7 +585,7 @@ CREATE TABLE `IdentityObjectAttribute` (
   UNIQUE KEY `name` (`name`,`IDENTITY_OBJECT_ID`),
   KEY `FKEB1F295FC42863A4` (`IDENTITY_OBJECT_ID`),
   CONSTRAINT `FKEB1F295FC42863A4` FOREIGN KEY (`IDENTITY_OBJECT_ID`) REFERENCES `IdentityObject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -584,7 +594,7 @@ CREATE TABLE `IdentityObjectAttribute` (
 
 LOCK TABLES `IdentityObjectAttribute` WRITE;
 /*!40000 ALTER TABLE `IdentityObjectAttribute` DISABLE KEYS */;
-INSERT INTO `IdentityObjectAttribute` VALUES (1,'informationUser','1',2);
+INSERT INTO `IdentityObjectAttribute` VALUES (1,'informationUser','1',2),(2,'informationUser','2',3);
 /*!40000 ALTER TABLE `IdentityObjectAttribute` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -606,7 +616,7 @@ CREATE TABLE `IdentityObjectCredential` (
   KEY `FK37DC41F48B732EF3` (`CREDENTIAL_TYPE_ID`),
   CONSTRAINT `FK37DC41F48B732EF3` FOREIGN KEY (`CREDENTIAL_TYPE_ID`) REFERENCES `IdentityObjectCredentialType` (`id`),
   CONSTRAINT `FK37DC41F4C42863A4` FOREIGN KEY (`IDENTITY_OBJECT_ID`) REFERENCES `IdentityObject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -615,7 +625,7 @@ CREATE TABLE `IdentityObjectCredential` (
 
 LOCK TABLES `IdentityObjectCredential` WRITE;
 /*!40000 ALTER TABLE `IdentityObjectCredential` DISABLE KEYS */;
-INSERT INTO `IdentityObjectCredential` VALUES (1,'admin',2,1);
+INSERT INTO `IdentityObjectCredential` VALUES (1,'admin',2,1),(2,'elmes',3,1);
 /*!40000 ALTER TABLE `IdentityObjectCredential` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -662,10 +672,10 @@ CREATE TABLE `IdentityObjectRelationship` (
   KEY `FK8C4CDC953DE562F1` (`FROM_IDENTITY_ID`),
   KEY `FK8C4CDC95A06CA842` (`TO_IDENTITY_ID`),
   KEY `FK8C4CDC95EB830EB5` (`RELATIONSHIP_TYPE_ID`),
-  CONSTRAINT `FK8C4CDC95EB830EB5` FOREIGN KEY (`RELATIONSHIP_TYPE_ID`) REFERENCES `IdentityObjectRelationshipType` (`id`),
   CONSTRAINT `FK8C4CDC953DE562F1` FOREIGN KEY (`FROM_IDENTITY_ID`) REFERENCES `IdentityObject` (`id`),
-  CONSTRAINT `FK8C4CDC95A06CA842` FOREIGN KEY (`TO_IDENTITY_ID`) REFERENCES `IdentityObject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  CONSTRAINT `FK8C4CDC95A06CA842` FOREIGN KEY (`TO_IDENTITY_ID`) REFERENCES `IdentityObject` (`id`),
+  CONSTRAINT `FK8C4CDC95EB830EB5` FOREIGN KEY (`RELATIONSHIP_TYPE_ID`) REFERENCES `IdentityObjectRelationshipType` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -674,7 +684,7 @@ CREATE TABLE `IdentityObjectRelationship` (
 
 LOCK TABLES `IdentityObjectRelationship` WRITE;
 /*!40000 ALTER TABLE `IdentityObjectRelationship` DISABLE KEYS */;
-INSERT INTO `IdentityObjectRelationship` VALUES (1,'commercial',1,1,2);
+INSERT INTO `IdentityObjectRelationship` VALUES (1,'admin',1,1,2),(2,'client',1,1,3);
 /*!40000 ALTER TABLE `IdentityObjectRelationship` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -803,8 +813,8 @@ CREATE TABLE `ItemToPurchase` (
   KEY `FKC79C742F64589BBA` (`createdBy_id`),
   KEY `FKC79C742FA1A0AD9` (`product_id`),
   KEY `FKC79C742F69C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FKC79C742F69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FKC79C742F64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FKC79C742F69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FKC79C742FA1A0AD9` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -840,9 +850,9 @@ CREATE TABLE `MeetingConfirmation` (
   KEY `FKD8D771F0995C1C7B` (`task_id`),
   KEY `FKD8D771F046270F74` (`contactToConfirm_id`),
   KEY `FKD8D771F069C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FKD8D771F069C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FKD8D771F046270F74` FOREIGN KEY (`contactToConfirm_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FKD8D771F064589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FKD8D771F069C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FKD8D771F0995C1C7B` FOREIGN KEY (`task_id`) REFERENCES `Task` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -876,8 +886,8 @@ CREATE TABLE `Notification` (
   PRIMARY KEY (`id`),
   KEY `FK2D45DD0B64589BBA` (`createdBy_id`),
   KEY `FK2D45DD0B69C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK2D45DD0B69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FK2D45DD0B64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`)
+  CONSTRAINT `FK2D45DD0B64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK2D45DD0B69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -910,9 +920,9 @@ CREATE TABLE `NotificationContact` (
   KEY `FKC1742C95675729BB` (`notification_id`),
   KEY `FKC1742C95F51CF139` (`contact_id`),
   KEY `FKC1742C9569C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FKC1742C9569C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FKC1742C9564589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FKC1742C95675729BB` FOREIGN KEY (`notification_id`) REFERENCES `Notification` (`id`),
+  CONSTRAINT `FKC1742C9569C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FKC1742C95F51CF139` FOREIGN KEY (`contact_id`) REFERENCES `Contact` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -950,8 +960,8 @@ CREATE TABLE `Opportunity` (
   KEY `FK16648EB3D44540DA` (`contactId`),
   KEY `FK16648EB3FCBDB4` (`accountId`),
   KEY `FK16648EB369C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK16648EB369C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK16648EB364589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK16648EB369C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK16648EB3D44540DA` FOREIGN KEY (`contactId`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK16648EB3FCBDB4` FOREIGN KEY (`accountId`) REFERENCES `Account` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -979,8 +989,8 @@ CREATE TABLE `Opportunity_ItemToPurchase` (
   UNIQUE KEY `itemsToPurchase_id` (`itemsToPurchase_id`),
   KEY `FK9734B73B3ECB38D9` (`Opportunity_id`),
   KEY `FK9734B73B93D12FAE` (`itemsToPurchase_id`),
-  CONSTRAINT `FK9734B73B93D12FAE` FOREIGN KEY (`itemsToPurchase_id`) REFERENCES `ItemToPurchase` (`id`),
-  CONSTRAINT `FK9734B73B3ECB38D9` FOREIGN KEY (`Opportunity_id`) REFERENCES `Opportunity` (`id`)
+  CONSTRAINT `FK9734B73B3ECB38D9` FOREIGN KEY (`Opportunity_id`) REFERENCES `Opportunity` (`id`),
+  CONSTRAINT `FK9734B73B93D12FAE` FOREIGN KEY (`itemsToPurchase_id`) REFERENCES `ItemToPurchase` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1011,9 +1021,9 @@ CREATE TABLE `PhoneNumber` (
   PRIMARY KEY (`id`),
   KEY `FK1C4E623764589BBA` (`createdBy_id`),
   KEY `FK1C4E623769C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK1C4E623769C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FK1C4E623764589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `FK1C4E623764589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK1C4E623769C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1022,6 +1032,7 @@ CREATE TABLE `PhoneNumber` (
 
 LOCK TABLES `PhoneNumber` WRITE;
 /*!40000 ALTER TABLE `PhoneNumber` DISABLE KEYS */;
+INSERT INTO `PhoneNumber` VALUES (1,'2012-06-01 00:34:12','2012-06-01 00:34:12','88-888-888','TRAVAIL',NULL,NULL),(2,'2012-06-01 00:34:54','2012-06-01 00:34:54','55 555 555','TRAVAIL',NULL,NULL);
 /*!40000 ALTER TABLE `PhoneNumber` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1051,9 +1062,9 @@ CREATE TABLE `Product` (
   KEY `FK50C664CF2C8A655B` (`category_id`),
   KEY `FK50C664CFAB3B5059` (`tva_id`),
   KEY `FK50C664CF69C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK50C664CF69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK50C664CF2C8A655B` FOREIGN KEY (`category_id`) REFERENCES `Category` (`id`),
   CONSTRAINT `FK50C664CF64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK50C664CF69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK50C664CFAB3B5059` FOREIGN KEY (`tva_id`) REFERENCES `TVA` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1085,8 +1096,8 @@ CREATE TABLE `TVA` (
   PRIMARY KEY (`id`),
   KEY `FK145FF64589BBA` (`createdBy_id`),
   KEY `FK145FF69C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK145FF69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FK145FF64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`)
+  CONSTRAINT `FK145FF64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK145FF69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1125,9 +1136,9 @@ CREATE TABLE `Task` (
   KEY `FK27A9A5B06F87F0` (`assignedTo_id`),
   KEY `FK27A9A53EFD89AD` (`creator_id`),
   KEY `FK27A9A569C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK27A9A569C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK27A9A53EFD89AD` FOREIGN KEY (`creator_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK27A9A564589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK27A9A569C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK27A9A5B06F87F0` FOREIGN KEY (`assignedTo_id`) REFERENCES `Contact` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1163,10 +1174,10 @@ CREATE TABLE `Ticket` (
   KEY `FK954D572C64589BBA` (`createdBy_id`),
   KEY `FK954D572C3EFD89AD` (`creator_id`),
   KEY `FK954D572C69C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FK954D572C69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK954D572C3EFD89AD` FOREIGN KEY (`creator_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FK954D572C64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `FK954D572C64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK954D572C69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1175,6 +1186,7 @@ CREATE TABLE `Ticket` (
 
 LOCK TABLES `Ticket` WRITE;
 /*!40000 ALTER TABLE `Ticket` DISABLE KEYS */;
+INSERT INTO `Ticket` VALUES (1,'2012-06-01 00:39:29','2012-06-01 00:39:29','dsqfsfqsfgwfxdgvstset',0,'<dfdqsfsdfqsdfqsf','INCIDENT',2,NULL,NULL),(2,'2012-06-01 00:42:23','2012-06-01 00:42:23','qezrtertgsert',0,'<dqfsqfsdfdsqf','INCIDENT',NULL,NULL,2),(3,'2012-06-01 00:42:48','2012-06-01 00:42:48','dqzrsdfstgqefg.\r\n\r\nqdsfsqfgs\r\ndsqfdgsqf\r\n\r\nqsfgqsfgfgs',0,'Avez vous deja vu ?','QUESTION',NULL,NULL,2),(4,'2012-06-01 11:53:28','2012-06-01 11:53:28','Svp j\'ai eu ce code d\'erreur lors de ma derniere connexion à votre systeme.',0,'Bug 34544','INCIDENT',NULL,NULL,2);
 /*!40000 ALTER TABLE `Ticket` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1192,17 +1204,17 @@ CREATE TABLE `TicketResponse` (
   `content` longtext,
   `createdBy_id` bigint(20) DEFAULT NULL,
   `modifiedBy_id` bigint(20) DEFAULT NULL,
-  `crmUser_id` bigint(20) DEFAULT NULL,
+  `backendUser_id` bigint(20) DEFAULT NULL,
   `ticket_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKA55AE38D64589BBA` (`createdBy_id`),
+  KEY `FKA55AE38DEACB179` (`backendUser_id`),
   KEY `FKA55AE38DA42FA6DB` (`ticket_id`),
-  KEY `FKA55AE38D123FCEEF` (`crmUser_id`),
   KEY `FKA55AE38D69C35C79` (`modifiedBy_id`),
-  CONSTRAINT `FKA55AE38D69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FKA55AE38D123FCEEF` FOREIGN KEY (`crmUser_id`) REFERENCES `BackendUser` (`id`),
   CONSTRAINT `FKA55AE38D64589BBA` FOREIGN KEY (`createdBy_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FKA55AE38DA42FA6DB` FOREIGN KEY (`ticket_id`) REFERENCES `Ticket` (`id`)
+  CONSTRAINT `FKA55AE38D69C35C79` FOREIGN KEY (`modifiedBy_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FKA55AE38DA42FA6DB` FOREIGN KEY (`ticket_id`) REFERENCES `Ticket` (`id`),
+  CONSTRAINT `FKA55AE38DEACB179` FOREIGN KEY (`backendUser_id`) REFERENCES `BackendUser` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1224,4 +1236,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-05-31 18:49:26
+-- Dump completed on 2012-06-01 12:09:46

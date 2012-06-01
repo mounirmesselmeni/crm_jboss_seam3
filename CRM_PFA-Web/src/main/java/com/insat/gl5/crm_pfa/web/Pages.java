@@ -20,17 +20,17 @@ public interface Pages {
 
     static enum Configuration {
 
-        @ViewPattern("/backoffice/*")
-        @Admin
-        BACKOFFICE,
-        
-        @ViewPattern("/frontoffice/*")
-        @LoggedIn
-        FRONTOFFICE,
-        
-        @ViewPattern("/*")
-        @AccessDeniedView("/denied.xhtml")
-        @LoginView("/login2.xhtml")
-        ALL;
+//        @ViewPattern("/backoffice/*")
+//        @Admin
+//        BACKOFFICE,
+//        
+//        @ViewPattern("/frontoffice/*")
+//        @LoggedIn
+//        FRONTOFFICE,
+//        
+//        @ViewPattern("/*")
+//        @AccessDeniedView("/denied.xhtml")
+//        @LoginView("/login2.xhtml")
+//        ALL;
     }
 }
