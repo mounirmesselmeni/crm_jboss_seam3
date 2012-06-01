@@ -10,7 +10,8 @@ package com.insat.gl5.crm_pfa.enumeration;
  */
 public enum NotificationType {
     REUNION("Réunion"), 
-    TICKET("Ticket");
+    TICKET("Ticket"),
+    OPPORTUNITE("Opportunité");
     private String displayName;
 
     private NotificationType(String displayName) {

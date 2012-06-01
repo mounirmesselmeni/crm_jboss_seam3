@@ -18,7 +18,7 @@ import javax.persistence.Query;
  * @author Mu7ammed 3li -- mohamed.ali.affes@gmail.com --
  */
 @RequestScoped
-@FacesConverter(value="accountConverter")
+@FacesConverter(forClass = Account.class)
 public class AccountConverter implements Serializable, Converter {
     private static final long serialVersionUID = 1L;
 

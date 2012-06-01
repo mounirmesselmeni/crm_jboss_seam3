@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../WEB-INF/template/clientTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="body">
+        <f:metadata>
+            <f:viewParam name="id" value="#{consultOpportunityController.id}"/>
+            <f:event type="preRenderView"
+                     listener="#{consultOpportunityController.initOpportunity()}" />
+        </f:metadata>
+        <p:panel header="Nouvelle opportunité">
+            <h:form id="formNew"  >
+                <p:messages id="messages" globalOnly="true"/>   
+                <table style="width: 100%">
+                    <tr>
+                        <td style="vertical-align: top">
+                            <h3>Informations générales</h3>
+                            <p:spacer height="10"/>
+                            <h:panelGrid columns="2" cellpadding="4">
+                                <h:outputLabel value="Nom opportunité :" styleClass="titleLib"/>  
+                                <h:outputText value="#{consultOpportunityController.opportunity.name}" styleClass="titleLib"/>  
+                                <h:outputLabel value="Type :" styleClass="titleLib"/>  
+                                <h:outputText value="#{consultOpportunityController.opportunity.type}"/>  
+                                <h:outputLabel value="Date de clôture prévue :" styleClass="titleLib"/>  
+                                <h:outputText value="#{consultOpportunityController.opportunity.closeDate}" converter="dateConverter"/>  
+                                <h:outputLabel value="Déscription :" />  
+                                <p:inputTextarea disabled="true" rows="5" cols="45" value="#{consultOpportunityController.opportunity.description}"/>
+                            </h:panelGrid>
+                        </td>
+                        <td style="vertical-align: top;">
+                            <h3>Produits de l'offre</h3>
+                            <p:spacer height="10"/>
+                            <p:panel header="Items séléctionnés" id="cartPanel" >
+                                <ui:repeat  value="#{consultOpportunityController.opportunity.itemsToPurchase}" var="item">
+
+                                    <h:panelGrid columns="3" style="width: 100%">
+                                        <p:graphicImage value="/CRMData/products/#{item.product.image}"  width="30" height="50"/>   
+                                        <h:outputLabel value="#{item.product} "/>
+                                        <h:outputLabel value=" Quantité: #{item.quantity}"/>
+                                    </h:panelGrid>        
+                                </ui:repeat>
+                            </p:panel>
+                        </td>
+                    </tr>  
+                </table>
+                <p:spacer height="40"/>
+            </h:form>
+        </p:panel>
+         </ui:define >
+</ui:composition>

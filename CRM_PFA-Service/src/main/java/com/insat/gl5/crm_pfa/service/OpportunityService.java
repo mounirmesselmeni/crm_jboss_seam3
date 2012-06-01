@@ -75,4 +75,8 @@ public class OpportunityService extends GenericService{
     private String getDisplayText(Opportunity Opportunity){
         return Opportunity.getType().getDisplayName()+" : "+Opportunity.getName() ;
     }
+    
+    public Opportunity findById(Long id){
+        return em.find(Opportunity.class, id);
+    }
 }

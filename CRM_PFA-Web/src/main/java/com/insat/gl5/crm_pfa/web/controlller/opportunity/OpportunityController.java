@@ -4,13 +4,14 @@
  */
 package com.insat.gl5.crm_pfa.web.controlller.opportunity;
 
+import com.insat.gl5.crm_pfa.enumeration.DirectionEnum;
+import com.insat.gl5.crm_pfa.enumeration.NotificationType;
 import com.insat.gl5.crm_pfa.model.*;
-import com.insat.gl5.crm_pfa.service.ItemToPurchaseService;
+import com.insat.gl5.crm_pfa.service.ContactService;
+import com.insat.gl5.crm_pfa.service.NotificationService;
 import com.insat.gl5.crm_pfa.service.OpportunityService;
-import com.insat.gl5.crm_pfa.service.ProductService;
+import com.insat.gl5.crm_pfa.service.qualifier.CurrentUser;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
-import com.insat.gl5.crm_pfa.web.viewModel.EmailViewModel;
-import com.insat.gl5.crm_pfa.web.viewModel.PhoneNumberViewModel;
 import java.util.LinkedList;
 import java.util.List;
 import javax.enterprise.context.ConversationScoped;
@@ -34,23 +35,21 @@ public class OpportunityController extends ConversationController {
     @Inject
     private OpportunityService opportunityService;
     @Inject
-    private ItemToPurchaseService  itemToPurchaseService;
+    private ContactService contactService;
     @Inject
-    private ProductService productService;
-    private List<Product> products = new LinkedList<Product>();
+    private NotificationService notificationService;
+    @Inject
+    private ItemsToPurchaseController itemsToPurchaseController;
     @Inject
     private Opportunity opportunity;
     @Inject
     private Messages messages;
     private String redirect;
-    //Liste des produits séléctionnés à partir du datatable
-    private List<ItemToPurchase> itemsToPurchase = new LinkedList<ItemToPurchase>();
-    private List<ItemToPurchase> lstItemsToDelete = new LinkedList<ItemToPurchase>();
-    private List<ItemToPurchase> lstItemsToAdd = new LinkedList<ItemToPurchase>();
-    private Product selctedProduct;
-    private int quantity;
-    private Category filterCategory;
-    private String filterProductName;
+    private Account selectedAccount;
+    private List<Contact> selectedContacts;
+    @Inject
+    @CurrentUser
+    private BackendUser currentUser;
 
     /**
      * Save
@@ -64,7 +63,7 @@ public class OpportunityController extends ConversationController {
 
             affectProducts();
             opportunityService.saveOpportunity(getOpportunity());
-
+            notifyContacts();
             messages.info("Opportunité {0} est enregistrée avec succés !", getOpportunity());
             setOpportunity(null);
 
@@ -100,17 +99,17 @@ public class OpportunityController extends ConversationController {
     }
 
     private void editProducts() {
-        for (ItemToPurchase item : lstItemsToDelete) {
+        for (ItemToPurchase item : itemsToPurchaseController.getLstItemsToDelete()) {
             try {
-                itemToPurchaseService.deleteItemToPurchase(item);
+                itemsToPurchaseController.deleteItem(item);
                 opportunity.getItemsToPurchase().remove(item);
             } catch (Exception ex) {
                 messages.error("Erreur de supression de l'item {0}", item);
             }
         }
-        for (ItemToPurchase item : lstItemsToAdd) {
+        for (ItemToPurchase item : itemsToPurchaseController.getLstItemsToAdd()) {
             try {
-                itemToPurchaseService.saveItemToPurchase(item);
+                itemsToPurchaseController.saveItem(item);
                 opportunity.getItemsToPurchase().add(item);
             } catch (Exception ex) {
                 messages.error("Erreur de l'ajout de l'item {0}", item);
@@ -119,21 +118,20 @@ public class OpportunityController extends ConversationController {
     }
 
     public String getOpportunityPrice(Product product) {
-        return String.valueOf(product.getPrice() * ((100 - opportunity.getRelatedTo().getFidelity().getScore()) / 100));
+        return String.valueOf(product.getPrice() * ((100 - opportunity.getRelatedTo().getAccount().getFidelity().getScore()) / 100));
     }
 
-    public void initProducts(){
+    public void initProducts() {
         beginConversation();
-        products = productService.getAllProducts();
+        itemsToPurchaseController.initProducts();
     }
-    public void loadProducts(){
+
+    public void loadProducts(Opportunity o) {
         beginConversation();
-        products = productService.getAllProducts();
-        itemsToPurchase = opportunity.getItemsToPurchase();
-        for(ItemToPurchase item : itemsToPurchase){
-            products.remove(item.getProduct());
-        }
+        opportunity = o;
+        itemsToPurchaseController.loadProducts(opportunity.getItemsToPurchase());
     }
+
     /**
      * Delete
      * the
@@ -154,44 +152,25 @@ public class OpportunityController extends ConversationController {
         endConversation();
     }
 
-    public void addItem() {
-        itemsToPurchase.add(new ItemToPurchase(quantity, selctedProduct));
-        products.remove(selctedProduct);
-    }
-
-    public void removeItem(ItemToPurchase itemToPurchase){
-        itemsToPurchase.remove(itemToPurchase);
-        products.add(itemToPurchase.getProduct());
-    }
     private void affectProducts() {
-        opportunity.setItemsToPurchase(itemsToPurchase);
+        opportunity.setItemsToPurchase(itemsToPurchaseController.getItemsToPurchase());
     }
 
-    public void populateProducts() {
-        products.clear();
-        if (filterCategory == null) {
-            if (filterProductName == null || filterProductName.isEmpty()) {
-                //-------Criteres : none--------//
-                products = productService.getAllProducts();
-                return;
-            }
-                //-------Criteres : ProductName--------//
-            products = productService.findProductsByLikeName(filterProductName);
-            return;
-        }
-         if (filterProductName == null || filterProductName.isEmpty()) {
-                //-------Criteres : Category--------//
-                products = productService.findProductsByCategory(filterCategory);
-                return;
-            }
-                //-------Criteres : Category+productName--------//
-            products = productService.findProductsByLikeNameAndCategory(filterProductName, filterCategory);
+    private void notifyContacts() throws Exception {
+        Notification notification = new Notification();
+        notification.setContent("Vous avez un offre");
+        notification.setLink("/frontoffice/notifications/viewOpportunity?id="+opportunity.getId());
+        notification.setType(NotificationType.OPPORTUNITE);
+        List<NotificationContact> list = new LinkedList<NotificationContact>();
+        NotificationContact notificationContact = new NotificationContact(opportunity.getRelatedTo(), currentUser, notification, DirectionEnum.FROM_BACKUSER);
+        list.add(notificationContact);
+        notification.setNotificationContacts(list);
+        notificationService.saveNotificationContact(notificationContact);
+        notificationService.saveNotification(notification);
     }
 
-    public List<String> complete(String query) {
-
-        List<String> filtredProductNames = productService.getFiltredProductNames(query);
-        return filtredProductNames;
+    public List<Contact> getContactsByAccount() {
+        return contactService.getContactsByAccount(selectedAccount);
     }
 
     /**
@@ -239,126 +218,42 @@ public class OpportunityController extends ConversationController {
     /**
      * @return
      * the
-     * itemsToPurchase
+     * selectedAccount
      */
-    public List<ItemToPurchase> getItemsToPurchase() {
-        return itemsToPurchase;
+    public Account getSelectedAccount() {
+        return selectedAccount;
     }
 
     /**
      * @param
-     * itemsToPurchase
+     * selectedAccount
      * the
-     * itemsToPurchase
+     * selectedAccount
      * to
      * set
      */
-    public void setItemsToPurchase(List<ItemToPurchase> itemsToPurchase) {
-        this.itemsToPurchase = itemsToPurchase;
+    public void setSelectedAccount(Account selectedAccount) {
+        this.selectedAccount = selectedAccount;
     }
 
     /**
      * @return
      * the
-     * selctedProduct
+     * selectedContacts
      */
-    public Product getSelctedProduct() {
-        return selctedProduct;
+    public List<Contact> getSelectedContacts() {
+        return selectedContacts;
     }
 
     /**
      * @param
-     * selctedProduct
+     * selectedContacts
      * the
-     * selctedProduct
+     * selectedContacts
      * to
      * set
      */
-    public void setSelctedProduct(Product selctedProduct) {
-        this.selctedProduct = selctedProduct;
-    }
-
-    /**
-     * @return
-     * the
-     * quantity
-     */
-    public int getQuantity() {
-        return quantity;
-    }
-
-    /**
-     * @param
-     * quantity
-     * the
-     * quantity
-     * to
-     * set
-     */
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    /**
-     * @return
-     * the
-     * products
-     */
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    /**
-     * @param
-     * products
-     * the
-     * products
-     * to
-     * set
-     */
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    /**
-     * @return
-     * the
-     * filterCategory
-     */
-    public Category getFilterCategory() {
-        return filterCategory;
-    }
-
-    /**
-     * @param
-     * filterCategory
-     * the
-     * filterCategory
-     * to
-     * set
-     */
-    public void setFilterCategory(Category filterCategory) {
-        this.filterCategory = filterCategory;
-    }
-
-    /**
-     * @return
-     * the
-     * filterProductName
-     */
-    public String getFilterProductName() {
-        return filterProductName;
-    }
-
-    /**
-     * @param
-     * filterProductName
-     * the
-     * filterProductName
-     * to
-     * set
-     */
-    public void setFilterProductName(String filterProductName) {
-        this.filterProductName = filterProductName;
+    public void setSelectedContacts(List<Contact> selectedContacts) {
+        this.selectedContacts = selectedContacts;
     }
 }
