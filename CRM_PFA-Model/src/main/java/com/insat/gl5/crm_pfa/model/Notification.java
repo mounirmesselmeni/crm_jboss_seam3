@@ -7,6 +7,7 @@ package com.insat.gl5.crm_pfa.model;
 import com.insat.gl5.crm_pfa.enumeration.NotificationType;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,7 +22,7 @@ public class Notification extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private NotificationType type;
-    @OneToMany(mappedBy = "notification")
+    @OneToMany(mappedBy = "notification",cascade= CascadeType.ALL)
     private List<NotificationContact> notificationContacts = new LinkedList<NotificationContact>();
     private String link;
     private String content;

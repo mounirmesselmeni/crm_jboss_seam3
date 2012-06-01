@@ -37,7 +37,7 @@
                         </p:column>  
                         
                         <p:column headerText="Liée à" style="width:20%">  
-                                <h:outputText value="#{opportunity.relatedTo.name}" />
+                                <h:outputText value="#{opportunity.relatedTo.fullName}" />
                         </p:column>  
                         <p:column headerText="Date de clôture prévue" style="width:20%">  
                                 <h:outputText value="#{opportunity.closeDate}" converter="dateConverter"/>

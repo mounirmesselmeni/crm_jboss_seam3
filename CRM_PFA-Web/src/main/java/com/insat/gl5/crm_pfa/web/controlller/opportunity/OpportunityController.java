@@ -4,11 +4,13 @@
  */
 package com.insat.gl5.crm_pfa.web.controlller.opportunity;
 
+import com.insat.gl5.crm_pfa.enumeration.DirectionEnum;
 import com.insat.gl5.crm_pfa.enumeration.NotificationType;
 import com.insat.gl5.crm_pfa.model.*;
 import com.insat.gl5.crm_pfa.service.ContactService;
 import com.insat.gl5.crm_pfa.service.NotificationService;
 import com.insat.gl5.crm_pfa.service.OpportunityService;
+import com.insat.gl5.crm_pfa.service.qualifier.CurrentUser;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,7 +36,7 @@ public class OpportunityController extends ConversationController {
     private OpportunityService opportunityService;
     @Inject
     private ContactService contactService;
-    @Inject 
+    @Inject
     private NotificationService notificationService;
     @Inject
     private ItemsToPurchaseController itemsToPurchaseController;
@@ -44,7 +46,11 @@ public class OpportunityController extends ConversationController {
     private Messages messages;
     private String redirect;
     private Account selectedAccount;
-    
+    private List<Contact> selectedContacts;
+    @Inject
+    @CurrentUser
+    private BackendUser currentUser;
+
     /**
      * Save
      * an
@@ -57,12 +63,7 @@ public class OpportunityController extends ConversationController {
 
             affectProducts();
             opportunityService.saveOpportunity(getOpportunity());
-            Notification notification = new Notification();
-            notification.setContent("Vous avez un offre");
-            notification.setLink("");
-            notification.setType(NotificationType.OPPORTUNITE);
-            List<NotificationContact> list = new LinkedList<NotificationContact>();
-            list.add(opportunity.getRelatedTo());
+            notifyContacts();
             messages.info("Opportunité {0} est enregistrée avec succés !", getOpportunity());
             setOpportunity(null);
 
@@ -120,15 +121,17 @@ public class OpportunityController extends ConversationController {
         return String.valueOf(product.getPrice() * ((100 - opportunity.getRelatedTo().getAccount().getFidelity().getScore()) / 100));
     }
 
-    public void initProducts(){
+    public void initProducts() {
         beginConversation();
         itemsToPurchaseController.initProducts();
     }
-    public void loadProducts(Opportunity o){
+
+    public void loadProducts(Opportunity o) {
         beginConversation();
         opportunity = o;
         itemsToPurchaseController.loadProducts(opportunity.getItemsToPurchase());
     }
+
     /**
      * Delete
      * the
@@ -149,14 +152,26 @@ public class OpportunityController extends ConversationController {
         endConversation();
     }
 
-  
     private void affectProducts() {
         opportunity.setItemsToPurchase(itemsToPurchaseController.getItemsToPurchase());
     }
 
-    public List<Contact> getContactsByAccount(){
+    private void notifyContacts() throws Exception {
+        Notification notification = new Notification();
+        notification.setContent("Vous avez un offre");
+        notification.setLink("/frontoffice/notifications/viewOpportunity?id="+opportunity.getId());
+        notification.setType(NotificationType.OPPORTUNITE);
+        List<NotificationContact> list = new LinkedList<NotificationContact>();
+        NotificationContact notificationContact = new NotificationContact(opportunity.getRelatedTo(), currentUser, notification, DirectionEnum.FROM_BACKUSER);
+        list.add(notificationContact);
+        notification.setNotificationContacts(list);
+        notificationService.saveNotificationContact(notificationContact);
+        notificationService.saveNotification(notification);
+    }
+
+    public List<Contact> getContactsByAccount() {
         return contactService.getContactsByAccount(selectedAccount);
-    } 
+    }
 
     /**
      * @return
@@ -201,17 +216,44 @@ public class OpportunityController extends ConversationController {
     }
 
     /**
-     * @return the selectedAccount
+     * @return
+     * the
+     * selectedAccount
      */
     public Account getSelectedAccount() {
         return selectedAccount;
     }
 
     /**
-     * @param selectedAccount the selectedAccount to set
+     * @param
+     * selectedAccount
+     * the
+     * selectedAccount
+     * to
+     * set
      */
     public void setSelectedAccount(Account selectedAccount) {
         this.selectedAccount = selectedAccount;
     }
 
+    /**
+     * @return
+     * the
+     * selectedContacts
+     */
+    public List<Contact> getSelectedContacts() {
+        return selectedContacts;
+    }
+
+    /**
+     * @param
+     * selectedContacts
+     * the
+     * selectedContacts
+     * to
+     * set
+     */
+    public void setSelectedContacts(List<Contact> selectedContacts) {
+        this.selectedContacts = selectedContacts;
+    }
 }

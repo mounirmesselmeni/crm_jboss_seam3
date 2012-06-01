@@ -7,7 +7,9 @@ package com.insat.gl5.crm_pfa.service;
 import com.insat.gl5.crm_pfa.model.BackendUser;
 import com.insat.gl5.crm_pfa.model.Contact;
 import com.insat.gl5.crm_pfa.model.Notification;
+import com.insat.gl5.crm_pfa.model.NotificationContact;
 import java.util.List;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -29,6 +31,20 @@ public class NotificationService extends GenericService{
             log.info("Create Notification " + getDisplayText(notification) + SUCCESS);
         } catch (Exception ex) {
             log.error("Error in Creating Notification "+getDisplayText(notification)+ " : -->", ex);
+            throw ex;
+        }
+    }
+    /**
+     * Save new NotificationContact
+     *
+     * @param notificationContact 
+     */
+    public void saveNotificationContact(NotificationContact notificationContact) throws Exception {
+
+        try {
+            persist(notificationContact);
+        } catch (Exception ex) {
+            log.error("Error in Creating NotificationContact : -->", ex);
             throw ex;
         }
     }
@@ -70,7 +86,7 @@ public class NotificationService extends GenericService{
      * @return 
      */
     public List<Notification> getAllNotificationsByContact(Contact contact) {
-        TypedQuery query = em.createQuery("SELECT nc.notification FROM NotificationContact nc WHERE nc.contact=?1 AND nc.notification.readed=false", Notification.class).setParameter(1, contact);
+        TypedQuery query = em.createQuery("SELECT nc.notification FROM NotificationContact nc WHERE nc.contact=?1 AND nc.notification.readed=false AND nc.direction =1", Notification.class).setParameter(1, contact);
         return query.getResultList();
     }
      /**
@@ -79,11 +95,20 @@ public class NotificationService extends GenericService{
      * @return 
      */
     public List<Notification> getAllNotificationsByBackendUser(BackendUser backendUser) {
-        TypedQuery query = em.createQuery("SELECT nc.notification FROM NotificationContact nc WHERE nc.backendUser=?1 AND nc.notification.readed=false", Notification.class).setParameter(1, backendUser);
+        TypedQuery query = em.createQuery("SELECT nc.notification FROM NotificationContact nc WHERE nc.backendUser=?1 AND nc.notification.readed=false AND nc.direction =2", Notification.class).setParameter(1, backendUser);
         return query.getResultList();
     }
     
     private String getDisplayText(Notification notification){
         return notification.getType().getDisplayName()+" : "+notification.getContent() ;
+    }
+    
+    public int getNotificationsNumberByContact(Contact user){
+        Query query = em.createQuery("SELECT COUNT(nc) FROM NotificationContact nc WHERE nc.contact=?1 AND nc.notification.readed=false AND nc.direction =1").setParameter(1, user);
+        return query.getResultList().size();
+    }
+    public int getNotificationsNumberByBackendUser(BackendUser user){
+        Query query = em.createQuery("SELECT COUNT(nc) FROM NotificationContact nc WHERE nc.backendUser=?1 AND nc.notification.readed=false AND nc.direction =2").setParameter(1, user);
+        return query.getResultList().size();
     }
 }

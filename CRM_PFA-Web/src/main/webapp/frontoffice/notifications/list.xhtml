@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../WEB-INF/template/clientTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="body">
+        <p:panel header="Dérnières Notifications">
+
+            <h:form id="form1">
+                <p:messages id="messages" globalOnly="true"/>
+                <p:spacer width="10"/>
+                <h:panelGrid width="100%">
+                    <p:spacer height="7" />
+                    <p:dataTable id="datatable"  var="notification" value="#{notificationController.contactNotifications}"  paginator="true" rows="10"  
+                                 paginatorPosition="bottom">  
+
+                        <f:facet name="header" >
+                            Liste des notifications
+                        </f:facet>
+                        <p:column  style="width:10%">
+                            <center>
+                                <p:graphicImage value="/resources/images/constellation/icons/fugue/mail.png"  width="30" height="30" />  
+                            </center>
+                        </p:column> 
+                        <p:column headerText="Contenu" style="width:5%">  
+                            <h:outputText value="#{notification.content}" />  
+                        </p:column>  
+                        <p:column headerText="Type" style="width:5%">  
+                            <h:outputText value="#{notification.type}" />  
+                        </p:column>  
+                        <p:column headerText="Consulter" style="width:10%">  
+                            <p:commandLink value="consulter" ajax="false" action="#{notificationController.consult(notification)}" >
+                            </p:commandLink>  
+                        </p:column>  
+                    </p:dataTable>
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+    </ui:define>
+</ui:composition>

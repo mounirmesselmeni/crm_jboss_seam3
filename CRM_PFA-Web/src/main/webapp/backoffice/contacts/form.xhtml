@@ -14,7 +14,7 @@
                         <h:panelGrid id="contactPanel"  columns="3" cellpadding="4">
 
                             <h:outputLabel value="Société (Compte)"/>
-                            <p:selectOneMenu  required="true" converter="accountConverter"  value="#{contactController.contact.account}">
+                            <p:selectOneMenu  required="true"  value="#{contactController.contact.account}">
                                 <f:selectItems value="#{lstAccounts}" var="_s" itemValue="#{_s}" itemLabel="#{_s.name}" />
                             </p:selectOneMenu>	
                             <p:spacer/>

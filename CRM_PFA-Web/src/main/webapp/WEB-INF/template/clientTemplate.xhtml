@@ -28,8 +28,10 @@
                         <p:menuitem value="Configuration" icon="/resources/images/menu/Configuration.png" action="/data/accueil/accueilConfiguration" ajax="false"/>
                         <p:menuitem value="A propos" icon="/resources/images/menu/A_propos.png" onclick="dlg3.show();"/>
                     </p:dock>
+                    <h:outputText value="Bienvenue #{currentContact.firstName} #{currentContact.lastName}"/>
+                    <br/>
+                    <h2><h:outputText value="Vous avez "/><p:commandLink ajax="false" action="/frontoffice/notifications/list"> <FONT COLOR="red">#{notificationController.contactNotificationsNumber}</FONT></p:commandLink> <h:outputText value=" notifications" style="font-style: italic"/> </h2>
                 </h:form>
-                <h:outputText value="Bienvenue #{currentContact.firstName} #{currentContact.lastName}"/>
             </ui:insert>
         </div>
         <div>
