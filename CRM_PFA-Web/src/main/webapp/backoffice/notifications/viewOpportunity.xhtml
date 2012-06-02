@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="./../../WEB-INF/template/clientTemplate.xhtml"
+                template="./../../WEB-INF/template/generalTemplate2.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="body">
         <f:metadata>
-            <f:viewParam name="id" value="#{consultOpportunityController.id}"/>
             <f:event type="preRenderView"
                      listener="#{consultOpportunityController.initOpportunity()}" />
         </f:metadata>
@@ -49,24 +48,10 @@
                     </tr>  
                 </table>
                 <p:spacer height="40"/>
-                <table width="100%" border="0">
-                    <tr >
-                        <td width="70%" />
-                        <td width="15%" >
-                            <p:commandButton   styleClass="btn_annul" value="Refuser" ajax="false" actionListener="#{consultOpportunityController.refuse()}"
-                                               action="list"
-                                               immediate="true" />
-                        </td>
-                        <td  width="15%" height="20px" align="right">
-                            <p:commandButton  
-                                ajax="false"  value="Accepter" actionListener="#{consultOpportunityController.accept()}"
-                                action ="list"
-                                styleClass="btn_val" 
-                                />
-                        </td>
-                    </tr>  
-                </table>
+                <p:commandLink    value="Retour" ajax="false" action="list"
+                                   immediate="true" />
+
             </h:form>
         </p:panel>
-         </ui:define >
+    </ui:define >
 </ui:composition>

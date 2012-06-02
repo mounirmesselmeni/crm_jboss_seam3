@@ -4,6 +4,7 @@
  */
 package com.insat.gl5.crm_pfa.service;
 
+import com.insat.gl5.crm_pfa.model.Account;
 import com.insat.gl5.crm_pfa.model.Address;
 import com.insat.gl5.crm_pfa.model.EmailAdress;
 import com.insat.gl5.crm_pfa.model.PhoneNumber;
@@ -185,5 +186,10 @@ public class CoordinatesService extends GenericService{
     public List<PhoneNumber> getAllPhoneNumbers() {
         TypedQuery query = em.createQuery("SELECT p FROM PhoneNumber p", PhoneNumber.class);
         return query.getResultList();
+    }
+    
+    public boolean emailExits(String value){
+        TypedQuery query = em.createQuery("SELECT e FROM EmailAdress e WHERE e.value=?1", EmailAdress.class).setParameter(1, value);
+        return query.getResultList().size()>0;
     }
 }

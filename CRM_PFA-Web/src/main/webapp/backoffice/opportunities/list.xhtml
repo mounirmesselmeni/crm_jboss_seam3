@@ -49,7 +49,12 @@
                             </ui:repeat>
                         </p:column>
                         <p:column headerText="Assignée à" style="width:20%">  
-                                <h:outputText value="#{opportunity.assignedTo}" />
+                                <h:outputText value="#{opportunity.assignedTo.login}" />
+                        </p:column>  
+                            
+                        <p:column headerText="Acceptée" style="text-align:center;width:20%">  
+                            <h:graphicImage library="images" name="constellation/icons/fugue/tick_circle.png" width="16" height="16" rendered="#{opportunity.accepted}"/>
+                            <h:graphicImage library="images" name="constellation/icons/fugue/restricted-icon.png" width="16" height="16" rendered="#{not opportunity.accepted}"/>
                         </p:column>  
                         <p:column headerText="Actions" style="text-align:center;width: 15%">  
 

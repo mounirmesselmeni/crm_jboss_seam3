@@ -25,6 +25,7 @@ public class Opportunity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "contactId")
     private Contact relatedTo;
+    private boolean accepted = false;
     @ManyToOne
     @JoinColumn(name = "backendUserId")
     private BackendUser assignedTo;
@@ -146,6 +147,20 @@ public class Opportunity extends BaseEntity {
      */
     public void setAssignedTo(BackendUser assignedTo) {
         this.assignedTo = assignedTo;
+    }
+
+    /**
+     * @return the accepted
+     */
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    /**
+     * @param accepted the accepted to set
+     */
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
     
 }

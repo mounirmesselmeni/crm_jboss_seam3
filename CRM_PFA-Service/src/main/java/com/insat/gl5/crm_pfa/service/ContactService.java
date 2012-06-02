@@ -4,9 +4,7 @@
  */
 package com.insat.gl5.crm_pfa.service;
 
-import com.insat.gl5.crm_pfa.model.Account;
-import com.insat.gl5.crm_pfa.model.ActivationCode;
-import com.insat.gl5.crm_pfa.model.Contact;
+import com.insat.gl5.crm_pfa.model.*;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -125,5 +123,18 @@ public class ContactService extends GenericService{
        Query query = em.createQuery("select a from ActivationCode a where a.code =?1");
        query.setParameter(1, code);
        return (ActivationCode) query.getSingleResult();
+    }
+    public Fidelity getFidelityByContact(Contact contact){
+        TypedQuery query = em.createQuery("SELECT c.account.fidelity FROM Contact c WHERE c=?1", Fidelity.class).setParameter(1, contact);
+        return (Fidelity) query.getResultList().get(0);
+    }
+    public Account getAccountByContact(Contact contact){
+        TypedQuery query = em.createQuery("SELECT c.account FROM Contact c WHERE c=?1", Account.class).setParameter(1, contact);
+        return (Account) query.getResultList().get(0);
+    }
+    
+    public boolean loginExits(String value){
+        TypedQuery query = em.createQuery("SELECT c FROM Contact c WHERE c.login=?1", Contact.class).setParameter(1, value);
+        return query.getResultList().size()>0;
     }
 }

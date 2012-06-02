@@ -13,6 +13,8 @@ import com.insat.gl5.crm_pfa.service.mail.Person;
 import com.insat.gl5.crm_pfa.service.security.UserProfileService;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
 import com.insat.gl5.crm_pfa.web.controller.FileUploadController;
+import com.insat.gl5.crm_pfa.web.exception.ExistingEmailException;
+import com.insat.gl5.crm_pfa.web.exception.ExistingLoginException;
 import com.insat.gl5.crm_pfa.web.viewModel.AddressViewModel;
 import com.insat.gl5.crm_pfa.web.viewModel.EmailViewModel;
 import com.insat.gl5.crm_pfa.web.viewModel.PhoneNumberViewModel;
@@ -99,7 +101,9 @@ public class ContactController extends ConversationController {
         }
         this.endConversation();
         this.messages.info("Utilisateur {0} {1} est créé", this.getContact().getFirstName(), this.getContact().getLastName());
-         /*----*/
+        /*
+         * ----
+         */
         endConversation();
         return getRedirect();
     }
@@ -139,7 +143,7 @@ public class ContactController extends ConversationController {
             return true;
         }
         return false;
-       
+
     }
 
     /**
@@ -191,7 +195,7 @@ public class ContactController extends ConversationController {
         roles.add(new SimpleRole(roleType, null, roleGroup));
     }
 
-      /**
+    /**
      * Save
      * an
      * account
@@ -200,24 +204,30 @@ public class ContactController extends ConversationController {
     public String saveContact() {
 
         try {
-
+            validateAttributes();
             affectCoordinates();
-            contact.setImageURL( contact.getLogin() + ".png");
+            contact.setImageURL(contact.getLogin() + ".png");
             contactService.saveContact(getContact());
             uploadLogo();
             messages.info("Contact {0} est enregistré avec succés !", getContact());
             ActivationCode activationCode = new ActivationCode(contact);
             contactService.saveActivationCode(activationCode);
             Person receiver = new Person(contact.getLastName(), contact.getLstEmails().get(0).getValue());
-            mailService.sendJoinInvitation(receiver,activationCode.getCode(), contact.getLogin());
+            mailService.sendJoinInvitation(receiver, activationCode.getCode(), contact.getLogin());
             setContact(null);
-        }catch(MalformedURLException ex){
+        } catch (ExistingLoginException e) {
+            messages.error("Login : {0} existe déja !", getContact().getLogin());
+            return null;
+        } catch (ExistingEmailException e) {
+            messages.error("L'e-mail : {0} existe déja !", lstEmailViewModels.get(0).getEmail().getValue());
+            return null;
+        } catch (MalformedURLException ex) {
             messages.error("Erreur d'envoi mail");
-            System.out.println("--->"+ex.getMessage());
+            System.out.println("--->" + ex.getMessage());
             return null;
         } catch (Exception e) {
             messages.error("Erreur d'enregistrement du contact {0}", getContact());
-            System.out.println("--->"+e.getMessage());
+            System.out.println("--->" + e.getMessage());
             return null;
         }
         endConversation();
@@ -244,6 +254,7 @@ public class ContactController extends ConversationController {
         beginConversation();
         fileUploadController.resetFile();
         setContact(contact);
+        contact.setAccount(contactService.getAccountByContact(contact));
         initEmailViewModels();
         initAddressViewModels();
         initPhoneNumberViewModels();
@@ -273,7 +284,17 @@ public class ContactController extends ConversationController {
         }
     }
 
-    
+    private void validateAttributes() throws ExistingEmailException, ExistingLoginException {
+
+        if (contactService.loginExits(contact.getLogin())) {
+            throw new ExistingLoginException();
+        }
+
+         if (coordinatesService.emailExits(lstEmailViewModels.get(0).getEmail().getValue())) {
+            throw new ExistingEmailException();
+        }
+    }
+
     /**
      * Edit
      * an
@@ -283,6 +304,7 @@ public class ContactController extends ConversationController {
     public String editContact() {
 
         try {
+            validateAttributes();
             editCoordinates();
             //Mettre à jour le nom du logo
             updateLogo();
@@ -290,7 +312,12 @@ public class ContactController extends ConversationController {
             messages.info("Contact {0} est modifié avec succés !", getContact());
 
             setContact(null);
-
+        } catch (ExistingLoginException e) {
+            messages.error("Login : {0} existe déja !", getContact().getLogin());
+            return null;
+        } catch (ExistingEmailException e) {
+            messages.error("L'e-mail : {0} existe déja !", lstEmailViewModels.get(0).getEmail().getValue());
+            return null;
         } catch (Exception e) {
             messages.error("Erreur de modification du contact {0}", getContact());
             return null;
@@ -519,7 +546,7 @@ public class ContactController extends ConversationController {
 
     private void updateLogo() {
         // Nouveau chemin
-        String newPath =  contact.getLogin() + ".png";
+        String newPath = contact.getLogin() + ".png";
         // Ancien chemin
         String lastPath = contact.getImageURL();
         // Mettre à jour le  chemin
@@ -532,18 +559,18 @@ public class ContactController extends ConversationController {
     }
 
     private void uploadLogo() throws IOException {
-         // Création du répertoire du client
+        // Création du répertoire du client
         File dir = new File(CONTACTS_DIRECTORY);
         if (!dir.exists()) {
             dir.mkdirs();
         }
         if (fileUploadController.getFile() != null) {
-            fileUploadController.upload(CONTACTS_DIRECTORY+contact.getImageURL());
+            fileUploadController.upload(CONTACTS_DIRECTORY + contact.getImageURL());
         } else {
-            fileUploadController.uploadFromURL("//resources//images//other//defaultLogo.png", CONTACTS_DIRECTORY+contact.getImageURL());
+            fileUploadController.uploadFromURL("//resources//images//other//defaultLogo.png", CONTACTS_DIRECTORY + contact.getImageURL());
         }
     }
-  
+
     /**
      * @return
      * the

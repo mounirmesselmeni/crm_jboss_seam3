@@ -47,4 +47,10 @@ public abstract class CrmUser extends BaseEntity {
     public void setLstEmails(List<EmailAdress> lstEmails) {
         this.lstEmails = lstEmails;
     }
+
+    @Override
+    public String toString() {
+        return login ;
+    }
+    
 }
