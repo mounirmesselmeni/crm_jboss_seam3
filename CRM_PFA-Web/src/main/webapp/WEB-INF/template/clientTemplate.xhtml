@@ -20,8 +20,6 @@
         <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/mws.style.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/icons/icons.css" media="screen" />
 
-        <!-- Demo and Plugin Stylesheets -->
-
 
         <!-- Theme Stylesheet -->
         <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/mws.theme.css" media="screen" />
@@ -49,10 +47,10 @@
                     <span class="mws-dropdown-notif">#{notificationController.contactNotificationsNumber}</span>
                     <div class="mws-dropdown-box">
                         <div class="mws-dropdown-content">
-                            <ul class="mws-notifications">
+                            <ul class="mws-messages">
                                 <ui:repeat value="#{notificationController.contactNotifications}"
                                            var="notif">
-                                    <li class="#{notif.readed} ? 'read' : 'unread'">
+                                    <li class="#{not notif.readed ? 'unread' : 'read'}">
                                         <a href="#">
                                             <span class="message">
                                                 #{notif.content}
@@ -65,49 +63,11 @@
                                         </a>
                                     </li>
                                 </ui:repeat>
-                                <li class="read">
-                                    <a href="#">
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="read">
-                                    <a href="#">
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="unread">
-                                    <a href="#">
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="unread">
-                                    <a href="#">
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
                             </ul>
                             <div class="mws-dropdown-viewall">
-                                <a href="#">View All Notifications</a>
+                                <h:form>
+                                    <h:commandLink value="Afficher toutes" action="/frontoffice/notifications/list" />
+                                </h:form>
                             </div>
                         </div>
                     </div>
