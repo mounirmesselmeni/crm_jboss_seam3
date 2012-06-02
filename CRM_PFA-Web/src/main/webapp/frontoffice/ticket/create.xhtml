@@ -23,8 +23,8 @@
                                  required="true" requiredMessage="Valeur requise" style="width: 350px;"/>
                     <p:message for="ticketSubject"/>
                     <h:outputText value="Contenu :"/>
-                    <p:inputTextarea id="ticketContent" value="#{ticketController.ticket.content}" 
-                                     required="true" requiredMessage="Valeur requise" style="width: 350px;height: 200px"/>
+                    <p:editor id="ticketContent" value="#{ticketController.ticket.content}" 
+                                     required="true" requiredMessage="Valeur requise"/>
                     <p:message for="ticketContent"/>
                 </h:panelGrid>
                 <p:spacer height="20"/>

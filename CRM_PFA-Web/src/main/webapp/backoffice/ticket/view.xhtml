@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../WEB-INF/template/generalTemplate2.xhtml">
+
+    <ui:define name="body">
+        <f:metadata>
+            <f:viewParam name="id" value="#{ticketController.ticketId}"/>
+            <f:event type="preRenderView"
+                     listener="#{ticketController.loadTicket()}" />
+            <f:event type="preRenderView"
+                     listener="#{ticketController.beginConversation()}" />
+        </f:metadata>
+        <p:panel id="panel">
+            <f:facet name="header">
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{ticketController.ticket.type} : #{ticketController.ticket.subject}"/>
+                    <p:selectBooleanButton value="#{ticketController.ticket.resolved}" onLabel="Résolu" offLabel="Non résolu" 
+                                           onIcon="ui-icon-check" offIcon="ui-icon-close"
+                                           disabled="#{not identity.hasRole('client','crm', 'GROUP')}"/>  
+                </h:panelGrid>
+            </f:facet>
+            <p:messages autoUpdate="true"/>
+            <h:form>
+                <h:panelGrid columns="1" style="width: 100%;">
+                    <h:outputText value="#{ticketController.ticket.content}" escape="false"/>
+                </h:panelGrid>
+                <p:spacer height="50"/>
+                <p:dataGrid value="#{ticketController.ticketResponseList}" var="ticketReponse"
+                            columns="1" emptyMessage="Aucune réponse">
+                    <p:column>
+                        <p:fieldset legend="#{ticketReponse.title}">
+                            <table style="width: 100%">
+                                <tr>
+                                    <td style="width: 80%">
+                                        <h:outputText value="#{ticketReponse.content}" escape="false"/>
+                                    </td>
+                                    <td style="width: 20%">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 80%">
+                                    </td>
+                                    <td style="width: 20%">
+                                        <h:outputText value="#{ticketReponse.createdOn}">
+                                            <f:converter converterId="dateTimeConverter"/>
+                                        </h:outputText>
+                                        <h:outputText value=" par #{ticketReponse.crmUser}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </p:fieldset>
+                    </p:column>
+                </p:dataGrid>
+                <br/>
+                <p:commandButton value="Répondre" oncomplete="responseDlg.show();" />
+            </h:form>
+        </p:panel>
+        <p:dialog widgetVar="responseDlg" modal="true">
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Titre :"/>
+                    <p:inputText value="#{ticketController.ticketResponse.title}" required="true" requiredMessage="Valeur requise"/>
+                    <h:outputText value="Réponse :"/>
+                    <p:editor value="#{ticketController.ticketResponse.content}" required="true" requiredMessage="Valeur requise"/>
+                </h:panelGrid>
+                <table width="100%" border="0">
+                    <tr >
+                        <td width="20%" height="20px">
+                            <p:commandButton   styleClass="btn_annul" value="Annuler" ajax="true" onclick="responseDlg.hide();"
+                                               immediate="true" />
+                        </td>
+                        <td width="60%" >
+                        </td>
+                        <td  width="20%" height="20px">
+                            <p:commandButton ajax="true"  value="Ajouter" styleClass="btn_val" 
+                                             update=":panel"
+                                             action="#{ticketController.addResponse()}" oncomplete="responseDlg.hide();"/>
+                        </td>
+                    </tr>  
+                </table>
+            </h:form>
+
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

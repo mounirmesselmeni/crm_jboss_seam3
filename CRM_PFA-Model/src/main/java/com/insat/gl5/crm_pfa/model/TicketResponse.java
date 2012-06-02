@@ -4,7 +4,9 @@
  */
 package com.insat.gl5.crm_pfa.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
@@ -13,11 +15,13 @@ import javax.persistence.ManyToOne;
  * @author Mounir Messelmeni <messelmeni.mounir@gmail.com>
  */
 @Entity
-public class TicketResponse extends BaseEntity{
+public class TicketResponse extends BaseEntity {
+
+    private String title;
     @Lob
     private String content;
     @ManyToOne
-    private BackendUser backendUser;
+    private CrmUser crmUser;
     @ManyToOne
     private Ticket ticket;
 
@@ -50,16 +54,30 @@ public class TicketResponse extends BaseEntity{
     }
 
     /**
-     * @return the backendUser
+     * @return the crmUser
      */
-    public BackendUser getBackendUser() {
-        return backendUser;
+    public CrmUser getCrmUser() {
+        return crmUser;
     }
 
     /**
-     * @param backendUser the backendUser to set
+     * @param crmUser the crmUser to set
      */
-    public void setBackendUser(BackendUser backendUser) {
-        this.backendUser = backendUser;
+    public void setCrmUser(CrmUser crmUser) {
+        this.crmUser = crmUser;
+    }
+
+    /**
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

@@ -53,7 +53,7 @@ public class TicketService extends GenericService {
     public void addResponse(Ticket ticket, TicketResponse ticketResponse) throws Exception {
         try {
             ticketResponse.setTicket(ticket);
-            persist(ticket);
+            persist(ticketResponse);
         } catch (Exception ex) {
             log.error(ex.getMessage());
             throw ex;
@@ -70,5 +70,32 @@ public class TicketService extends GenericService {
                 + " order by t.createdOn desc");
         query.setParameter(1, contact);
         return query.getResultList();
+    }
+
+    /**
+     * Get TicketResponse List for a Ticket
+     * @param ticket
+     * @return 
+     */
+    public List<TicketResponse> getLstTicketResponse(Ticket ticket) {
+        Query query = em.createQuery("select t from TicketResponse t where t.ticket.id =?1 "
+                + " order by t.createdOn");
+        query.setParameter(1, ticket.getId());
+        return query.getResultList();
+    }
+
+    /**
+     * Get Ticket by id
+     * @param id
+     * @return 
+     */
+    public Ticket findTicket(Long id) {
+        return em.find(Ticket.class, id);
+    }
+
+    public Long countResponse(Ticket ticket) {
+        Query query = em.createQuery("select count(tr) from TicketResponse tr where tr.ticket =?1");
+        query.setParameter(1, ticket);
+        return (Long) query.getSingleResult();
     }
 }

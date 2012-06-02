@@ -17,6 +17,14 @@
                     <p:inputText id="login" value="#{userManagement.user.login}" 
                                  required="true" requiredMessage="Valeur requise"/>
                     <p:message for="login"/>
+                    <h:outputText value="Nom :" styleClass="titleLib" />
+                    <p:inputText id="firstName" value="#{userManagement.user.firstName}" 
+                                 required="true" requiredMessage="Valeur requise"/>
+                    <p:message for="firstName"/>
+                    <h:outputText value="Prénom :" styleClass="titleLib" />
+                    <p:inputText id="lastName" value="#{userManagement.user.lastName}" 
+                                 required="true" requiredMessage="Valeur requise"/>
+                    <p:message for="lastName"/>
                     <h:outputText value="Mot de passe :" styleClass="titleLib"/>
                     <p:password id="password" feedback="true" value="#{userManagement.password}" 
                                 required="true" requiredMessage="Valeur requise"/>

@@ -19,7 +19,7 @@ import javax.faces.convert.FacesConverter;
  * @author Mu7ammed 3li -- mohamed.ali.affes@gmail.com --
  */
 
-@FacesConverter(value = "dateConverter")
+@FacesConverter(value = "dateTimeConverter")
 public class DateConverter implements Converter {
 
     @Override
@@ -42,12 +42,12 @@ public class DateConverter implements Converter {
         if (date == null) {
             return null;
         }
-        SimpleDateFormat formatDateJour = new SimpleDateFormat("dd/MM/yyyy à HH:mm:ss");
+        SimpleDateFormat formatDateJour = new SimpleDateFormat("'Le' dd/MM/yyyy à HH:mm:ss");
         return formatDateJour.format(date);
     }
 
     public Date fromStringToDate(String date) throws ParseException {
-        SimpleDateFormat formatDateJour = new SimpleDateFormat("dd/MM/yyyy à HH:mm:ss");
+        SimpleDateFormat formatDateJour = new SimpleDateFormat("'Le' dd/MM/yyyy à HH:mm:ss");
         return formatDateJour.parse(date);
     }
 }

@@ -28,9 +28,6 @@
                             <f:converter converterId="dateTimeConverter"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Nombre de réponses">
-                        <h:outputText value="#{ticketController.getReponseNumber(ticket)}"/>
-                    </p:column>
                     <p:column headerText="Résolu" style="text-align: center">
                         <h:graphicImage library="images" width="16" height="16"
                                         name="#{ticket.resolved eq true ? 'constellation/icons/fugue/tick_circle.png' : 'constellation/icons/fugue/cross-circle.png'}"/>

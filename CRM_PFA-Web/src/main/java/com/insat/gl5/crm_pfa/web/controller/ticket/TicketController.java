@@ -43,66 +43,134 @@ public class TicketController extends ConversationController {
     private TicketService ticketService;
     @Inject
     private Identity identity;
+    private Long ticketId;
+
+    /**
+     * Load Ticket by Id
+     */
+    public void loadTicket() {
+        this.ticket = this.ticketService.findTicket(this.ticketId);
+        if (!isAllowedUser()) {
+            //if user not allowed nothing gonna to be viewed by resting the ticket
+            ticket = new Ticket();
+            messages.error("Attention ! Vous n'êtes pas autorisé à accéder à ce contenu.");
+        }
+    }
+
+    /**
+     * Verify if the current user is allowed to view the Ticket
+     * @return 
+     */
+    public boolean isAllowedUser() {
+        if (currentBackendUser != null) {
+            return true;
+        }
+        if (currentContact != null && this.ticket.getCreator().equals(currentContact)) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Create ticket by client (Contact)
      */
     public String createTicket() {
-        if (currentContact == null) {
-            messages.error("Utilisateur inconnu !");
+        if (this.currentContact == null) {
+            this.messages.error("Utilisateur inconnu !");
             return null;
         }
         try {
-            getTicket().setCreator(currentContact);
-            ticketService.createTicket(ticket);
-            ticket = new Ticket();
+            this.ticket.setCreator(this.currentContact);
+            this.ticketService.createTicket(this.ticket);
+            this.ticket = new Ticket();
+            this.messages.info("Ticket crée avec succés.");
             return "list";
         } catch (Exception ex) {
-            messages.error("Erreur lors de la création du ticket");
+            this.messages.error("Erreur lors de la création du ticket");
         }
         return null;
     }
 
     public String editTicket() {
-        if (currentContact == null) {
-            messages.error("Utilisateur inconnu !");
+        if (this.currentContact == null) {
+            this.messages.error("Utilisateur inconnu !");
             return null;
         }
-        if (!currentContact.equals(ticket.getCreator())) {
-            messages.error("Vous n'avez pas le droit de modifier ce contenu !");
+        if (!this.currentContact.equals(this.ticket.getCreator())) {
+            this.messages.error("Vous n'avez pas le droit de modifier ce contenu !");
             return null;
         }
         try {
-            ticketService.editTicket(ticket);
-            ticket = new Ticket();
+            this.ticketService.editTicket(this.ticket);
+            this.ticket = new Ticket();
+            this.messages.info("Ticket à jour.");
             return "list";
         } catch (Exception ex) {
-            messages.error("Erreur lors de la création du ticket");
+            this.messages.error("Erreur lors de la création du ticket");
         }
         return null;
+    }
+
+    /**
+     * Update the resolved boolean to the Data base
+     */
+    public void editResolved() {
+        if (this.currentContact != null && this.currentContact.equals(this.ticket.getCreator())) {
+            try {
+                this.ticketService.editTicket(this.ticket);
+                if (this.ticket.isResolved()) {
+                    this.messages.info("Ticket résolu");
+                }else{
+                    this.messages.info("Ticket non résolu");
+                }
+            } catch (Exception ex) {
+                this.messages.error("Erreur lors de la mise à jour du ticket");
+            }
+        }
     }
 
     /**
      * response to the current ticket
      * @return 
      */
-    public String addResponse() {
-        if (identity.hasRole("admin", "crm", "GROUP")
-                || identity.hasRole("commercial", "crm", "GROUP")) {
+    public void addResponse() {
+        if (this.identity.hasRole("admin", "crm", "GROUP")
+                || this.identity.hasRole("commercial", "crm", "GROUP")) {
             if (currentBackendUser == null) {
-                messages.error("Utilisateur inconnu !");
-                return null;
+                this.messages.error("Utilisateur inconnu !");
+                return;
             }
             try {
-                getTicketResponse().setBackendUser(currentBackendUser);
-                ticketService.addResponse(getTicket(), getTicketResponse());
-                return "list";
+                this.ticketResponse.setCrmUser(currentBackendUser);
+                Ticket ticketE = ticketService.findTicket(ticketId);
+                this.ticketService.addResponse(ticketE, this.ticketResponse);
+                this.ticketResponse = new TicketResponse();
+                this.messages.info("Réponse ajouté.");
+                return;
             } catch (Exception ex) {
-                messages.error("Erreur lors de l'insertion de la réponse.");
-                return null;
+                this.messages.error("Erreur lors de l'insertion de la réponse.");
+                return;
             }
         }
-        return null;
+        if (this.identity.hasRole("client", "crm", "GROUP")) {
+            if (this.currentContact == null) {
+                this.messages.error("Utilisateur inconnu !");
+                return;
+            }
+            try {
+                this.ticketResponse.setCrmUser(this.currentContact);
+                Ticket ticketE = ticketService.findTicket(ticketId);
+                this.ticketService.addResponse(ticketE, this.ticketResponse);
+                this.ticketResponse = new TicketResponse();
+                this.messages.info("Réponse ajouté.");
+            } catch (Exception ex) {
+                this.messages.error("Erreur lors de l'insertion de la réponse.");
+            }
+        }
+    }
+
+    public Long getReponseNumber(Ticket ticketE) {
+        return this.ticketService.countResponse(ticketE);
     }
 
     /**
@@ -114,6 +182,14 @@ public class TicketController extends ConversationController {
             return null;
         }
         return ticketService.getContactTicketList(currentContact);
+    }
+
+    /**
+     * List of TicketResponse for the current Ticket
+     * @return 
+     */
+    public List<TicketResponse> getTicketResponseList() {
+        return ticketService.getLstTicketResponse(ticket);
     }
 
     /**
@@ -142,5 +218,19 @@ public class TicketController extends ConversationController {
      */
     public void setTicketResponse(TicketResponse ticketResponse) {
         this.ticketResponse = ticketResponse;
+    }
+
+    /**
+     * @return the ticketId
+     */
+    public Long getTicketId() {
+        return ticketId;
+    }
+
+    /**
+     * @param ticketId the ticketId to set
+     */
+    public void setTicketId(Long ticketId) {
+        this.ticketId = ticketId;
     }
 }
