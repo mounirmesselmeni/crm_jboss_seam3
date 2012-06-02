@@ -344,7 +344,7 @@ div#mws-wrapper
 {
 	height:auto;
 	min-height:100%;
-	position:relative;
+/*	position:relative;*/
 	z-index:0;
 }
 

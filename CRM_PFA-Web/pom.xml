@@ -51,6 +51,16 @@
             <artifactId>ui-lightness</artifactId>  
             <version>1.0.2</version>
         </dependency> 
+        <dependency>  
+            <groupId>org.primefaces.themes</groupId>  
+            <artifactId>black-tie</artifactId>  
+            <version>1.0.2</version>
+        </dependency> 
+        <dependency>  
+            <groupId>org.primefaces.themes</groupId>  
+            <artifactId>home</artifactId>  
+            <version>1.0.2</version>
+        </dependency> 
         <dependency>
             <groupId>com.lowagie</groupId>
             <artifactId>itext</artifactId>
