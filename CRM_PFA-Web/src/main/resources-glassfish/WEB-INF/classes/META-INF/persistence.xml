@@ -6,6 +6,7 @@
     <class>com.insat.gl5.crm_pfa.model.Account</class>
     <class>com.insat.gl5.crm_pfa.model.ActivationCode</class>
     <class>com.insat.gl5.crm_pfa.model.Address</class>
+    <class>com.insat.gl5.crm_pfa.model.BackendUser</class>
     <class>com.insat.gl5.crm_pfa.model.Category</class>
     <class>com.insat.gl5.crm_pfa.model.Contact</class>
     <class>com.insat.gl5.crm_pfa.model.CrmUser</class>
@@ -32,7 +33,6 @@
     <class>com.insat.gl5.crm_pfa.model.security.IdentityObjectType</class>
     <class>com.insat.gl5.crm_pfa.model.security.IdentityPermission</class>
     <class>com.insat.gl5.crm_pfa.model.security.IdentityRoleName</class>
-    <class>com.insat.gl5.crm_pfa.model.BackendUser</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="org.hibernate.SQL" value="DEBUG"/>

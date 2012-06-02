@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../WEB-INF/template/clientTemplate.xhtml">
+
+    <ui:define name="body">
+        <p:panel header="Modifier réponse">
+            <p:messages autoUpdate="true"/>
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputText value="Titre :"/>
+                    <p:inputText id="title" value="#{ticketController.ticketResponse.title}" 
+                                 required="true" requiredMessage="Valeur requise"/>
+                    <p:message for="title"/>
+                </h:panelGrid>
+                <p:separator />
+                <p:message for="content"/>
+                <p:editor id="content" value="#{ticketController.ticketResponse.content}" 
+                          required="true" requiredMessage="Valeur requise"/>
+                 <p:spacer height="20"/>
+                <table width="100%" border="0">
+                    <tr >
+                        <td width="20%" height="20px">
+                            <p:commandButton   styleClass="btn_annul" value="Annuler" ajax="false"
+                                               rendered="#{not empty ticketController.ticket.id}"
+                                               action="view"
+                                               immediate="true" />
+                        </td>
+                        <td width="60%" >
+                        </td>
+                        <td  width="20%" height="20px" align="right">
+                            <p:commandButton
+                                ajax="false"  value="Modifier"
+                                styleClass="btn_val" action="#{ticketController.editResponse()}"
+                                />
+                        </td>
+                    </tr>  
+                </table>
+            </h:form>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

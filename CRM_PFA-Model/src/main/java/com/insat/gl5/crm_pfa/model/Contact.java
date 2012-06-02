@@ -12,8 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 
@@ -22,8 +20,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 public class Contact extends CrmUser {
 
-    private String firstName;
-    private String lastName;
     private String imageURL;
     @OneToMany(cascade = CascadeType.ALL)
     private List<PhoneNumber> lstPhoneNumbers = new LinkedList<PhoneNumber>();
@@ -34,26 +30,6 @@ public class Contact extends CrmUser {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accountId")
     private Account account;
-
-    @NotNull
-    @NotEmpty
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    @NotNull
-    @NotEmpty
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public Account getAccount() {
         return account;
@@ -75,10 +51,6 @@ public class Contact extends CrmUser {
      */
     public void setSalutation(Salutation salutation) {
         this.salutation = salutation;
-    }
-
-    public String getFullName() {
-        return firstName + " " + lastName;
     }
 
     /**
@@ -125,6 +97,6 @@ public class Contact extends CrmUser {
 
     @Override
     public String toString() {
-        return salutation + ". " + firstName + " " + lastName;
+        return salutation + ". " + getFirstName() + " " + getLastName();
     }
 }

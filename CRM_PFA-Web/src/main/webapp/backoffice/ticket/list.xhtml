@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../WEB-INF/template/clientTemplate.xhtml">
+
+    <ui:define name="body">
+        <p:panel header="Vos tickets">
+            <p:messages autoUpdate="true"/>
+            <h:form>
+                <p:commandLink action="create?faces-redirect=true">
+                    <h:outputText value="Créer un nouvelle ticket"/>
+                    <h:graphicImage library="images" name="constellation/icons/add.png" width="16" height="16"/>
+                </p:commandLink>
+                <p:dataTable value="#{ticketController.contactTickets}" var="ticket" paginator="true"
+                             paginatorPosition="bottom">
+                    <p:column headerText="Type">
+                        <h:outputText value="#{ticket.type}"/>
+                    </p:column>
+                    <p:column headerText="Sujet">
+                        <h:outputText value="#{ticket.subject}"/>
+                    </p:column>
+                    <p:column headerText="Crée le">
+                        <h:outputText value="#{ticket.createdOn}">
+                            <f:converter converterId="dateTimeConverter"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Résolu" style="text-align: center">
+                        <h:graphicImage library="images" width="16" height="16"
+                                        name="#{ticket.resolved eq true ? 'constellation/icons/fugue/tick_circle.png' : 'constellation/icons/fugue/cross-circle.png'}"/>
+                    </p:column>
+                    <p:column headerText="Actions" style="text-align:center;width: 5%">  
+                        <h:link  title="Modifier" outcome="view">
+                            <f:param name="id" value="#{ticket.id}"/>
+                            <h:graphicImage library="images" name="constellation/icons/fugue/pencil.png" width="16" height="16"/>
+                        </h:link>  
+                        <p:spacer width="5"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

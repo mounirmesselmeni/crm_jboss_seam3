@@ -32,14 +32,7 @@ public abstract class BaseEntity implements Serializable {
     private Date createdOn;
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedOn;
-    @ManyToOne
-    private Contact createdBy;
-    @ManyToOne
-    private Contact modifiedBy;
 
-    
-    
-    
     public Long getId() {
         return id;
     }
@@ -64,22 +57,6 @@ public abstract class BaseEntity implements Serializable {
         this.modifiedOn = new Date(modifiedOn.getTime());
     }
 
-    public Contact getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Contact createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Contact getModifiedBy() {
-        return modifiedBy;
-    }
-
-    public void setModifiedBy(Contact modifiedBy) {
-        this.modifiedBy = modifiedBy;
-    }
-
     @PrePersist
     public void initTimeStamps() {
         // we do this for the purpose of the demo, this lets us create our own
@@ -89,15 +66,16 @@ public abstract class BaseEntity implements Serializable {
         }
         modifiedOn = createdOn;
     }
-    
+
     @PreUpdate
     public void updateTimeStamp() {
         modifiedOn = new Date();
     }
 
-    public boolean isPersistent(){
-        return getId()!=null;
+    public boolean isPersistent() {
+        return getId() != null;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -116,12 +94,6 @@ public abstract class BaseEntity implements Serializable {
         if (this.modifiedOn != other.modifiedOn && (this.modifiedOn == null || !this.modifiedOn.equals(other.modifiedOn))) {
             return false;
         }
-        if (this.createdBy != other.createdBy && (this.createdBy == null || !this.createdBy.equals(other.createdBy))) {
-            return false;
-        }
-        if (this.modifiedBy != other.modifiedBy && (this.modifiedBy == null || !this.modifiedBy.equals(other.modifiedBy))) {
-            return false;
-        }
         return true;
     }
 
@@ -131,8 +103,6 @@ public abstract class BaseEntity implements Serializable {
         hash = 37 * hash + (this.id != null ? this.id.hashCode() : 0);
         hash = 37 * hash + (this.createdOn != null ? this.createdOn.hashCode() : 0);
         hash = 37 * hash + (this.modifiedOn != null ? this.modifiedOn.hashCode() : 0);
-        hash = 37 * hash + (this.createdBy != null ? this.createdBy.hashCode() : 0);
-        hash = 37 * hash + (this.modifiedBy != null ? this.modifiedBy.hashCode() : 0);
         return hash;
     }
 }

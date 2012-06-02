@@ -9,6 +9,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="css" name="default.css" />
         <h:outputStylesheet library="css" name="cssLayout.css" />
+        <ui:insert name="cssAndJs"></ui:insert>
         <title><ui:insert name="title">Default Title</ui:insert></title>
     </h:head>
 
@@ -31,6 +32,8 @@
                     <h:outputText value="Bienvenue #{currentContact.firstName} #{currentContact.lastName}"/>
                     <br/>
                     <h2><h:outputText value="Vous avez "/><p:commandLink ajax="false" action="/frontoffice/notifications/list"> <FONT COLOR="red">#{notificationController.contactNotificationsNumber}</FONT></p:commandLink> <h:outputText value=" notifications" style="font-style: italic"/> </h2>
+					<br/>
+                    <p:commandLink value="Logout" action="#{identity.logout()}" ajax="false"/>
                 </h:form>
             </ui:insert>
         </div>
@@ -39,30 +42,10 @@
                 <ui:insert name="left">
                     <p:accordionPanel activeIndex="-1">
                         <ui:insert name="menu">
-                            <p:tab title="Gestion des comptes">
+                            <p:tab title="Tickets">
                                 <h:form>
                                     <h:panelGrid columns="1">
-                                        <p:commandLink value="Comptes" action="/backoffice/accounts/list" ajax="false"/>
-                                        <p:commandLink value="Contacts" action="/backoffice/contacts/list" ajax="false"/>
-                                    </h:panelGrid>
-                                </h:form>
-                            </p:tab>
-                            <p:tab title="Gestion des produits">
-                                <h:form>
-                                    <h:panelGrid columns="1">
-                                        <p:commandLink value="Produits" action="/backoffice/products/list" ajax="false"/>
-                                        <p:commandLink value="Catégories" action="/backoffice/products/category/list" ajax="false"/>
-                                        <p:commandLink value="TVA" action="/backoffice/products/tva/list" ajax="false"/>
-                                    </h:panelGrid>
-                                </h:form>
-                            </p:tab>
-                            <p:tab title="Gestion d'accès">
-                                <h:form>
-                                    <h:panelGrid columns="1">
-                                        <p:commandLink value="Créer utilisateur" action="/backoffice/users/createUser" ajax="false"
-                                                       actionListener="#{userManagement.beginConversation()}"/>
-                                        <p:commandLink value="Gestion des groupes" action="/backoffice/users/listGroups" ajax="false"/>
-                                        <p:commandLink value="Gestion des rôles" action="/backoffice/users/listRoleTypes" ajax="false"/>
+                                        <p:commandLink value="Liste des tickets" action="/frontoffice/ticket/list?faces-redirect=true" ajax="false"/>
                                     </h:panelGrid>
                                 </h:form>
                             </p:tab>
@@ -77,7 +60,8 @@
                 <ui:insert name="body">Content</ui:insert>
             </div>
         </div>
-        <div id="bottom">
+        <p:spacer height="50"/>
+        <div id="bottom" style="vertical-align: bottom">
             <ui:insert name="bottom">Bottom</ui:insert>
         </div>
 

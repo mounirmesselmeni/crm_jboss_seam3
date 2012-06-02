@@ -8,6 +8,7 @@ import com.insat.gl5.crm_pfa.enumeration.PhoneNumberType;
 import com.insat.gl5.crm_pfa.enumeration.PriorityType;
 import com.insat.gl5.crm_pfa.enumeration.Salutation;
 import com.insat.gl5.crm_pfa.enumeration.TaskType;
+import com.insat.gl5.crm_pfa.enumeration.TicketType;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class EnumValues {
     public List<AddressType> getAddressTypes() {
         return Arrays.asList(AddressType.values());
     }
-    
+
     public List<CustomerType> getCustomerTypes() {
         return Arrays.asList(CustomerType.values());
     }
@@ -41,16 +42,20 @@ public class EnumValues {
     public List<OpportunityType> getOpportunityTypes() {
         return Arrays.asList(OpportunityType.values());
     }
-    
+
     public List<PhoneNumberType> getPhoneNumberTypes() {
         return Arrays.asList(PhoneNumberType.values());
     }
-    
+
     public List<PriorityType> getPriorityTypes() {
         return Arrays.asList(PriorityType.values());
     }
-    
+
     public List<TaskType> getTaskTypes() {
         return Arrays.asList(TaskType.values());
+    }
+
+    public List<TicketType> getTicketTypes() {
+        return Arrays.asList(TicketType.values());
     }
 }

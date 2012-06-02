@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="cssLayout.css" />
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <ui:insert name="top">
+                <h:form> 
+                    <p:dock position="top">
+                        <p:menuitem value="Accueil" icon="/resources/images/menu/Accueil.png" action="/home" ajax="false"/>
+                        <p:menuitem value="Tiers" icon="/resources/images/menu/Tiers.png" action="/backoffice/accounts/list" ajax="false"/>
+                        <p:menuitem value="Commercial" icon="/resources/images/menu/Commercial.png" action="/backoffice/agenda/calendar" ajax="false"/>
+                        <p:menuitem value="Produits Services" icon="/resources/images/menu/Produits.png" action="/data/accueil/accueilProduit" ajax="false"/>
+                        <p:menuitem value="Financier" icon="/resources/images/menu/Financier.png" action="/data/accueil/accueilFinancier" ajax="false"/>
+                        <p:menuitem value="Production" icon="/resources/images/menu/production.png" onclick="dlg3.show();"/>
+                        <p:menuitem value="Projet" icon="/resources/images/menu/projet.png" onclick="dlg3.show();"/>
+                        <p:menuitem value="Configuration" icon="/resources/images/menu/Configuration.png" action="/data/accueil/accueilConfiguration" ajax="false"/>
+                        <p:menuitem value="A propos" icon="/resources/images/menu/A_propos.png" onclick="dlg3.show();"/>
+                    </p:dock>
+                    <h:outputText value="Bienvenue #{currentContact.firstName} #{currentContact.lastName}"/>
+                    <br/>
+                    <h2><h:outputText value="Vous avez "/><p:commandLink ajax="false" action="/frontoffice/notifications/list"> <FONT COLOR="red">#{notificationController.contactNotificationsNumber}</FONT></p:commandLink> <h:outputText value=" notifications" style="font-style: italic"/> </h2>
+                </h:form>
+<<<<<<< HEAD
+                <h:form>
+                    <h:outputText value="Bienvenue #{currentContact.firstName} #{currentContact.lastName}"/>
+                    <br/>
+                    <p:commandLink value="Logout" action="#{identity.logout()}" ajax="false"/>
+                </h:form>
+=======
+>>>>>>> 00c90a6298a95cf70f2d00c72db7ec6f7441b00c
+            </ui:insert>
+        </div>
+        <div>
+            <div id="left">
+                <ui:insert name="left">
+                    <p:accordionPanel activeIndex="-1">
+                        <ui:insert name="menu">
+                            <p:tab title="Gestion des comptes">
+                                <h:form>
+                                    <h:panelGrid columns="1">
+                                        <p:commandLink value="Comptes" action="/backoffice/accounts/list" ajax="false"/>
+                                        <p:commandLink value="Contacts" action="/backoffice/contacts/list" ajax="false"/>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Gestion des produits">
+                                <h:form>
+                                    <h:panelGrid columns="1">
+                                        <p:commandLink value="Produits" action="/backoffice/products/list" ajax="false"/>
+                                        <p:commandLink value="Catégories" action="/backoffice/products/category/list" ajax="false"/>
+                                        <p:commandLink value="TVA" action="/backoffice/products/tva/list" ajax="false"/>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Gestion d'accès">
+                                <h:form>
+                                    <h:panelGrid columns="1">
+                                        <p:commandLink value="Créer utilisateur" action="/backoffice/users/createUser" ajax="false"
+                                                       actionListener="#{userManagement.beginConversation()}"/>
+                                        <p:commandLink value="Gestion des groupes" action="/backoffice/users/listGroups" ajax="false"/>
+                                        <p:commandLink value="Gestion des rôles" action="/backoffice/users/listRoleTypes" ajax="false"/>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                        </ui:insert>
+                    </p:accordionPanel>  
+                    <ui:insert name="switch">
+
+                    </ui:insert>
+                </ui:insert>
+            </div>
+            <div id="content" class="left_content">
+                <ui:insert name="body">Content</ui:insert>
+            </div>
+        </div>
+        <div id="bottom">
+            <ui:insert name="bottom">Bottom</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

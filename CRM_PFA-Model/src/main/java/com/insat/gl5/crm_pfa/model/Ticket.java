@@ -95,5 +95,5 @@ public class Ticket extends BaseEntity{
     public void setCreator(Contact creator) {
         this.creator = creator;
     }
-    
+
 }
