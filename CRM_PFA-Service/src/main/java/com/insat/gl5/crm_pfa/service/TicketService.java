@@ -98,4 +98,13 @@ public class TicketService extends GenericService {
         query.setParameter(1, ticket);
         return (Long) query.getSingleResult();
     }
+
+    public void editTicketResponse(TicketResponse ticketResponse) throws Exception {
+        try {
+            edit(ticketResponse);
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            throw ex;
+        }
+    }
 }

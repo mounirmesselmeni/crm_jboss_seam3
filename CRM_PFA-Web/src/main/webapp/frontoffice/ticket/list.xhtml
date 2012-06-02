@@ -8,6 +8,10 @@
                 template="./../../WEB-INF/template/clientTemplate.xhtml">
 
     <ui:define name="body">
+        <f:metadata>
+            <f:event type="preRenderView"
+                     listener="#{ticketController.endConversation()}" />
+        </f:metadata>
         <p:panel header="Vos tickets">
             <p:messages autoUpdate="true"/>
             <h:form>
@@ -38,7 +42,7 @@
                     <p:column headerText="Actions" style="text-align:center;width: 5%">  
                         <h:link  title="Modifier" outcome="view">
                             <f:param name="id" value="#{ticket.id}"/>
-                            <h:graphicImage library="images" name="constellation/icons/fugue/pencil.png" width="16" height="16"/>
+                            <h:graphicImage library="images" name="Icons/64/16.png" width="25" height="25"/>
                         </h:link>  
                         <p:spacer width="5"/>
                     </p:column>

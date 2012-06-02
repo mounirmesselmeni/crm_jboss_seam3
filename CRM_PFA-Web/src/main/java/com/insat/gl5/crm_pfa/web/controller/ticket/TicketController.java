@@ -13,6 +13,8 @@ import com.insat.gl5.crm_pfa.service.qualifier.CurrentContact;
 import com.insat.gl5.crm_pfa.service.qualifier.CurrentUser;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -58,6 +60,13 @@ public class TicketController extends ConversationController {
     }
 
     /**
+     * Load new TicketResponse instance
+     */
+    public void initTicketResponse() {
+        this.ticketResponse = new TicketResponse();
+    }
+
+    /**
      * Verify if the current user is allowed to view the Ticket
      * @return 
      */
@@ -66,6 +75,39 @@ public class TicketController extends ConversationController {
             return true;
         }
         if (currentContact != null && this.ticket.getCreator().equals(currentContact)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Verify if the current user is the creator of the current Ticket
+     * @return 
+     */
+    public boolean canEditTicket() {
+        if (currentContact == null) {
+            return false;
+        }
+        if (currentContact.equals(ticket.getCreator())) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Verify if the current user is the creator of the current TicketResponse
+     * @return 
+     */
+    public boolean canEditTicketResponse(TicketResponse currentTicketResponse) {
+        if (noUserConnected()) {
+            return false;
+        }
+        if (currentContact != null && currentTicketResponse != null
+                && currentContact.equals(currentTicketResponse.getCrmUser())) {
+            return true;
+        }
+        if (currentBackendUser != null && currentTicketResponse != null
+                && currentBackendUser.equals(currentTicketResponse.getCrmUser())) {
             return true;
         }
         return false;
@@ -102,9 +144,8 @@ public class TicketController extends ConversationController {
         }
         try {
             this.ticketService.editTicket(this.ticket);
-            this.ticket = new Ticket();
             this.messages.info("Ticket à jour.");
-            return "list";
+            return "view";
         } catch (Exception ex) {
             this.messages.error("Erreur lors de la création du ticket");
         }
@@ -117,10 +158,11 @@ public class TicketController extends ConversationController {
     public void editResolved() {
         if (this.currentContact != null && this.currentContact.equals(this.ticket.getCreator())) {
             try {
+                this.ticket.setResolved(!this.ticket.isResolved());
                 this.ticketService.editTicket(this.ticket);
                 if (this.ticket.isResolved()) {
                     this.messages.info("Ticket résolu");
-                }else{
+                } else {
                     this.messages.info("Ticket non résolu");
                 }
             } catch (Exception ex) {
@@ -167,6 +209,32 @@ public class TicketController extends ConversationController {
                 this.messages.error("Erreur lors de l'insertion de la réponse.");
             }
         }
+    }
+
+    /**
+     * Edit the current TicketResponse
+     * @return 
+     */
+    public String editResponse() {
+        if (noUserConnected()) {
+            return null;
+        }
+        try {
+            this.ticketService.editTicketResponse(this.ticketResponse);
+            this.messages.info("Réponse à jour");
+            return "view";
+        } catch (Exception ex) {
+            this.messages.error("Erreur lors de la modification de votre réponse.");
+            return null;
+        }
+    }
+
+    private boolean noUserConnected() {
+        if (this.currentContact == null && this.currentBackendUser == null) {
+            this.messages.error("Utilisateur inconnu !");
+            return true;
+        }
+        return false;
     }
 
     public Long getReponseNumber(Ticket ticketE) {

@@ -8,39 +8,35 @@
                 template="./../../WEB-INF/template/clientTemplate.xhtml">
 
     <ui:define name="body">
-        <p:panel header="Nouvelle ticket">
+        <p:panel header="#{empty ticketController.ticket.id ? 'Nouvelle ticket' : 'Modifier ticket'}">
             <p:messages autoUpdate="true"/>
             <h:form>
-                <h:panelGrid columns="3" style="width: 100%;">
-                    <h:outputText value="Type :"/>
-                    <p:selectOneMenu id="ticketType" value="#{ticketController.ticket.type}" styleClass="full-width"
-                                     required="true" requiredMessage="Valeur requise" style="width: 350px;">
-                        <f:selectItems value="#{enumValues.ticketTypes}" var="ticketType" itemValue="#{ticketType}" itemLabel="#{ticketType.displayName}"/>
-                    </p:selectOneMenu>
-                    <p:message for="ticketType"/>
-                    <h:outputText value="Sujet :"/>
-                    <p:inputText id="ticketSubject" value="#{ticketController.ticket.subject}" 
-                                 required="true" requiredMessage="Valeur requise" style="width: 350px;"/>
-                    <p:message for="ticketSubject"/>
-                    <h:outputText value="Contenu :"/>
-                    <p:editor id="ticketContent" value="#{ticketController.ticket.content}" 
-                                     required="true" requiredMessage="Valeur requise"/>
-                    <p:message for="ticketContent"/>
-                </h:panelGrid>
+                <ui:include src="ticketForm.xhtml" />
                 <p:spacer height="20"/>
                 <table width="100%" border="0">
                     <tr >
                         <td width="20%" height="20px">
-                            <p:commandButton   styleClass="btn_annul" value="Annuler" ajax="false" actionListener="#{fileUploadController.resetFile()}" 
+                            <p:commandButton   styleClass="btn_annul" value="Annuler" ajax="false"
+                                               rendered="#{empty ticketController.ticket.id}"
                                                action="#{ticketController.cancel('list')}"
+                                               immediate="true" />
+                            <p:commandButton   styleClass="btn_annul" value="Annuler" ajax="false"
+                                               rendered="#{not empty ticketController.ticket.id}"
+                                               action="view"
                                                immediate="true" />
                         </td>
                         <td width="60%" >
                         </td>
                         <td  width="20%" height="20px" align="right">
                             <p:commandButton  
+                                rendered="#{empty ticketController.ticket.id}"
                                 ajax="false"  value="Créer"
                                 styleClass="btn_val" action="#{ticketController.createTicket()}"
+                                />
+                            <p:commandButton  
+                                rendered="#{not empty ticketController.ticket.id}"
+                                ajax="false"  value="Modifier"
+                                styleClass="btn_val" action="#{ticketController.editTicket()}"
                                 />
                         </td>
                     </tr>  
