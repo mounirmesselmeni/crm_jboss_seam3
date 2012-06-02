@@ -30,7 +30,7 @@
                     </p:dock>
                 <h:outputText value="Bienvenue #{currentUser.fullName}"/>
                 <br/>
-                <h2><h:outputText value="Vous avez "/><p:commandLink> <FONT COLOR="red">#{notificationController.backendUserNotificationsNumber}</FONT></p:commandLink> <h:outputText value=" notifications" style="font-style: italic"/> </h2>
+                <h2><h:outputText value="Vous avez "/><p:commandLink ajax="false" action="/backoffice/notifications/list"> <FONT COLOR="red">#{notificationController.backendUserNotificationsNumber}</FONT></p:commandLink> <h:outputText value=" notifications" style="font-style: italic"/> </h2>
                 </h:form>
             </ui:insert>
         </div>
@@ -53,6 +53,13 @@
                                         <p:commandLink value="Produits" action="/backoffice/products/list" ajax="false"/>
                                         <p:commandLink value="Catégories" action="/backoffice/products/category/list" ajax="false"/>
                                         <p:commandLink value="TVA" action="/backoffice/products/tva/list" ajax="false"/>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Gestion des opportunités">
+                                <h:form>
+                                    <h:panelGrid columns="1">
+                                        <p:commandLink value="Opportunités" action="/backoffice/opportunities/list" ajax="false"/>
                                     </h:panelGrid>
                                 </h:form>
                             </p:tab>

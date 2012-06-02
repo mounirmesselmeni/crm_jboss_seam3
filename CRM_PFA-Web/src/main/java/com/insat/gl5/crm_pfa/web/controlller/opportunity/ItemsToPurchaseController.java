@@ -13,7 +13,6 @@ import java.util.List;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.jboss.seam.international.status.Messages;
 
 /**
  *
@@ -42,10 +41,11 @@ public class ItemsToPurchaseController extends ConversationController {
     private Category filterCategory;
     private String filterProductName;
 
-    public void deleteItem(ItemToPurchase item) throws Exception{
+    public void deleteItem(ItemToPurchase item) throws Exception {
         itemToPurchaseService.deleteItemToPurchase(item);
     }
-    public void saveItem(ItemToPurchase item) throws Exception{
+
+    public void saveItem(ItemToPurchase item) throws Exception {
         itemToPurchaseService.saveItemToPurchase(item);
     }
 
@@ -56,20 +56,35 @@ public class ItemsToPurchaseController extends ConversationController {
     public void loadProducts(List<ItemToPurchase> items) {
         products = productService.getAllProducts();
         itemsToPurchase = items;
-        for (ItemToPurchase item : itemsToPurchase) {
-            products.remove(item.getProduct());
-        }
+//        for (ItemToPurchase item : itemsToPurchase) {
+//            products.remove(item.getProduct());
+//        }
     }
 
-
     public void addItem() {
-        itemsToPurchase.add(new ItemToPurchase(quantity, selctedProduct));
-        products.remove(selctedProduct);
+        ItemToPurchase item = getItemToPurchaseByProduct(selctedProduct);
+
+        if (item == null) {
+            itemsToPurchase.add(new ItemToPurchase(quantity, selctedProduct));
+        }else{
+            item.setQuantity(item.getQuantity()+quantity);
+        }
+        quantity =0;
+//        products.remove(selctedProduct);
     }
 
     public void removeItem(ItemToPurchase itemToPurchase) {
         itemsToPurchase.remove(itemToPurchase);
-        products.add(itemToPurchase.getProduct());
+//        products.add(itemToPurchase.getProduct());
+    }
+
+    private ItemToPurchase getItemToPurchaseByProduct(Product product) {
+        for (ItemToPurchase item : itemsToPurchase) {
+            if (item.getProduct().equals(product)) {
+                return item;
+            }
+        }
+        return null;
     }
 
     public void populateProducts() {

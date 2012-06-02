@@ -79,14 +79,17 @@ public class NotificationService extends GenericService{
             throw ex;
         }
     }
-
      /**
      * Get a list of notifications
      *
      * @return 
      */
     public List<Notification> getAllNotificationsByContact(Contact contact) {
-        TypedQuery query = em.createQuery("SELECT nc.notification FROM NotificationContact nc WHERE nc.contact=?1 AND nc.notification.readed=false AND nc.direction =1", Notification.class).setParameter(1, contact);
+        TypedQuery query = em.createQuery("SELECT nc.notification FROM NotificationContact nc WHERE nc.contact=?1 AND nc.direction =1 ORDER BY nc.notification.createdOn DESC, nc.notification.readed", Notification.class).setParameter(1, contact);
+        return query.getResultList();
+    }
+    public List<Notification> getUnreadedNotificationsByContact(Contact contact) {
+        TypedQuery query = em.createQuery("SELECT nc.notification FROM NotificationContact nc WHERE nc.contact=?1 AND nc.notification.readed=false AND nc.direction =1 ORDER BY nc.notification.createdOn DESC", Notification.class).setParameter(1, contact);
         return query.getResultList();
     }
      /**
@@ -95,20 +98,28 @@ public class NotificationService extends GenericService{
      * @return 
      */
     public List<Notification> getAllNotificationsByBackendUser(BackendUser backendUser) {
-        TypedQuery query = em.createQuery("SELECT nc.notification FROM NotificationContact nc WHERE nc.backendUser=?1 AND nc.notification.readed=false AND nc.direction =2", Notification.class).setParameter(1, backendUser);
+        TypedQuery query = em.createQuery("SELECT nc.notification FROM NotificationContact nc WHERE nc.backendUser=?1 AND nc.direction =0 ORDER BY nc.notification.createdOn DESC, nc.notification.readed", Notification.class).setParameter(1, backendUser);
+        return query.getResultList();
+    }
+    public List<Notification> getUnreadedNotificationsByBackendUser(BackendUser backendUser) {
+        TypedQuery query = em.createQuery("SELECT nc.notification FROM NotificationContact nc WHERE nc.backendUser=?1 AND nc.notification.readed=false AND nc.direction =0 ORDER BY nc.notification.createdOn DESC", Notification.class).setParameter(1, backendUser);
         return query.getResultList();
     }
     
     private String getDisplayText(Notification notification){
         return notification.getType().getDisplayName()+" : "+notification.getContent() ;
     }
-    
-    public int getNotificationsNumberByContact(Contact user){
-        Query query = em.createQuery("SELECT COUNT(nc) FROM NotificationContact nc WHERE nc.contact=?1 AND nc.notification.readed=false AND nc.direction =1").setParameter(1, user);
-        return query.getResultList().size();
-    }
-    public int getNotificationsNumberByBackendUser(BackendUser user){
-        Query query = em.createQuery("SELECT COUNT(nc) FROM NotificationContact nc WHERE nc.backendUser=?1 AND nc.notification.readed=false AND nc.direction =2").setParameter(1, user);
-        return query.getResultList().size();
+//    
+//    public int getNotificationsNumberByContact(Contact user){
+//        Query query = em.createQuery("SELECT COUNT(nc) FROM NotificationContact nc WHERE nc.contact=?1 AND nc.notification.readed=false AND nc.direction =1").setParameter(1, user);
+//        return query.getResultList().size();
+//    }
+//    public int getNotificationsNumberByBackendUser(BackendUser user){
+//        Query query = em.createQuery("SELECT COUNT(nc) FROM NotificationContact nc WHERE nc.backendUser=?1 AND nc.notification.readed=false AND nc.direction =2").setParameter(1, user);
+//        return query.getResultList().size();
+//    }
+    public Notification getNotificationByOpportunity(Long id){
+        TypedQuery query = em.createQuery("SELECT n FROM Notification n WHERE n.link=?1", Notification.class).setParameter(1, "/frontoffice/notifications/viewOpportunity?id="+id);
+        return (Notification) query.getResultList().get(0);
     }
 }

@@ -9,8 +9,147 @@
     <ui:define name="body">
         <p:panel header="Edition de l'ooportunité : #{opportunityController.opportunity.name}">
             <h:form id="formNew"  >
-                <ui:include src="form.xhtml" />	
+<!--                <ui:include src="form.xhtml" />	-->
+                <p:spacer height="20"/>
+                <p:messages id="messages" autoUpdate="true" globalOnly="true"/>   
+                <table style="width: 100%">
+                    <tr>
+                        <td style="vertical-align: top">
+                            <h3>Informations générales</h3>
+                            <p:spacer height="10"/>
+                            <h:panelGrid columns="2" cellpadding="4">
+                                <h:outputLabel value="Nom opportunité :" styleClass="titleLib"/>  
+                                <h:panelGrid columns="2">
+                                    <p:inputText id="newName" value="#{opportunityController.opportunity.name}"
+                                                 required="true"
+                                                 requiredMessage="Valeur requise">
+                                        <p:ajax event="blur"/>
+                                    </p:inputText>
+                                    <p:message for="newName"/> 
+                                </h:panelGrid>
+                                <h:outputLabel value="Type :" styleClass="titleLib"/>  
+                                <p:selectOneMenu value="#{opportunityController.opportunity.type}" styleClass="full-width">
+                                    <f:selectItems value="#{enumValues.opportunityTypes}" var="_c" itemValue="#{_c}" itemLabel="#{_c.displayName}" />  
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Liée à :" styleClass="titleLib"/> 
+                                <h:panelGroup>
+                                    <h:panelGrid columns="4">
+                                        <p:selectOneMenu value="#{opportunityController.selectedAccount}" styleClass="full-width">
+                                            <f:selectItem  itemValue="#{null}" itemLabel="Selectionnez" />  
+                                            <f:selectItems value="#{lstAccounts}" var="_a" itemValue="#{_a}" itemLabel="#{_a.name}" />  
+                                            <p:ajax event="change" update="contactGroup"/>
+                                        </p:selectOneMenu>
+                                        <p:spacer width="10"/>
+                                        <h:outputLabel value="Contact :" styleClass="titleLib"/>
+                                        <h:panelGroup id="contactGroup">
+                                            <h:outputLabel  value="aucun contact trouvé" style="font-style: italic" rendered="#{opportunityController.contactsByAccount eq null}"/>
+                                            <p:selectOneMenu id="contact" value="#{opportunityController.opportunity.relatedTo}"  styleClass="full-width" rendered="#{opportunityController.contactsByAccount.size() gt 0}">
+                                                <f:selectItems value="#{opportunityController.contactsByAccount}" var="_a" itemValue="#{_a}" itemLabel="#{_a.lastName}" />  
+                                                <p:ajax event="change" update="@this"/>
+                                            </p:selectOneMenu>
+                                        </h:panelGroup>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:outputLabel value="Date de clôture prévue :" styleClass="titleLib"/>  
+                                <h:panelGrid columns="2">
 
+                                    <p:calendar id="startDate" pattern="dd/MM/yyyy" value="#{opportunityController.opportunity.closeDate}"  
+                                                readOnlyInputText="true"
+                                                required="true"
+                                                requiredMessage="Valeur requise" >
+                                        <p:ajax event="dateSelect" />
+                                    </p:calendar>
+                                    <p:message for="startDate"/>
+                                </h:panelGrid>
+                                <h:outputLabel value="Déscription :" />  
+                                <p:inputTextarea rows="5" cols="45" value="#{opportunityController.opportunity.description}"/>
+                            </h:panelGrid>
+                        </td>
+                        <td style="vertical-align: top;">
+                            <h3>Produits de l'offre</h3>
+                            <p:spacer height="10"/>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td colspan="2">
+                                        <h:panelGrid columns="8" cellspacing="8">
+                                            <h:outputText value="Catégorie" styleClass="fs12 gras"/>
+                                            <p:selectOneMenu   value="#{itemsToPurchaseController.filterCategory}"
+                                                               styleClass="fs12">
+                                                <f:selectItem itemLabel="-- Toutes --" itemValue="#{null}"/> 
+                                                <f:selectItems value="#{lstCategories}" var="c" 
+                                                               itemLabel="#{c.name}" itemValue="#{c}"/>
+                                                <p:ajax event="change" update="@form"/>
+                                            </p:selectOneMenu>
+                                            <p:spacer width="10"/>
+                                            <h:outputText value="Recherche par nom" styleClass="fs12 gras"/>
+                                            <p:inputText id="nom" value="#{itemsToPurchaseController.filterProductName}" >
+                                                <p:ajax event="blur"/>
+                                            </p:inputText>
+                                            <p:commandLink title="Filtrer" immediate="true" update="groupProducts"
+                                                           action="#{itemsToPurchaseController.populateProducts()}">
+                                                <h:graphicImage library="images" name="icons/filter.png"/>   
+                                            </p:commandLink>
+
+                                        </h:panelGrid>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                
+                                    <td valign="top" style="width: 250px">
+                                        <h:panelGroup id="groupProducts">
+                                            <p:galleria id="contentGalleria" rendered="#{itemsToPurchaseController.products.size() gt 0}" value="#{itemsToPurchaseController.products}" 
+                                                        var="product" frameWidth="70" frameHeight="100"  
+                                                        panelWidth="240" panelHeight="280" transitionInterval="0"  
+                                                        styleClass="ui-widget-content ui-corner-all">  
+                                                <p:graphicImage id="productImage" value="/CRMData/products/#{product.image}" width="120" height="140"/>  
+                                                <p:galleriaContent>  
+                                                    <center>
+                                                        <h:panelGrid  columns="2" cellpadding="5">  
+                                                            <f:facet name="header">  
+                                                                <p:commandLink  title="Ajouter " oncomplete="cartDialog.show()" update=":cartDlg" immediate="true">
+                                                                    <p:graphicImage value="/CRMData/products/#{product.image}"  width="120" height="140"/>  
+                                                                    <f:setPropertyActionListener target="#{itemsToPurchaseController.selctedProduct}" value="#{product}"/>
+                                                                </p:commandLink>
+                                                            </f:facet>  
+                                                            <h:outputText value="Référence"/>
+                                                            <h:outputText value="#{product.reference}"/>
+                                                            <h:outputText value="Libellé"/>
+                                                            <h:outputText value="#{product.name}"/>
+                                                            <h:outputText value="Prix ordinaire"/>
+                                                            <h:outputText value="#{product.price}"/>
+                                                        </h:panelGrid>  
+                                                    </center>
+                                                </p:galleriaContent>  
+                                            </p:galleria>
+                                            <h:outputLabel value="Pas de produits trouvés" rendered="#{itemsToPurchaseController.products.size() eq 0}"/>
+                                        </h:panelGroup>
+                                    </td>
+                                    <td valign="top" style="width: 380px">
+                                        <p:panel header="Items séléctionnés" id="cartPanel" >
+                                            <ui:repeat  value="#{itemsToPurchaseController.itemsToPurchase}" var="item">
+
+                                                <h:panelGrid columns="4" style="width: 100%">
+                                                    <p:graphicImage value="/CRMData/products/#{item.product.image}"  width="30" height="50"/>   
+                                                    <h:outputLabel value="#{item.product} "/>
+                                                    <h:outputLabel value=" Quantité: #{item.quantity}"/>
+                                                    <p:commandLink  title="Supprimer"  immediate="true" action="#{itemsToPurchaseController.removeItem(item)}" update="@form">
+                                                        <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
+                                                    </p:commandLink>
+                                                </h:panelGrid>        
+                                            </ui:repeat>
+                                        </p:panel>
+                                        <h:outputText value="Prix d'opportunité : "/>
+                                        <h:outputText value="#{opportunityController.calculateOpportunityPrice()}"/>
+                                    </td>
+                                </tr>
+
+                            </table>    
+
+
+                        </td>
+                    </tr>  
+                </table>
                 <p:spacer height="20"/>
                 <table width="100%" border="0">
                     <tr >
@@ -32,6 +171,39 @@
             </h:form>
 
         </p:panel>
+         <p:dialog modal="true" id="cartDlg" header="Ajouter le produit" widgetVar="cartDialog" width="400" height="300"
+                  >
+            <h:form >
+                <h:panelGrid columns="2" style="width: 100%">
+                    <h:outputText value="Référence"/>
+                    <h:outputText value="#{itemsToPurchaseController.selctedProduct.reference}"/>
+                    <h:outputText value="Libellé"/>
+                    <h:outputText value="#{itemsToPurchaseController.selctedProduct.name}"/>
+                    <h:outputText value="Prix ordinaire"/>
+                    <h:outputText value="#{itemsToPurchaseController.selctedProduct.price}"/>
+                    <h:outputText value="Prix d'opportunité"/>
+                    <p:spacer/>
+                    <h:outputText value="Quantité :" styleClass="titleLib"/>
+                    <p:inputText value="#{itemsToPurchaseController.quantity}">
+                    </p:inputText>
+                </h:panelGrid>
+                <table width="100%" border="0">
+                    <tr >
+                        <td width="20%" height="20px">
+                            <p:commandButton styleClass="btn_annul" value="Annuler" ajax="false" 
+                                             onclick="cartDialog.hide();" immediate="true" />
+                        </td>
+                        <td width="60%" >
+                        </td>
+                        <td  width="20%" height="20px">
+                            <p:commandButton   value="Ajouter" ajax="false" styleClass="btn_val" oncomplete="cartDialog.hide()" update="@form" 
+                                               action="#{itemsToPurchaseController.addItem()}">
+                            </p:commandButton>
+                        </td>
+                    </tr>  
+                </table>
+            </h:form>
+        </p:dialog>
     </ui:define>
 
 </ui:composition>

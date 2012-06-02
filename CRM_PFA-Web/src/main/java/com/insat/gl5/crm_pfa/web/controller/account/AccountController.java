@@ -4,14 +4,13 @@
  */
 package com.insat.gl5.crm_pfa.web.controller.account;
 
-import com.insat.gl5.crm_pfa.model.Account;
-import com.insat.gl5.crm_pfa.model.Address;
-import com.insat.gl5.crm_pfa.model.EmailAdress;
-import com.insat.gl5.crm_pfa.model.PhoneNumber;
+import com.insat.gl5.crm_pfa.model.*;
 import com.insat.gl5.crm_pfa.service.AccountService;
 import com.insat.gl5.crm_pfa.service.CoordinatesService;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
 import com.insat.gl5.crm_pfa.web.controller.FileUploadController;
+import com.insat.gl5.crm_pfa.web.exception.ExistingEmailException;
+import com.insat.gl5.crm_pfa.web.exception.ExistingNameException;
 import com.insat.gl5.crm_pfa.web.viewModel.AddressViewModel;
 import com.insat.gl5.crm_pfa.web.viewModel.EmailViewModel;
 import com.insat.gl5.crm_pfa.web.viewModel.PhoneNumberViewModel;
@@ -115,14 +114,20 @@ public class AccountController extends ConversationController {
     public String saveAccount() {
 
         try {
-
+            validateAttributes();
             affectCoordinates();
             account.setLogoURL(account.getName() + ".png");
+            account.setFidelity(new Fidelity(5));
             accountService.saveAccount(getAccount());
             uploadLogo();
             messages.info("Compte {0} est enregistré avec succés !", getAccount().getName());
             setAccount(null);
-
+        } catch (ExistingNameException e) {
+            messages.error("Nom de société : {0} existe déja !", getAccount().getName());
+            return null;
+        } catch (ExistingEmailException e) {
+            messages.error("L'e-mail : {0} existe déja !", lstEmailViewModels.get(0).getEmail().getValue());
+            return null;
         } catch (Exception e) {
             messages.error("Erreur d'enregistrement du compte {0}", getAccount().getName());
             return null;
@@ -140,6 +145,7 @@ public class AccountController extends ConversationController {
     public String editAccount() {
 
         try {
+            validateAttributes();
             editCoordinates();
             //Mettre à jour le nom du logo
             updateLogo();
@@ -147,12 +153,19 @@ public class AccountController extends ConversationController {
             messages.info("Compte {0} est modifié avec succés !", getAccount().getName());
 
             setAccount(null);
-
+        } catch (ExistingNameException e) {
+            messages.error("Nom de société : {0} existe déja !", getAccount().getName());
+            return null;
+        } catch (ExistingEmailException e) {
+            messages.error("L'e-mail : {0} existe déja !", lstEmailViewModels.get(0).getEmail().getValue());
+            return null;
         } catch (Exception e) {
             messages.error("Erreur de modification du compte {0}", getAccount().getName());
             return null;
         }
+
         endConversation();
+
         return getRedirect();
     }
 
@@ -160,6 +173,16 @@ public class AccountController extends ConversationController {
         editEmails();
         editAddresses();
         editPhoneNumbers();
+    }
+
+    private void validateAttributes() throws ExistingEmailException, ExistingNameException {
+        if (accountService.nameExits(account.getName())) {
+            throw new ExistingNameException();
+        }
+
+       if (coordinatesService.emailExits(lstEmailViewModels.get(0).getEmail().getValue())) {
+            throw new ExistingEmailException();
+        }
     }
 
     private void editEmails() {
@@ -370,7 +393,7 @@ public class AccountController extends ConversationController {
 
     private void deleteLogo() throws IOException {
         // supprimer le logo
-        File logo = new File(ACCOUNTS_DIRECTORY+account.getLogoURL());
+        File logo = new File(ACCOUNTS_DIRECTORY + account.getLogoURL());
         logo.delete();
     }
 
@@ -389,15 +412,15 @@ public class AccountController extends ConversationController {
     }
 
     private void uploadLogo() throws IOException {
-         // Création du répertoire du client
+        // Création du répertoire du client
         File dir = new File(ACCOUNTS_DIRECTORY);
         if (!dir.exists()) {
             dir.mkdirs();
         }
         if (fileUploadController.getFile() != null) {
-            fileUploadController.upload(ACCOUNTS_DIRECTORY+account.getLogoURL());
+            fileUploadController.upload(ACCOUNTS_DIRECTORY + account.getLogoURL());
         } else {
-            fileUploadController.uploadFromURL("//resources//images//other//defaultLogo.png", ACCOUNTS_DIRECTORY+account.getLogoURL());
+            fileUploadController.uploadFromURL("//resources//images//other//defaultLogo.png", ACCOUNTS_DIRECTORY + account.getLogoURL());
         }
     }
 

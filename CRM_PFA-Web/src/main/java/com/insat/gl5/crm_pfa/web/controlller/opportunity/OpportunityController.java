@@ -6,12 +6,16 @@ package com.insat.gl5.crm_pfa.web.controlller.opportunity;
 
 import com.insat.gl5.crm_pfa.enumeration.DirectionEnum;
 import com.insat.gl5.crm_pfa.enumeration.NotificationType;
+import com.insat.gl5.crm_pfa.enumeration.OpportunityType;
 import com.insat.gl5.crm_pfa.model.*;
+import com.insat.gl5.crm_pfa.service.AccountService;
 import com.insat.gl5.crm_pfa.service.ContactService;
 import com.insat.gl5.crm_pfa.service.NotificationService;
 import com.insat.gl5.crm_pfa.service.OpportunityService;
 import com.insat.gl5.crm_pfa.service.qualifier.CurrentUser;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
+import com.insat.gl5.crm_pfa.web.exception.ContactRequiredException;
+import com.insat.gl5.crm_pfa.web.exception.ProductsRequiredException;
 import java.util.LinkedList;
 import java.util.List;
 import javax.enterprise.context.ConversationScoped;
@@ -34,6 +38,8 @@ public class OpportunityController extends ConversationController {
 
     @Inject
     private OpportunityService opportunityService;
+    @Inject
+    private AccountService accountService;
     @Inject
     private ContactService contactService;
     @Inject
@@ -60,13 +66,21 @@ public class OpportunityController extends ConversationController {
     public String saveOpportunity() {
 
         try {
-
+            validateContact();
             affectProducts();
+            opportunity.setType(OpportunityType.PROPOSITION);
+            opportunity.setAssignedTo(currentUser);
             opportunityService.saveOpportunity(getOpportunity());
             notifyContacts();
             messages.info("Opportunité {0} est enregistrée avec succés !", getOpportunity());
             setOpportunity(null);
 
+        } catch (ContactRequiredException e) {
+            messages.error("Veuillez choisir le contact");
+            return null;
+        } catch (ProductsRequiredException e) {
+            messages.error("Veuillez choisir les produits");
+            return null;
         } catch (Exception e) {
             messages.error("Erreur d'enregistrement de l'Opportunité {0}", getOpportunity());
             return null;
@@ -84,12 +98,19 @@ public class OpportunityController extends ConversationController {
     public String editOpportunity() {
 
         try {
+            validateContact();
             editProducts();
+
             opportunityService.editOpportunity(getOpportunity());
             messages.info("Opportunité {0} est modifiée avec succés !", getOpportunity());
 
             setOpportunity(null);
-
+        } catch (ContactRequiredException e) {
+            messages.error("Veuillez choisir le contact");
+            return null;
+        } catch (ProductsRequiredException e) {
+            messages.error("Veuillez choisir les produits");
+            return null;
         } catch (Exception e) {
             messages.error("Erreur de modification de l'Opportunité {0}", getOpportunity());
             return null;
@@ -98,7 +119,10 @@ public class OpportunityController extends ConversationController {
         return getRedirect();
     }
 
-    private void editProducts() {
+    private void editProducts() throws ProductsRequiredException {
+        if (itemsToPurchaseController.getItemsToPurchase().isEmpty()) {
+            throw new ProductsRequiredException();
+        }
         for (ItemToPurchase item : itemsToPurchaseController.getLstItemsToDelete()) {
             try {
                 itemsToPurchaseController.deleteItem(item);
@@ -117,8 +141,25 @@ public class OpportunityController extends ConversationController {
         }
     }
 
-    public String getOpportunityPrice(Product product) {
-        return String.valueOf(product.getPrice() * ((100 - opportunity.getRelatedTo().getAccount().getFidelity().getScore()) / 100));
+    public void validateContact() throws ContactRequiredException {
+        if (opportunity.getRelatedTo() == null) {
+            throw new ContactRequiredException();
+        }
+    }
+
+    public double calculateTotalPrice() {
+        double price = 0;
+        for (ItemToPurchase item : itemsToPurchaseController.getItemsToPurchase()) {
+            price += item.getQuantity() * item.getProduct().getPrice();
+        }
+        return price;
+    }
+
+    public double calculateOpportunityPrice() {
+        if (opportunity.getRelatedTo() == null) {
+            return calculateTotalPrice();
+        }
+        return calculateTotalPrice() * ((100 - contactService.getFidelityByContact(opportunity.getRelatedTo()).getScore()) / 100);
     }
 
     public void initProducts() {
@@ -129,6 +170,7 @@ public class OpportunityController extends ConversationController {
     public void loadProducts(Opportunity o) {
         beginConversation();
         opportunity = o;
+        selectedAccount = accountService.findById(opportunity.getRelatedTo().getAccount().getId());
         itemsToPurchaseController.loadProducts(opportunity.getItemsToPurchase());
     }
 
@@ -141,25 +183,27 @@ public class OpportunityController extends ConversationController {
     public void deleteOpportunity() {
 
         try {
+            notificationService.deleteNotification(notificationService.getNotificationByOpportunity(opportunity.getId()));
             opportunityService.deleteOpportunity(getOpportunity());
             messages.info("Opportunité {0} est supprimée avec succés !", getOpportunity());
-
             setOpportunity(null);
-
         } catch (Exception e) {
             messages.error("Erreur de supression de l'Opportunité {0}", getOpportunity());
         }
         endConversation();
     }
 
-    private void affectProducts() {
+    private void affectProducts() throws ProductsRequiredException {
+        if (itemsToPurchaseController.getItemsToPurchase().isEmpty()) {
+            throw new ProductsRequiredException();
+        }
         opportunity.setItemsToPurchase(itemsToPurchaseController.getItemsToPurchase());
     }
 
     private void notifyContacts() throws Exception {
         Notification notification = new Notification();
-        notification.setContent("Vous avez un offre");
-        notification.setLink("/frontoffice/notifications/viewOpportunity?id="+opportunity.getId());
+        notification.setContent("Vous avez un offre : <" + currentUser.getLogin() + "> vous invite à consulter l'opportunité ' " + opportunity.getName() + " ' !!");
+        notification.setLink("/frontoffice/notifications/viewOpportunity?id=" + opportunity.getId());
         notification.setType(NotificationType.OPPORTUNITE);
         List<NotificationContact> list = new LinkedList<NotificationContact>();
         NotificationContact notificationContact = new NotificationContact(opportunity.getRelatedTo(), currentUser, notification, DirectionEnum.FROM_BACKUSER);
@@ -170,7 +214,10 @@ public class OpportunityController extends ConversationController {
     }
 
     public List<Contact> getContactsByAccount() {
-        return contactService.getContactsByAccount(selectedAccount);
+        if (selectedAccount == null) {
+            return null;
+        }
+        return contactService.getContactsByAccount(accountService.findById(selectedAccount.getId()));
     }
 
     /**

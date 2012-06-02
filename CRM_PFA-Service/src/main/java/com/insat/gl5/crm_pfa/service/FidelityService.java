@@ -74,6 +74,6 @@ public class FidelityService extends GenericService{
     }
  
     private String getDisplayText(Fidelity  fidelity){
-        return fidelity.getAccount().getName()+" : "+fidelity.getScore();
+        return ""+fidelity.getScore();
     }
 }

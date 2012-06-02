@@ -31,17 +31,23 @@ public class NotificationController  implements Serializable {
         @Inject
         @CurrentUser
         private BackendUser currentUser;
+        
+        private Long id;
     /**
      * @return the notificationsNumber
      */
     public String consult(Notification notification) {
-        return notification.getLink();
+        String link = notification.getLink();
+        setId((Long) Long.parseLong(link.substring(link.indexOf("=")+1, link.length())));
+        link = link.substring(0, link.indexOf("?"));
+        notification.setReaded(true);
+        return link;
     }
     /**
      * @return the notificationsNumber
      */
     public int getContactNotificationsNumber() {
-        return getContactNotifications().size();
+        return notificationService.getUnreadedNotificationsByContact(currentContact).size();
     }
     /**
      * @return the notifications
@@ -53,13 +59,27 @@ public class NotificationController  implements Serializable {
      * @return the notificationsNumber
      */
     public int getBackendUserNotificationsNumber() {
-        return getBackendUserNotifications().size();
+        return notificationService.getUnreadedNotificationsByBackendUser(currentUser).size();
     }
     /**
      * @return the notifications
      */
     public List<Notification> getBackendUserNotifications() {
         return notificationService.getAllNotificationsByBackendUser(currentUser);
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 
     
