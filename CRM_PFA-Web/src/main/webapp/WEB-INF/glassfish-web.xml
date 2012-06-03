@@ -5,6 +5,9 @@
     <property name="alternatedocroot_2" value="from=/CRMData/contacts/* dir=/home/mu7ammed"/>
     <property name="alternatedocroot_3" value="from=/CRMData/products/* dir=/home/mu7ammed"/>
     <class-loader delegate="true"/>
+    <locale-charset-info>
+        <parameter-encoding default-charset="utf-8"/>
+    </locale-charset-info> 
     <jsp-config>
         <property name="keepgenerated" value="true">
             <description>Keep a copy of the generated servlet class' java code.</description>
