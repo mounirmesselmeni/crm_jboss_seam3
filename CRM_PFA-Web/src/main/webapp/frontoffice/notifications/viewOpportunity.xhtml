@@ -10,13 +10,13 @@
             <f:event type="preRenderView"
                      listener="#{consultOpportunityController.initOpportunity()}" />
         </f:metadata>
-        <p:panel header="Nouvelle opportunité">
+        <p:panel header="Opportunité">
             <h:form id="formNew"  >
                 <p:messages id="messages" globalOnly="true"/>   
                 <table style="width: 100%">
                     <tr>
                         <td style="vertical-align: top">
-                            <h3>Informations générales</h3>
+                            <h3><h:graphicImage library="images" name="Icons/48/42.png" /><p:spacer width="20"/>Informations générales</h3>
                             <p:spacer height="10"/>
                             <h:panelGrid columns="2" cellpadding="4">
                                 <h:outputLabel value="Nom opportunité :" styleClass="titleLib"/>  
@@ -30,7 +30,7 @@
                             </h:panelGrid>
                         </td>
                         <td style="vertical-align: top;">
-                            <h3>Produits de l'offre</h3>
+                             <h3><h:graphicImage library="images" name="Icons/48/78.png" /><p:spacer width="20"/>Produits de l'offre</h3>
                             <p:spacer height="10"/>
                             <p:panel header="Items séléctionnés" id="cartPanel" >
                                 <ui:repeat  value="#{consultOpportunityController.opportunity.itemsToPurchase}" var="item">
@@ -41,10 +41,14 @@
                                     </h:panelGrid>        
                                 </ui:repeat>
                             </p:panel>
-                            <p:spacer height="20"/>
-                            <br/>
-                            <h:outputLabel value="Prix d'opportunité :   "  styleClass="titleLib"/>
-                            <h:outputText value="#{consultOpportunityController.opportunity.totalPrice}" />
+                              <p:spacer height="20"/>
+                                <h3><h:graphicImage library="images" name="Icons/48/80.png" /><p:spacer width="20"/>Prix d'opportunité</h3>
+                                <br/>
+                                <h:outputLabel value="Normal : " styleClass="titleLib"/>
+                                <h:outputText value="#{consultOpportunityController.calculateTotalPrice()}" />
+                                <br/>
+                                <h:outputLabel value="Fidélité : " styleClass="titleLib"/>
+                                <h:outputText value="#{consultOpportunityController.calculateOpportunityPrice()}" style="color: #990000"/>
                         </td>
                     </tr>  
                 </table>
@@ -68,5 +72,5 @@
                 </table>
             </h:form>
         </p:panel>
-         </ui:define >
+    </ui:define >
 </ui:composition>

@@ -48,28 +48,14 @@
     <h:body >
 
 
-        <div id="mws-login">
-            <h1>Connexion</h1>
-            <div class="mws-login-lock">
-                <img src="#{request.contextPath}/resources/mws/css/icons/24/locked-2.png" alt="" /></div>
+        <div id="mws-login" style="width: 500px;height: 300px">
+            <h1>Activation du compte</h1>
+            <br/>
+            <br/>
             <div id="mws-login-form">
-                <h:form id="loginForm" styleClass="mws-form" rendered="#{not identity.loggedIn}">
-                    <div class="mws-form-row">
-                        <div class="mws-form-item large">
-                            <ui:insert name="body"></ui:insert>
-                        </div>
-                    </div>
-                </h:form>
-                <h:form id="alreadyLoggedInForm" styleClass="mws-form" rendered="#{identity.loggedIn}">
-                    <div class="mws-form-item large">
-                        <ui:insert name="loggedIn"></ui:insert>
-                        <p:spacer/>
-                    </div>
-                </h:form>
-            </div>
                 <ui:insert name="register">
-                   
                 </ui:insert>
+            </div>
             <p:messages id="messages" globalOnly="true" />
         </div>
     </h:body>

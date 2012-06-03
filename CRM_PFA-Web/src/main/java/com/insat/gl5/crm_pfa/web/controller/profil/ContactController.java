@@ -8,6 +8,7 @@ import com.insat.gl5.crm_pfa.enumeration.Salutation;
 import com.insat.gl5.crm_pfa.model.*;
 import com.insat.gl5.crm_pfa.service.ContactService;
 import com.insat.gl5.crm_pfa.service.CoordinatesService;
+import com.insat.gl5.crm_pfa.service.OpportunityService;
 import com.insat.gl5.crm_pfa.service.mail.MailService;
 import com.insat.gl5.crm_pfa.service.mail.Person;
 import com.insat.gl5.crm_pfa.service.security.UserProfileService;
@@ -59,6 +60,8 @@ public class ContactController extends ConversationController {
     @Inject
     private CoordinatesService coordinatesService;
     @Inject
+    private OpportunityService opportunityService;
+    @Inject
     private MailService mailService;
     @Inject
     private FileUploadController fileUploadController;
@@ -69,6 +72,8 @@ public class ContactController extends ConversationController {
     private Collection<Role> roles = new LinkedList<Role>();
     private RoleType roleType;
     private Group roleGroup;
+    private String lastEmail;
+    private String lastLogin;
     @Inject
     private Messages messages;
     private String redirect;
@@ -254,6 +259,7 @@ public class ContactController extends ConversationController {
         beginConversation();
         fileUploadController.resetFile();
         setContact(contact);
+        lastLogin = contact.getLogin();
         contact.setAccount(contactService.getAccountByContact(contact));
         initEmailViewModels();
         initAddressViewModels();
@@ -262,6 +268,7 @@ public class ContactController extends ConversationController {
 
     private void initEmailViewModels() {
         lstEmailViewModels = new LinkedList<EmailViewModel>();
+        lastEmail = contact.getLstEmails().get(0).getValue();
         int index = 0;
         for (EmailAdress email : contact.getLstEmails()) {
             lstEmailViewModels.add(new EmailViewModel(index++, email));
@@ -287,11 +294,15 @@ public class ContactController extends ConversationController {
     private void validateAttributes() throws ExistingEmailException, ExistingLoginException {
 
         if (contactService.loginExits(contact.getLogin())) {
-            throw new ExistingLoginException();
+            if (!lastLogin.equals(contact.getLogin())) {
+                throw new ExistingLoginException();
+            }
         }
 
-         if (coordinatesService.emailExits(lstEmailViewModels.get(0).getEmail().getValue())) {
-            throw new ExistingEmailException();
+        if (coordinatesService.emailExits(lstEmailViewModels.get(0).getEmail().getValue())) {
+            if (!lastEmail.equals(lstEmailViewModels.get(0).getEmail().getValue())) {
+                throw new ExistingEmailException();
+            }
         }
     }
 
@@ -401,6 +412,12 @@ public class ContactController extends ConversationController {
 
         try {
             deleteLogo();
+            for(Opportunity opp : opportunityService.getOpportunitiesByContact(contact)){
+                opportunityService.deleteOpportunity(opp);
+            }
+//            opportunityService.deleteOpportunitiesByContact(getContact());
+            contactService.deleteActivationCode(getContact());
+            contactService.deleteNotificationsContact(getContact());
             contactService.deleteContact(getContact());
             messages.info("Contact {0} est supprimé avec succés !", getContact());
 
@@ -544,7 +561,7 @@ public class ContactController extends ConversationController {
         logo.delete();
     }
 
-    private void updateLogo() {
+    private void updateLogo() throws IOException {
         // Nouveau chemin
         String newPath = contact.getLogin() + ".png";
         // Ancien chemin
@@ -556,6 +573,9 @@ public class ContactController extends ConversationController {
             lastURL.renameTo(newURL);
             contact.setImageURL(newPath);
         }
+        if (fileUploadController.getFile() != null) {
+            fileUploadController.upload(CONTACTS_DIRECTORY + contact.getImageURL());
+        } 
     }
 
     private void uploadLogo() throws IOException {

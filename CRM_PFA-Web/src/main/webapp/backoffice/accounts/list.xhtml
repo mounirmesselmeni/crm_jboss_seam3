@@ -16,10 +16,10 @@
             </div>
             <div class="mws-panel-body"  >
                 <h:form id="form1">
-                    <p:messages id="messages" globalOnly="true"/>
+                    <p:messages id="messages" autoUpdate="true" globalOnly="true"/>
                     <br/>
                     <p:spacer width="10" height="10"/>
-                    <h:commandButton image="/resources/images/icons/add.png"/>
+                    <h:commandButton image="/resources/images/icons/plus.png"/>
                     <p:spacer width="10"/>
                     <p:commandLink  ajax="false" value="Nouveau Compte" actionListener="#{accountController.createViewModels()}" action="create?faces-redirect=true"
                                     style="font-weight: bold">
@@ -33,9 +33,6 @@
                         <p:dataTable id="datatable"  var="account" value="#{lstAccounts}"  paginator="true" rows="10"  
                                      paginatorPosition="bottom">  
 
-                            <f:facet name="header" >
-                                Liste des comptes
-                            </f:facet>
                             <p:column headerText="Logo" style="width:10%">
                                 <center>
                                     <p:graphicImage value="/CRMData/accounts/#{account.logoURL}"  width="40" height="50" />  

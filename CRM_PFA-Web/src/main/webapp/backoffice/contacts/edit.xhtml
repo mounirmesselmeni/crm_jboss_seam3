@@ -8,8 +8,17 @@
                 template="./../../WEB-INF/template/generalTemplate2.xhtml">
     
     <ui:define name="body">
-        <p:panel header="Edit Contact">
-            <h:form id="contactForm">
+          <div class="mws-panel grid_8">
+            <div class="mws-panel-header">
+                <span class="mws-i-24 i-text-documents">
+                    Editer  #{contactController.contact.fullName}
+                </span>
+            </div>
+            <div class="mws-panel-body">
+                <p:spacer height="20" width="20"/>
+                <h:panelGrid columns="3" width="100%">
+                    <p:spacer height="20" width="20"/>      
+            <h:form id="contactForm" enctype="multipart/form-data">
 
                 <ui:include src="form.xhtml" />			
 
@@ -24,15 +33,18 @@
                     <td width="60%" >
                     </td>
                     <td  width="20%" height="20px">
-                    <p:commandButton  ajax="false"  value="Ajouter" styleClass="btn_val"
+                    <p:commandButton  ajax="false"  value="Editer" styleClass="btn_val"
                                       action="#{contactController.editContact()}"/>
                     </td>
                     </tr>  
                 </table>
 
-            </h:form>
-            <div style="clear:both;" />
-        </p:panel>
+           </h:form>
 
+                    <p:spacer height="20" width="20"/>
+                </h:panelGrid>
+            </div>
+        </div>
     </ui:define>
+
 </ui:composition>

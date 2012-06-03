@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
 
     <h:head>
@@ -13,7 +12,7 @@
         <ui:insert name="cssAndJs"></ui:insert>
         <title><ui:insert name="title">Default Title</ui:insert></title>
         <!-- Required Stylesheets -->
-       <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/reset.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/reset.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/text.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/fluid.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/fonts/ptsans/stylesheet.css" media="screen" />
@@ -25,10 +24,12 @@
         <!-- Theme Stylesheet -->
         <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/mws.theme.css" media="screen" />
 
+        <!--for accordeon panel-->
+<!--        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/jui/jquery.ui.css" media="screen" />-->
         <!-- JavaScript Plugins -->
-<!--        <script type="text/javascript" src="#{request.contextPath}/resources/mws/js/jquery-1.7.1.min.js"></script>-->
 
-
+        <!--ya3ml machakel-->
+<!--        <script type="text/javascript" src="#{request.contextPath}/resources/mws/js/demo.js"></script>-->
 
         <!-- For showing notif and msg list -->
         <script type="text/javascript" src="#{request.contextPath}/resources/mws/js/mws.js"></script>
@@ -45,14 +46,15 @@
             <div id="mws-user-tools" class="clearfix">
                 <div id="mws-user-notif" class="mws-dropdown-menu">
                     <a href="#" class="mws-i-24 i-alert-2 mws-dropdown-trigger">Notifications</a>
-                    <span class="mws-dropdown-notif">#{notificationController.contactNotificationsNumber}</span>
+                    <span class="mws-dropdown-notif">#{notificationController.backendUserNotificationsNumber}</span>
                     <div class="mws-dropdown-box">
                         <div class="mws-dropdown-content">
                             <ul class="mws-messages">
-                                <ui:repeat value="#{notificationController.contactNotifications}"
+                                <ui:repeat value="#{notificationController.backendUserNotifications}"
                                            var="notif">
                                     <li class="#{not notif.readed ? 'unread' : 'read'}">
-                                        <h:commandLink  action="#{notificationController.consult(notification)}" >
+<!--                                        <a href="{notificationController.consult(notification)}">-->
+                                        <a href="#">
                                             <span class="message">
                                                 #{notif.content}
                                             </span>
@@ -61,89 +63,38 @@
                                                     <f:converter converterId="dateTimeConverter"/>
                                                 </h:outputText>
                                             </span>
-                                        </h:commandLink>
+                                        </a>
                                     </li>
                                 </ui:repeat>
                             </ul>
                             <div class="mws-dropdown-viewall">
                                 <h:form>
-                                    <h:commandLink value="Afficher toutes" action="/frontoffice/notifications/list" />
+                                    <h:commandLink value="Afficher toutes" action="/backoffice/notifications/list" />
                                 </h:form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="mws-user-message" class="mws-dropdown-menu">
-                    <a href="#" class="mws-i-24 i-message mws-dropdown-trigger">Messages</a>
-                    <span class="mws-dropdown-notif">35</span>
-                    <div class="mws-dropdown-box">
-                        <div class="mws-dropdown-content">
-                            <ul class="mws-messages">
-                                <li class="read">
-                                    <a href="#">
-                                        <span class="sender">John Doe</span>
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="read">
-                                    <a href="#">
-                                        <span class="sender">John Doe</span>
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="unread">
-                                    <a href="#">
-                                        <span class="sender">John Doe</span>
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="unread">
-                                    <a href="#">
-                                        <span class="sender">John Doe</span>
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="mws-dropdown-viewall">
-                                <a href="#">View All Messages</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div id="mws-user-info" class="mws-inset">
                     <div id="mws-user-photo">
-                        <p:graphicImage value="/CRMData/contacts/#{currentContact.imageURL}"  alt="User Photo"/>  
+                        <img src="#{request.contextPath}/resources/mws/example/profile.jpg" alt="User Photo" />
                     </div>
                     <div id="mws-user-functions">
                         <div id="mws-username">
                             <h:outputText value="Bienvenue" style="color: white"/>
-                            <h:outputText value=" #{currentContact.firstName} #{currentContact.lastName}"/>
+                            <h:outputText value=" #{currentUser.fullName}"/>
                         </div>
                         <h:form>
                             <ul>
-                                <li><h:commandLink value="Profile" action="/frontoffice/myProfile"/></li>
-                                <li><a href="#">Change Password</a></li>
+<<<<<<< HEAD
+                                <li><a href="#">Profile</a></li>
+                                <li><h:commandLink value="Changer mot de passe" action="/backoffice/users/changePassword?faces-redirect=true"/></li>
                                 <li><h:commandLink value="Logout" action="/login" actionListener="#{identity.logout()}"/></li>
+=======
+                                <li><h:commandLink value="Profile" action="/backoffice/users/myProfile"/></li>
+                                <li><a href="#">Change Password</a></li>
+                                <li><h:commandLink value="Logout" action="#{identity.logout()}"/></li>
+>>>>>>> 804475beff075f94289dcb8d11ea965bfe2b65d4
                             </ul>
                         </h:form>
                     </div>
@@ -160,8 +111,41 @@
                 <div id="mws-navigation">
                     <h:form>
                         <ul>
-                            <li><h:commandLink action="/frontoffice/index" value="Tableau de bord"  class="mws-i-24 i-home"/></li>
-                            <li><h:commandLink action="/frontoffice/ticket/list" value="Mes tickets" class="mws-i-24 i-text-documents"/></li>
+                            <li><h:commandLink action="/backoffice/home" value="Acceuil" styleClass="mws-i-24 i-home" /></li>
+                            <li>
+                                <a href="#" class="mws-i-24 i-users"><h:outputText  value="Gestion des comptes"/></a>
+                                <ul>
+                                    <li><h:commandLink action="/backoffice/accounts/list" value="Sociétés"  /></li>
+                                    <li><h:commandLink action="/backoffice/contacts/list" value="Contacts" /></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="mws-i-24 i-scan-label"><h:outputText  value="Gestion des produits"/></a>
+                                <ul>
+                                    <li><h:commandLink action="/backoffice/products/list" value="Produits" /></li>
+                                    <li><h:commandLink action="/backoffice/products/category/list" value="Catégories" /></li>
+                                    <li><h:commandLink action="/backoffice/products/tva/list" value="TVA" /></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="mws-i-24 i-facebook-like"><h:outputText  value="Gestion des opportunités"/></a>
+                                <ul>
+                                    <li><h:commandLink action="/backoffice/opportunities/list" value="Opportunités" /></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <h:commandLink action="/backoffice/ticket/list" value="Tickets" class="mws-i-24 i-text-documents"/>
+                            </li>
+                            <li>
+                                <a href="#" class="mws-i-24 i-unlocked"><h:outputText  value="Gestion d'accès"/></a>
+                                <ul>
+                                    <li><h:commandLink value="Créer utilisateur" action="/backoffice/users/createUser"
+                                                       actionListener="#{userManagement.beginConversation()}" /></li>
+                                    <li><h:commandLink action="/backoffice/users/listGroups" value="Gestion des groupes" /></li>
+                                    <li><h:commandLink action="/backoffice/users/listRoleTypes" value="Gestion des rôles" /></li>
+                                    
+                                </ul>
+                            </li>
                         </ul>
                     </h:form>
                 </div>
@@ -177,6 +161,9 @@
                 </div>
             </div>
         </div>
+
+
+
     </h:body>
 
 </html>

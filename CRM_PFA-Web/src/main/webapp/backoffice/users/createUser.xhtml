@@ -9,62 +9,83 @@
                 template="./../../WEB-INF/template/generalTemplate2.xhtml">
 
     <ui:define name="body">
-        <p:panel header="Nouveau utilisateur">
-            <p:messages autoUpdate="true"/>
-            <h:form>
-                <h:panelGrid columns="3">
-                    <h:outputText value="Username :" styleClass="titleLib" />
-                    <p:inputText id="login" value="#{userManagement.user.login}" 
-                                 required="true" requiredMessage="Valeur requise"/>
-                    <p:message for="login"/>
-                    <h:outputText value="Nom :" styleClass="titleLib" />
-                    <p:inputText id="firstName" value="#{userManagement.user.firstName}" 
-                                 required="true" requiredMessage="Valeur requise"/>
-                    <p:message for="firstName"/>
-                    <h:outputText value="Prénom :" styleClass="titleLib" />
-                    <p:inputText id="lastName" value="#{userManagement.user.lastName}" 
-                                 required="true" requiredMessage="Valeur requise"/>
-                    <p:message for="lastName"/>
-                    <h:outputText value="Mot de passe :" styleClass="titleLib"/>
-                    <p:password id="password" feedback="true" value="#{userManagement.password}" 
-                                required="true" requiredMessage="Valeur requise"/>
-                    <p:message for="password"/>
-                    <h:outputText value="Confirmation mot de passe :" styleClass="titleLib"/>
-                    <p:password id="confirmPassword" feedback="true" value="#{userManagement.confirmPassword}" 
-                                required="true" requiredMessage="Valeur requise"/>
-                    <p:message for="confirmPassword"/>
-                    <p:outputPanel autoUpdate="true">
+        <div class="mws-panel grid_8">
+            <div class="mws-panel-header">
+                <span class="mws-i-24 i-text-documents">
+                    Nouveau utilisateur
+                </span>
+            </div>
+            <div class="mws-panel-body"  >
+                <p:messages autoUpdate="true"/>
+                <h:form>
+                    <br/>
+                    <br/>
+                    <h:panelGrid width="100%" columns="3">
+                        <p:spacer height="20" width="10"/>
+
+                        <h:panelGrid columns="3">
+                            <h:outputText value="Username :" styleClass="titleLib" />
+                            <p:inputText id="login" value="#{userManagement.user.login}" 
+                                         required="true" requiredMessage="Valeur requise"/>
+                            <p:message for="login"/>
+                            <h:outputText value="Nom :" styleClass="titleLib" />
+                            <p:inputText id="firstName" value="#{userManagement.user.firstName}" 
+                                         required="true" requiredMessage="Valeur requise"/>
+                            <p:message for="firstName"/>
+                            <h:outputText value="Prénom :" styleClass="titleLib" />
+                            <p:inputText id="lastName" value="#{userManagement.user.lastName}" 
+                                         required="true" requiredMessage="Valeur requise"/>
+                            <p:message for="lastName"/>
+                            <h:outputText value="Mot de passe :" styleClass="titleLib"/>
+                            <p:password id="password" feedback="true" value="#{userManagement.password}" 
+                                        required="true" requiredMessage="Valeur requise"/>
+                            <p:message for="password"/>
+                            <h:outputText value="Confirmation mot de passe :" styleClass="titleLib"/>
+                            <p:password id="confirmPassword" feedback="true" value="#{userManagement.confirmPassword}" 
+                                        required="true" requiredMessage="Valeur requise"/>
+                            <p:message for="confirmPassword"/>
+                            <p:outputPanel autoUpdate="true">
+                                <h:panelGroup>
+                                    <h4><h:outputText value="Rôles"/></h4>
+                                    <ui:repeat value="#{userManagement.roles}" var="role">
+                                        <b><h:outputText value="#{role.roleType.name}"/></b>
+                                        <span> <h:outputText value="dans le groupe"/> </span>
+                                        <b><h:outputText value="#{role.group.name}"/></b><br/>
+                                    </ui:repeat>
+                                </h:panelGroup>
+                            </p:outputPanel>
+                            <p:commandButton value="Ajouter" oncomplete="newRoleType.show();" immediate="true"
+                                             ajax="true"/>
+                        </h:panelGrid>
+                        <p:spacer height="20" width="10"/>
+                    </h:panelGrid>
+                    <p:spacer height="30"/>
+                    <h:panelGrid width="100%" columns="3">
+                        <p:spacer height="20" width="10"/>
                         <h:panelGroup>
-                            <h4><h:outputText value="Rôles"/></h4>
-                            <ui:repeat value="#{userManagement.roles}" var="role">
-                                <b><h:outputText value="#{role.roleType.name}"/></b>
-                                <span> <h:outputText value="dans le groupe"/> </span>
-                                <b><h:outputText value="#{role.group.name}"/></b><br/>
-                            </ui:repeat>
+
+                            <table width="100%" border="0">
+                                <tr >
+                                    <td width="20%" >
+                                        <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler"
+                                                         actionListener="#{userManagement.endConversation()}"
+                                                         ajax="true" immediate="true">
+                                        </p:commandButton>
+                                    </td>
+                                    <td width="60%" >
+                                    </td>
+                                    <td  width="20%" height="20px">
+                                        <p:commandButton id="val" action="#{userManagement.createUser()}" ajax="false" styleClass="btn_val" 
+                                                         value="Valider"/>
+                                    </td>
+                                </tr>  
+                            </table>
                         </h:panelGroup>
-                    </p:outputPanel>
-                    <p:commandButton value="Ajouter" oncomplete="newRoleType.show();" immediate="true"
-                                     ajax="true"/>
-                </h:panelGrid>
-                <p:spacer height="30"/>
-                <table width="100%" border="0">
-                    <tr style="background-color:#D4D4D4">
-                        <td width="20%" >
-                            <p:commandButton id="retour"  styleClass="btn_annul" value="Annuler"
-                                             actionListener="#{userManagement.endConversation()}"
-                                             ajax="true" immediate="true">
-                            </p:commandButton>
-                        </td>
-                        <td width="60%" >
-                        </td>
-                        <td  width="20%" height="20px">
-                            <p:commandButton id="val" action="#{userManagement.createUser()}" ajax="false" styleClass="btn_val" 
-                                             value="Valider"/>
-                        </td>
-                    </tr>  
-                </table>
-            </h:form>
-        </p:panel>
+                        <p:spacer height="20" width="10"/>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </div>
         <p:dialog widgetVar="newRoleType" modal="true" header="Ajouter rôle" >
             <h:form>
                 <h:panelGrid columns="3">

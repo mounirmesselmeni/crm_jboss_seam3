@@ -154,12 +154,25 @@ public class OpportunityController extends ConversationController {
         }
         return price;
     }
+    public double calculateTotalPrice(Opportunity opp) {
+        double price = 0;
+        for (ItemToPurchase item : opp.getItemsToPurchase()) {
+            price += item.getQuantity() * item.getProduct().getPrice();
+        }
+        return price;
+    }
 
     public double calculateOpportunityPrice() {
-        if (opportunity.getRelatedTo() == null) {
+        if (opportunity.getRelatedTo() == null || contactService.getFidelityByContact(opportunity.getRelatedTo()) == null) {
             return calculateTotalPrice();
         }
-        return calculateTotalPrice() * ((100 - contactService.getFidelityByContact(opportunity.getRelatedTo()).getScore()) / 100);
+        return calculateTotalPrice() * ((double)(100 - contactService.getFidelityByContact(opportunity.getRelatedTo()).getScore()) / 100);
+    }
+    public double calculateOpportunityPrice(Opportunity opp) {
+        if (opp.getRelatedTo() == null || contactService.getFidelityByContact(opp.getRelatedTo()) == null) {
+            return calculateTotalPrice(opp);
+        }
+        return calculateTotalPrice(opp) * ((double)(100 - contactService.getFidelityByContact(opp.getRelatedTo()).getScore()) / 100);
     }
 
     public void initProducts() {

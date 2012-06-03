@@ -2,79 +2,82 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition  xmlns:ui="http://java.sun.com/jsf/facelets"
-                 template="./WEB-INF/template/loginTemplate.xhtml"
+                 template="./WEB-INF/template/activationMwsTemplate.xhtml"
                  xmlns:h="http://java.sun.com/jsf/html"
                  xmlns:f="http://java.sun.com/jsf/core"
                  xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="body">
+    <ui:define name="register">
         <f:metadata>
             <f:event type="preRenderView"
                      listener="#{registerController.beginConversation()}" />
         </f:metadata>
-        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-            <tr>
-                <td width="25%"></td>
-                <td>
-                    <p:fieldset id="activationFieldset" legend="Activation compte" style="width:100%; height:100%;">
-                        <p:messages id="messages" globalOnly="false"/>
-                        <div style="position:relative; left:-25px;">
-                            <table border="0" cellpadding="0" cellspacing="0" >
+        <p:outputPanel id="panel">
 
-                                <tr>
-                                    <td width="50px"></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td style="vertical-align:top;width: 100%">
-                                        <center>
-                                            <p:outputPanel id="panel">
-                                                <h:form id="activationForm" rendered="#{not registerController.activationOk}">
-                                                    <h:panelGrid columns="2">
-                                                        <h:panelGrid columns="2">
-                                                            <h:outputText value="Code d'activation :"  />
-                                                            <p:inputText id="activationCode" value="#{registerController.activationCode}"
-                                                                         required="true" requiredMessage="Code d'activation obligatoire" />
-                                                            <p:spacer/>
-                                                            <p:spacer/>
-                                                            <h:outputText value="Captcha :"  />
-                                                            <p:captcha id="captcha" required="true" requiredMessage="Captcha requise"
-                                                                       validatorMessage="Captcha invalide"/>
-                                                            <p:spacer/>
-                                                            <p:spacer/>
-                                                            <p:spacer/>
-                                                            <p:commandButton value="Valider" action="#{registerController.activate()}" update=":panel"/>
-                                                        </h:panelGrid>
-                                                    </h:panelGrid>
-                                                </h:form>
-                                                <h:form id="registerForm" rendered="#{registerController.activationOk}">
-                                                    <h:panelGrid columns="2">
-                                                        <h:panelGrid columns="2">
-                                                            <h:outputText value="Mot de passe :"  />
-                                                            <p:password id="password" value="#{userManagement.password}"
-                                                                        required="true" requiredMessage="Mot de passe obligatoire" />
-                                                            <p:spacer/>
-                                                            <p:spacer/>
-                                                            <h:outputText value="Confirmez le mot de passe :"  />
-                                                            <p:password id="passwordConfirm" value="#{userManagement.confirmPassword}"
-                                                                        required="true" requiredMessage="Confirmation obligatoire du mot de passe"/>
-                                                            <p:spacer/>
-                                                            <p:spacer/>
-                                                            <p:spacer/>
-                                                            <p:commandButton value="Valider" action="#{registerController.validateAccount()}" ajax="false"/>
-                                                        </h:panelGrid>
-                                                    </h:panelGrid>
-                                                </h:form>
-                                            </p:outputPanel>
-                                        </center>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </p:fieldset>
-                </td>
-                <td width="25%"></td>
-            </tr>
-        </table>
+            <h:form id="activationForm" styleClass="mws-form" rendered="#{not registerController.activationOk}">
+                <div class="mws-form-item large " >
+                    <table>
+                        <tr>
+                            <td>
+                                <h1><b><h:outputText value="Code d'activation :" style="color: white;font-size: large" /></b></h1>
+                            </td>
+                            <td>
+                                <h:inputText id="activationCode" value="#{registerController.activationCode}" styleClass="mws-activation mws-textinput" 
+                                             required="true" requiredMessage="Code d'activation obligatoire" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h1><b><h:outputText value="Captcha :" style="color: white;font-size: large" /></b></h1>
+
+                            </td>
+                            <td>
+                                <p:captcha id="captcha" required="true" requiredMessage="Captcha requise"
+                                           validatorMessage="Captcha invalide"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:commandButton value="Valider" action="#{registerController.activate()}" update=":panel"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <p:spacer/>
+                </div>
+            </h:form>
+            <h:form id="registerForm" styleClass="mws-form"  rendered="#{registerController.activationOk}">
+                <div class="mws-form-item large">
+                    <table>
+                        <tr>
+                            <td>
+                                <h1><b><h:outputText value="Mot de passe :" style="color: white;font-size: large" /></b></h1>
+                            </td>
+                            <td>
+                                <p:password id="password" value="#{userManagement.password}"
+                                            required="true" requiredMessage="Mot de passe obligatoire" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h1><b><h:outputText value="Confirmez le mot de passe :" style="color: white;font-size: large" /></b></h1>
+                            </td>
+                            <td>
+
+                                <p:password id="passwordConfirm" value="#{userManagement.confirmPassword}"
+                                            required="true" requiredMessage="Confirmation obligatoire du mot de passe"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:commandButton value="Valider" action="#{registerController.validateAccount()}" ajax="false"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <p:spacer/>
+                </div>
+            </h:form>
+        </p:outputPanel>
+
     </ui:define>
 
 </ui:composition>

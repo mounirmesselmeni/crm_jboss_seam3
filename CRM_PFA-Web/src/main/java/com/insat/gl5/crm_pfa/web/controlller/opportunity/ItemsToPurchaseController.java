@@ -13,6 +13,7 @@ import java.util.List;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.jboss.seam.international.status.Messages;
 
 /**
  *
@@ -36,6 +37,8 @@ public class ItemsToPurchaseController extends ConversationController {
     private List<ItemToPurchase> itemsToPurchase = new LinkedList<ItemToPurchase>();
     private List<ItemToPurchase> lstItemsToDelete = new LinkedList<ItemToPurchase>();
     private List<ItemToPurchase> lstItemsToAdd = new LinkedList<ItemToPurchase>();
+    @Inject
+    private Messages messages;
     private Product selctedProduct;
     private int quantity;
     private Category filterCategory;
@@ -56,20 +59,26 @@ public class ItemsToPurchaseController extends ConversationController {
     public void loadProducts(List<ItemToPurchase> items) {
         products = productService.getAllProducts();
         itemsToPurchase = items;
-//        for (ItemToPurchase item : itemsToPurchase) {
-//            products.remove(item.getProduct());
-//        }
     }
 
     public void addItem() {
+        if (quantity > selctedProduct.getQuantity()) {
+            messages.error("La quantité est suppérieure au stock !!");
+            return;
+        }
         ItemToPurchase item = getItemToPurchaseByProduct(selctedProduct);
 
         if (item == null) {
             itemsToPurchase.add(new ItemToPurchase(quantity, selctedProduct));
-        }else{
-            item.setQuantity(item.getQuantity()+quantity);
+        } else {
+
+            if (item.getQuantity() + quantity > selctedProduct.getQuantity()) {
+                messages.error("La quantité est suppérieure au stock !!");
+                return;
+            }
+            item.setQuantity(item.getQuantity() + quantity);
         }
-        quantity =0;
+        quantity = 0;
 //        products.remove(selctedProduct);
     }
 
