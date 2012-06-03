@@ -4,18 +4,22 @@
                                                 http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.2.xsd">
     <url-mapping id="login"> 
         <pattern value="/login" /> 
-        <view-id value="/login2.jsf" />
+        <view-id value="/login.jsf" />
     </url-mapping>
     
     <url-mapping id="logout">
         <pattern value="/logout" /> 
-        <view-id value="/login2.jsf" />
+        <view-id value="/login.jsf" />
         <action>#{identity.logout}</action>
     </url-mapping>
     
     <url-mapping id="Home"> 
-        <pattern value="/Home" /> 
+        <pattern value="/backoffice/Home" /> 
         <view-id value="/backoffice/home.jsf" />
+    </url-mapping> 
+    <url-mapping id="FrontHome"> 
+        <pattern value="/frontoffice/Home" /> 
+        <view-id value="/frontoffice/home.jsf" />
     </url-mapping> 
     
     <url-mapping id="ListGroups"> 
@@ -50,31 +54,5 @@
         <pattern value="/backoffice/users/List" /> 
         <view-id value="/backoffice/listusers.jsf" />
     </url-mapping> 
-
-   <!-- Begin UrlMappings 
-      // These are examples of URL mappings, and should be customized for your application.
-
-      <url-mapping id="home"> 
-          <pattern value="/" /> 
-          <view-id value="/faces/index.jsf" />
-      </url-mapping> 
-      
-      <url-mapping id="store"> 
-          <pattern value="/store/" /> 
-          <view-id value="/faces/shop/store.jsf" />
-      </url-mapping> 
-      
-      <url-mapping id="viewCategory">
-          <pattern value="/store/#{ cat : bean.category }/" />
-          <view-id value="/faces/shop/store.jsf" />
-      </url-mapping>
-      
-      <url-mapping id="viewItem">
-          <pattern value="/store/#{ cat : bean.category }/#{ iid : bean.itemId }/" />
-          <view-id value="/faces/shop/item.jsf" /> 
-          <action>#{bean.loadItem}</action>
-      </url-mapping>
-   
-   -->
 
 </pretty-config>

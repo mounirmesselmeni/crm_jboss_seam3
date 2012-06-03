@@ -7,7 +7,6 @@ package com.insat.gl5.crm_pfa.model;
 import com.insat.gl5.crm_pfa.enumeration.PriorityType;
 import com.insat.gl5.crm_pfa.enumeration.TaskType;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,7 +29,7 @@ public class Task extends BaseEntity {
     @ManyToOne
     private Contact assignedTo;
     @ManyToOne
-    private Contact creator;
+    private BackendUser creator;
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     @Temporal(TemporalType.TIMESTAMP)
@@ -123,14 +122,14 @@ public class Task extends BaseEntity {
     /**
      * @return the creator
      */
-    public Contact getCreator() {
+    public BackendUser getCreator() {
         return creator;
     }
 
     /**
      * @param creator the creator to set
      */
-    public void setCreator(Contact creator) {
+    public void setCreator(BackendUser creator) {
         this.creator = creator;
     }
 

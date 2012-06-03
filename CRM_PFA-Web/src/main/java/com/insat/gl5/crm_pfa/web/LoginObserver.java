@@ -39,9 +39,9 @@ public class LoginObserver {
             //Redirect to the home page
             if (identity.hasRole("admin", "crm", "GROUP")
                     || identity.hasRole("commercial", "crm", "GROUP")) {
-                context.getExternalContext().redirect(request.getContextPath() + "/home.jsf");
+                context.getExternalContext().redirect(request.getContextPath() + "/backoffice/home.jsf");
             }else if(identity.hasRole("client", "crm", "GROUP")){
-                context.getExternalContext().redirect(request.getContextPath() + "/frontoffice/index.jsf");
+                context.getExternalContext().redirect(request.getContextPath() + "/frontoffice/home.jsf");
             }
             //Sending welcome message
             messages.info("Bienvenue");

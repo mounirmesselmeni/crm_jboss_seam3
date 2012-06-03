@@ -86,8 +86,8 @@
                         <h:form>
                             <ul>
                                 <li><a href="#">Profile</a></li>
-                                <li><a href="#">Change Password</a></li>
-                                <li><h:commandLink value="Logout" action="#{identity.logout()}"/></li>
+                                <li><h:commandLink value="Changer mot de passe" action="/backoffice/users/changePassword?faces-redirect=true"/></li>
+                                <li><h:commandLink value="Logout" action="/login" actionListener="#{identity.logout()}"/></li>
                             </ul>
                         </h:form>
                     </div>
@@ -127,13 +127,16 @@
                                 </ul>
                             </li>
                             <li>
+                                <h:commandLink action="/backoffice/ticket/list" value="Tickets" class="mws-i-24 i-text-documents"/>
+                            </li>
+                            <li>
                                 <a href="#" class="mws-i-24 i-unlocked"><h:outputText  value="Gestion d'accès"/></a>
                                 <ul>
                                     <li><h:commandLink value="Créer utilisateur" action="/backoffice/users/createUser"
                                                        actionListener="#{userManagement.beginConversation()}" /></li>
                                     <li><h:commandLink action="/backoffice/users/listGroups" value="Gestion des groupes" /></li>
                                     <li><h:commandLink action="/backoffice/users/listRoleTypes" value="Gestion des rôles" /></li>
-
+                                    
                                 </ul>
                             </li>
                         </ul>

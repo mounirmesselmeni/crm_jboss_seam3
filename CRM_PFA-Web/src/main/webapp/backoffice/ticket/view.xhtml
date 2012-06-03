@@ -6,7 +6,9 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 template="./../../WEB-INF/template/generalTemplate2.xhtml">
-
+    <ui:define name="cssAndJs">
+        <h:outputStylesheet library="css" name="profileTd.css" />
+    </ui:define>
     <ui:define name="body">
         <f:metadata>
             <f:viewParam name="id" value="#{ticketController.ticketId}"/>
@@ -16,19 +18,65 @@
                      listener="#{ticketController.beginConversation()}" />
         </f:metadata>
         <p:panel id="panel">
-            <f:facet name="header">
-                <h:panelGrid columns="2">
-                    <h:outputText value="#{ticketController.ticket.type} : #{ticketController.ticket.subject}"/>
-                    <p:selectBooleanButton value="#{ticketController.ticket.resolved}" onLabel="Résolu" offLabel="Non résolu" 
-                                           onIcon="ui-icon-check" offIcon="ui-icon-close"
-                                           disabled="#{not identity.hasRole('client','crm', 'GROUP')}"/>  
-                </h:panelGrid>
-            </f:facet>
-            <p:messages autoUpdate="true"/>
             <h:form>
-                <h:panelGrid columns="1" style="width: 100%;">
-                    <h:outputText value="#{ticketController.ticket.content}" escape="false"/>
-                </h:panelGrid>
+                <table style="width: 100%;height: 60px">
+                    <tbody>
+                        <tr>
+                            <td style="width:90%" valign="middle">
+                                <p:commandLink action="#{ticketController.editResolved()}" update="@this"
+                                               title="Marquer le sujet résolu">
+                                    <h:graphicImage library="images" name="vote-accepted-off.png" rendered="#{not ticketController.ticket.resolved}"/>
+                                    <h:graphicImage library="images" name="vote-accepted-on.png" rendered="#{ticketController.ticket.resolved}"/>
+                                </p:commandLink>
+                                <div align="center">
+                                    <h1>
+                                    <h:outputText value="#{ticketController.ticket.type}"/>
+                                    <h:outputText value=" : #{ticketController.ticket.subject}"/>
+                                    </h1>
+                                </div>
+                            </td>
+                            <td align="right">
+                                <p:spacer width="30"/>
+                                <p:commandLink title="Modifier ticket" action="create" ajax="false"
+                                               rendered="#{ticketController.canEditTicket()}">
+                                    <h:graphicImage library="images" name="Icons/48/13.png"/>
+                                </p:commandLink>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p:spacer height="10"/>
+                <p:growl autoUpdate="true"/>
+                <p:panel>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 70%">
+                                <h:outputText value="#{ticketController.ticket.content}" escape="false"/>
+                            </td>
+                            <td style="width: 30%" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 70%">
+                            </td>
+                            <td style="width: 30%;text-align: center" id="pattern-style-b">
+                                <br/>
+                                <h:outputText value="Crée "/>
+                                <h:outputText value="#{ticketController.ticket.createdOn}">
+                                    <f:converter converterId="dateTimeConverter"/>
+                                </h:outputText>
+                                <br/>
+                                <h:outputText value=" par #{ticketController.ticket.creator.fullName}"/>
+                                <br/>
+                                <br/>
+                            </td>
+                        </tr>
+                    </table>
+                </p:panel>
+                <br/>
+                <p:commandButton value="Répondre" actionListener="#{ticketController.initTicketResponse()}" 
+                                 update=":respDlg" oncomplete="responseDlg.show();" />
+                <br/>
                 <p:spacer height="50"/>
                 <p:dataGrid value="#{ticketController.ticketResponseList}" var="ticketReponse"
                             columns="1" emptyMessage="Aucune réponse">
@@ -36,20 +84,38 @@
                         <p:fieldset legend="#{ticketReponse.title}">
                             <table style="width: 100%">
                                 <tr>
-                                    <td style="width: 80%">
+                                    <td style="width: 60%">
                                         <h:outputText value="#{ticketReponse.content}" escape="false"/>
                                     </td>
-                                    <td style="width: 20%">
+                                    <td style="width: 30%">
+                                        
+                                    </td>
+                                    <td style="width: 10%" align="right">
+                                        <p:commandLink title="Modifier votre réponse"
+                                                       update=":respDlg" oncomplete="responseDlg.show();"
+                                                       rendered="#{ticketController.canEditTicketResponse(ticketReponse)}">
+                                            <f:setPropertyActionListener value="#{ticketReponse}" target="#{ticketController.ticketResponse}"/>
+                                            <h:graphicImage library="images" name="Icons/48/13.png"
+                                                            width="30" height="30"/>
+                                        </p:commandLink>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 80%">
+                                    <td style="width: 60%">
                                     </td>
-                                    <td style="width: 20%">
+                                    <td style="width: 30%; text-align: center" id="pattern-style-b">
+                                        <br/>
+                                        <h:outputText value="Répondu "/>
                                         <h:outputText value="#{ticketReponse.createdOn}">
                                             <f:converter converterId="dateTimeConverter"/>
                                         </h:outputText>
-                                        <h:outputText value=" par #{ticketReponse.crmUser}"/>
+                                        <br/>
+                                        <h:outputText value=" par #{ticketReponse.crmUser.fullName}"/>
+                                        <br/>
+                                        <br/>
+                                    </td>
+                                    <td>
+                                        
                                     </td>
                                 </tr>
                             </table>
@@ -57,17 +123,21 @@
                     </p:column>
                 </p:dataGrid>
                 <br/>
-                <p:commandButton value="Répondre" oncomplete="responseDlg.show();" />
+                <p:commandButton value="Répondre" update=":respDlg" actionListener="#{ticketController.initTicketResponse()}" 
+                                 oncomplete="responseDlg.show();" />
             </h:form>
         </p:panel>
-        <p:dialog widgetVar="responseDlg" modal="true">
+        <p:dialog id="respDlg" widgetVar="responseDlg" modal="true" 
+                  header="#{empty ticketController.ticketResponse.id ? 'Ajouter réponse' : 'Modifier réponse'}">
+            <br/>
             <h:form>
                 <h:panelGrid columns="2">
                     <h:outputText value="Titre :"/>
                     <p:inputText value="#{ticketController.ticketResponse.title}" required="true" requiredMessage="Valeur requise"/>
-                    <h:outputText value="Réponse :"/>
-                    <p:editor value="#{ticketController.ticketResponse.content}" required="true" requiredMessage="Valeur requise"/>
                 </h:panelGrid>
+                <p:separator />
+                <p:editor widgetVar="editor" value="#{ticketController.ticketResponse.content}" required="true" requiredMessage="Valeur requise"/>
+                <p:separator />
                 <table width="100%" border="0">
                     <tr >
                         <td width="20%" height="20px">
@@ -79,12 +149,16 @@
                         <td  width="20%" height="20px">
                             <p:commandButton ajax="true"  value="Ajouter" styleClass="btn_val" 
                                              update=":panel"
+                                             rendered="#{empty ticketController.ticketResponse.id}"
                                              action="#{ticketController.addResponse()}" oncomplete="responseDlg.hide();"/>
+                            <p:commandButton ajax="true"  value="Modifier" styleClass="btn_val" 
+                                             update=":panel"
+                                             rendered="#{not empty ticketController.ticketResponse.id}"
+                                             actionListener="#{ticketController.editResponse()}" oncomplete="responseDlg.hide();"/>
                         </td>
                     </tr>  
                 </table>
             </h:form>
-
         </p:dialog>
     </ui:define>
 

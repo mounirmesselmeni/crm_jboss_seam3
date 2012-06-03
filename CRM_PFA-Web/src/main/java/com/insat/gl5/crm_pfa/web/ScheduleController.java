@@ -19,7 +19,7 @@ import org.primefaces.model.*;
  *
  * @author Mounir Messelmeni <messelmeni.mounir@gmail.com>
  */
-@Named
+@Named("dsffsd")
 @SessionScoped
 public class ScheduleController implements Serializable {
 

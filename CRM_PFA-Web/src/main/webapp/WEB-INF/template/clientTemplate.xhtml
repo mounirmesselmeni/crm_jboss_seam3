@@ -144,7 +144,7 @@
                             <ul>
                                 <li><a href="#">Profile</a></li>
                                 <li><a href="#">Change Password</a></li>
-                                <li><h:commandLink value="Logout" action="#{identity.logout()}"/></li>
+                                <li><h:commandLink value="Logout" action="/login" actionListener="#{identity.logout()}"/></li>
                             </ul>
                         </h:form>
                     </div>

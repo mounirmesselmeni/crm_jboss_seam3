@@ -29,7 +29,7 @@ public class ExceptionHandler {
     private Identity identity;
 
     public void handleAuthorizationException(@Handles CaughtException<AuthorizationException> evt) {
-        messages.error("You do not have the necessary permissions to perform that operation");
+        messages.error("Vous n'avez pas les droit nécessaire pour éffectuer cette opération");
         evt.handled();
     }
 
