@@ -7,6 +7,7 @@ package com.insat.gl5.crm_pfa.web.controller.account;
 import com.insat.gl5.crm_pfa.model.*;
 import com.insat.gl5.crm_pfa.service.AccountService;
 import com.insat.gl5.crm_pfa.service.CoordinatesService;
+import com.insat.gl5.crm_pfa.service.qualifier.CurrentUser;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
 import com.insat.gl5.crm_pfa.web.controller.FileUploadController;
 import com.insat.gl5.crm_pfa.web.exception.ExistingEmailException;
@@ -46,10 +47,15 @@ public class AccountController extends ConversationController {
     private FileUploadController fileUploadController;
     @Inject
     private Messages messages;
+    @Inject
+    @CurrentUser
+    private BackendUser backendUser;
     private boolean editMode;
     @Inject
     private Account account;
     private String redirect;
+    private String lastEmail;
+    private String lastName;
     private List<EmailViewModel> lstEmailViewModels;
     private List<AddressViewModel> lstAddressViewModels;
     private List<PhoneNumberViewModel> lstPhoneNumberViewModels;
@@ -76,6 +82,7 @@ public class AccountController extends ConversationController {
         beginConversation();
         fileUploadController.resetFile();
         setAccount(account);
+        lastName = account.getName();
         initEmailViewModels();
         initAddressViewModels();
         initPhoneNumberViewModels();
@@ -83,6 +90,7 @@ public class AccountController extends ConversationController {
 
     private void initEmailViewModels() {
         lstEmailViewModels = new LinkedList<EmailViewModel>();
+        lastEmail = account.getLstEmails().get(0).getValue();
         int index = 0;
         for (EmailAdress email : account.getLstEmails()) {
             lstEmailViewModels.add(new EmailViewModel(index++, email));
@@ -116,6 +124,7 @@ public class AccountController extends ConversationController {
         try {
             validateAttributes();
             affectCoordinates();
+            account.setCrmUser(backendUser);
             account.setLogoURL(account.getName() + ".png");
             account.setFidelity(new Fidelity(5));
             accountService.saveAccount(getAccount());
@@ -177,11 +186,15 @@ public class AccountController extends ConversationController {
 
     private void validateAttributes() throws ExistingEmailException, ExistingNameException {
         if (accountService.nameExits(account.getName())) {
-            throw new ExistingNameException();
+            if (!lastName.equals(account.getName())) {
+                throw new ExistingNameException();
+            }
         }
 
-       if (coordinatesService.emailExits(lstEmailViewModels.get(0).getEmail().getValue())) {
-            throw new ExistingEmailException();
+        if (coordinatesService.emailExits(lstEmailViewModels.get(0).getEmail().getValue())) {
+            if (!lastEmail.equals(lstEmailViewModels.get(0).getEmail().getValue())) {
+                throw new ExistingEmailException();
+            }
         }
     }
 

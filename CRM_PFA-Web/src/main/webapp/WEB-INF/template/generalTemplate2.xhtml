@@ -3,90 +3,156 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="css" name="default.css" />
         <h:outputStylesheet library="css" name="cssLayout.css" />
+        <ui:insert name="cssAndJs"></ui:insert>
         <title><ui:insert name="title">Default Title</ui:insert></title>
+        <!-- Required Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/reset.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/text.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/fluid.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/fonts/ptsans/stylesheet.css" media="screen" />
+
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/mws.style.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/icons/icons.css" media="screen" />
+
+
+        <!-- Theme Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/mws.theme.css" media="screen" />
+
+        <!--for accordeon panel-->
+<!--        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/jui/jquery.ui.css" media="screen" />-->
+        <!-- JavaScript Plugins -->
+
+        <!--ya3ml machakel-->
+<!--        <script type="text/javascript" src="#{request.contextPath}/resources/mws/js/demo.js"></script>-->
+
+        <!-- For showing notif and msg list -->
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/js/mws.js"></script>
     </h:head>
 
     <h:body>
-
-        <div id="top">
-            <ui:insert name="top">
-                <h:form> 
-                    <p:dock position="top">
-                        <p:menuitem value="Accueil" icon="/resources/images/menu/Accueil.png" action="/home" ajax="false"/>
-                        <p:menuitem value="Tiers" icon="/resources/images/menu/Tiers.png" action="/backoffice/accounts/list" ajax="false"/>
-                        <p:menuitem value="Commercial" icon="/resources/images/menu/Commercial.png" action="/backoffice/agenda/calendar" ajax="false"/>
-                        <p:menuitem value="Produits Services" icon="/resources/images/menu/Produits.png" action="/data/accueil/accueilProduit" ajax="false"/>
-                        <p:menuitem value="Financier" icon="/resources/images/menu/Financier.png" action="/data/accueil/accueilFinancier" ajax="false"/>
-                        <p:menuitem value="Production" icon="/resources/images/menu/production.png" onclick="dlg3.show();"/>
-                        <p:menuitem value="Projet" icon="/resources/images/menu/projet.png" onclick="dlg3.show();"/>
-                        <p:menuitem value="Configuration" icon="/resources/images/menu/Configuration.png" action="/data/accueil/accueilConfiguration" ajax="false"/>
-                        <p:menuitem value="A propos" icon="/resources/images/menu/A_propos.png" onclick="dlg3.show();"/>
-                    </p:dock>
-                <h:outputText value="Bienvenue #{currentUser.fullName}"/>
-                <br/>
-                <h2><h:outputText value="Vous avez "/><p:commandLink ajax="false" action="/backoffice/notifications/list"> <FONT COLOR="red">#{notificationController.backendUserNotificationsNumber}</FONT></p:commandLink> <h:outputText value=" notifications" style="font-style: italic"/> </h2>
-                </h:form>
-            </ui:insert>
-        </div>
-        <div>
-            <div id="left">
-                <ui:insert name="left">
-                    <p:accordionPanel activeIndex="-1">
-                        <ui:insert name="menu">
-                            <p:tab title="Gestion des comptes">
-                                <h:form>
-                                    <h:panelGrid columns="1">
-                                        <p:commandLink value="Comptes" action="/backoffice/accounts/list" ajax="false"/>
-                                        <p:commandLink value="Contacts" action="/backoffice/contacts/list" ajax="false"/>
-                                    </h:panelGrid>
-                                </h:form>
-                            </p:tab>
-                            <p:tab title="Gestion des produits">
-                                <h:form>
-                                    <h:panelGrid columns="1">
-                                        <p:commandLink value="Produits" action="/backoffice/products/list" ajax="false"/>
-                                        <p:commandLink value="Catégories" action="/backoffice/products/category/list" ajax="false"/>
-                                        <p:commandLink value="TVA" action="/backoffice/products/tva/list" ajax="false"/>
-                                    </h:panelGrid>
-                                </h:form>
-                            </p:tab>
-                            <p:tab title="Gestion des opportunités">
-                                <h:form>
-                                    <h:panelGrid columns="1">
-                                        <p:commandLink value="Opportunités" action="/backoffice/opportunities/list" ajax="false"/>
-                                    </h:panelGrid>
-                                </h:form>
-                            </p:tab>
-                            <p:tab title="Gestion d'accès">
-                                <h:form>
-                                    <h:panelGrid columns="1">
-                                        <p:commandLink value="Créer utilisateur" action="/backoffice/users/createUser" ajax="false"
-                                                       actionListener="#{userManagement.beginConversation()}"/>
-                                        <p:commandLink value="Gestion des groupes" action="/backoffice/users/listGroups" ajax="false"/>
-                                        <p:commandLink value="Gestion des rôles" action="/backoffice/users/listRoleTypes" ajax="false"/>
-                                    </h:panelGrid>
-                                </h:form>
-                            </p:tab>
-                        </ui:insert>
-                    </p:accordionPanel>  
-                    <ui:insert name="switch">
-
-                    </ui:insert>
-                </ui:insert>
+        <div id="mws-header" class="clearfix">
+            <div id="mws-logo-container">
+                <div id="mws-logo-wrap">
+                    <img src="#{request.contextPath}/resources/images/crm-pfa-admin.png" alt="mws admin" />
+                </div>
             </div>
-            <div id="content" class="left_content">
-                <ui:insert name="body">Content</ui:insert>
+
+            <div id="mws-user-tools" class="clearfix">
+                <div id="mws-user-notif" class="mws-dropdown-menu">
+                    <a href="#" class="mws-i-24 i-alert-2 mws-dropdown-trigger">Notifications</a>
+                    <span class="mws-dropdown-notif">#{notificationController.backendUserNotificationsNumber}</span>
+                    <div class="mws-dropdown-box">
+                        <div class="mws-dropdown-content">
+                            <ul class="mws-messages">
+                                <ui:repeat value="#{notificationController.backendUserNotifications}"
+                                           var="notif">
+                                    <li class="#{not notif.readed ? 'unread' : 'read'}">
+                                        <a href="#">
+                                            <span class="message">
+                                                #{notif.content}
+                                            </span>
+                                            <span class="time">
+                                                <h:outputText value="#{notif.createdOn}">
+                                                    <f:converter converterId="dateTimeConverter"/>
+                                                </h:outputText>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ui:repeat>
+                            </ul>
+                            <div class="mws-dropdown-viewall">
+                                <h:form>
+                                    <h:commandLink value="Afficher toutes" action="/backoffice/notifications/list" />
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="mws-user-info" class="mws-inset">
+                    <div id="mws-user-photo">
+                        <img src="#{request.contextPath}/resources/mws/example/profile.jpg" alt="User Photo" />
+                    </div>
+                    <div id="mws-user-functions">
+                        <div id="mws-username">
+                            <h:outputText value="Bienvenue" style="color: white"/>
+                            <h:outputText value=" #{currentUser.login}"/>
+                        </div>
+                        <h:form>
+                            <ul>
+                                <li><a href="#">Profile</a></li>
+                                <li><a href="#">Change Password</a></li>
+                                <li><h:commandLink value="Logout" action="#{identity.logout()}"/></li>
+                            </ul>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="mws-wrapper">
+            <div id="mws-sidebar-stitch"></div>
+            <div id="mws-sidebar-bg"></div>
+            <div id="mws-sidebar">
+
+                <div id="mws-navigation">
+                    <h:form>
+                        <ul>
+                            <li><a href="#{request.contextPath}/resources/mws/dashboard.html" class="mws-i-24 i-home">Dashboard</a></li>
+                            <li>
+                                <a href="#" class="mws-i-24 i-users"><h:outputText  value="Gestion des comptes"/></a>
+                                <ul>
+                                    <li><h:commandLink action="/backoffice/accounts/list" value="Sociétés"  /></li>
+                                    <li><h:commandLink action="/backoffice/contacts/list" value="Contacts" /></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="mws-i-24 i-scan-label"><h:outputText  value="Gestion des produits"/></a>
+                                <ul>
+                                    <li><h:commandLink action="/backoffice/products/list" value="Produits" /></li>
+                                    <li><h:commandLink action="/backoffice/products/category/list" value="Catégories" /></li>
+                                    <li><h:commandLink action="/backoffice/products/tva/list" value="TVA" /></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="mws-i-24 i-facebook-like"><h:outputText  value="Gestion des opportunités"/></a>
+                                <ul>
+                                    <li><h:commandLink action="/backoffice/opportunities/list" value="Opportunités" /></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="mws-i-24 i-unlocked"><h:outputText  value="Gestion d'accès"/></a>
+                                <ul>
+                                    <li><h:commandLink value="Créer utilisateur" action="/backoffice/users/createUser"
+                                                       actionListener="#{userManagement.beginConversation()}" /></li>
+                                    <li><h:commandLink action="/backoffice/users/listGroups" value="Gestion des groupes" /></li>
+                                    <li><h:commandLink action="/backoffice/users/listRoleTypes" value="Gestion des rôles" /></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+            </div>
+            <div id="mws-container" class="clearfix">
+                <div class="container">
+                    <div class="mws-report-container clearfix">
+                        <ui:insert name="body">Content</ui:insert>
+                    </div>
+                    <div id="mws-footer">
+                        <ui:insert name="bottom">Copyright CRM-PFA 2012. Tous droits réservés.</ui:insert>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="bottom">
-            <ui:insert name="bottom">Bottom</ui:insert>
-        </div>
+
+
 
     </h:body>
 

@@ -1,21 +1,67 @@
-<!DOCTYPE HTML>
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets" 
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
     <h:head>
-        <title>CRM-PFA Administration</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="css" name="default.css" />
         <h:outputStylesheet library="css" name="cssLayout.css" />
+        <ui:insert name="cssAndJs"></ui:insert>
+        <title><ui:insert name="title">CRM-PFA Administration</ui:insert></title>
+        <!-- Required Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/reset.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/text.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/fluid.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/fonts/ptsans/stylesheet.css" media="screen" />
+
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/mws.style.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/icons/icons.css" media="screen" />
+
+
+        <!-- Theme Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/mws.theme.css" media="screen" />
+
+        <!--for accordeon panel-->
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/jui/jquery.ui.css" media="screen" />
+        <!-- JavaScript Plugins -->
+
+        <!--ya3ml machakel-->
+<!--        <script type="text/javascript" src="#{request.contextPath}/resources/mws/js/demo.js"></script>-->
+
+        <!-- For showing notif and msg list -->
+        <script type="text/javascript" src="#{request.contextPath}/resources/mws/js/mws.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("div#mws-login .mws-login-back").mouseover(function(event) {
+                    $(this).find("a").animate({'left':0})
+                }).mouseout(function(event) {
+                    $(this).find("a").animate({'left':70})
+                });
+            });
+        </script>
     </h:head>
+
     <h:body >
-        <div style="padding-top:10px;">
-            <h:panelGroup style="width:100%;">
-                <ui:insert name="body" id="content"></ui:insert>
-            </h:panelGroup>
-            <p:spacer height="100%"/>
-            <div align="center"  style="vertical-align:bottom; padding-bottom:5px;"><h:graphicImage library="images" value="/presentation/Vente.png" width="35" height="35" style="vertical-align: middle;"/> Copyright © 2012 CRM-PFA.  All rights reserved</div>
+
+      
+        <div id="mws-login">
+            <h1>Connexion</h1>
+            <div class="mws-login-lock">
+                <img src="#{request.contextPath}/resources/mws/css/icons/24/locked-2.png" alt="" /></div>
+            <div id="mws-login-form">
+                <h:form id="loginForm" styleClass="mws-form" rendered="#{not identity.loggedIn}">
+                    <div class="mws-form-row">
+                        <div class="mws-form-item large">
+                            <ui:insert name="body">Content</ui:insert>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+            <p:messages id="messages" globalOnly="true" />
         </div>
     </h:body>
 </html>

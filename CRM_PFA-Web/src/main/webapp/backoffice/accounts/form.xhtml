@@ -11,7 +11,7 @@
     <p:spacer height="30"/>
     <table width="100%" >
         <tr >
-            <td style="vertical-align: top">
+            <td style="vertical-align: top;" >
                 <h:panelGrid id="display" columns="3" cellpadding="4" >
                     <h:outputLabel value="Nom :" styleClass="titleLib"/>  
                     <p:inputText id="newName" value="#{accountController.account.name}"
@@ -40,7 +40,7 @@
                     <p:spacer/>
                 </h:panelGrid> 
             </td>
-            <td valign="top" align="right">
+            <td valign="top" align="right" >
                 <h:panelGrid id="logo" width="100" >
                     <p:panel style="border-style: dotted" id="panelLogo" >  
                         <h:graphicImage height="100" width="100" library="images" name="other/defaultLogo.png" rendered="#{not accountController.editMode and  fileUploadController.image eq null}"/>  
