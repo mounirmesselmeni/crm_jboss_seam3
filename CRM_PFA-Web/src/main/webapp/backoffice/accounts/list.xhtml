@@ -8,108 +8,114 @@
 
 
     <ui:define name="body">
-        <p:panel header="Liste des comptes">
+        <div class="mws-panel grid_8">
+            <div class="mws-panel-header">
+                <span class="mws-i-24 i-text-documents">
+                    Liste des comptes sociétés
+                </span>
+            </div>
+            <div class="mws-panel-body"  >
+                <h:form id="form1">
+                    <p:messages id="messages" globalOnly="true"/>
+                    <br/>
+                    <p:spacer width="10" height="10"/>
+                    <h:commandButton image="/resources/images/icons/add.png"/>
+                    <p:spacer width="10"/>
+                    <p:commandLink  ajax="false" value="Nouveau Compte" actionListener="#{accountController.createViewModels()}" action="create?faces-redirect=true"
+                                    style="font-weight: bold">
+                        <f:setPropertyActionListener target="#{accountController.redirect}" value="list?faces-redirect=true"/>
+                        <f:setPropertyActionListener target="#{accountController.editMode}" value="false"/>
+                    </p:commandLink>
+                    <br/>
+                    <p:spacer height="20"/>
+                    <h:panelGrid columns="3" width="100%">
+                        <p:spacer height="20" width="10"/>
+                        <p:dataTable id="datatable"  var="account" value="#{lstAccounts}"  paginator="true" rows="10"  
+                                     paginatorPosition="bottom">  
 
-            <h:form id="form1">
+                            <f:facet name="header" >
+                                Liste des comptes
+                            </f:facet>
+                            <p:column headerText="Logo" style="width:10%">
+                                <center>
+                                    <p:graphicImage value="/CRMData/accounts/#{account.logoURL}"  width="40" height="50" />  
+                                </center>
+                            </p:column> 
+                            <p:column headerText="Société" style="width:5%">  
+                                <h:outputText value="#{account.name}" />  
+                            </p:column>  
+                            <p:column headerText="Type" style="width:5%">  
+                                <h:outputText value="#{account.type}" />  
+                            </p:column>  
+                            <p:column headerText="Site web" style="width:10%">  
+                                <h:outputText value="#{account.website}" />  
+                            </p:column>  
+                            <p:column headerText="e-mails" style="width:10%">  
+                                <ui:repeat value="#{account.lstEmails}" var="email">
+                                    <h:outputText value="#{email}" />
+                                    <br/>
+                                </ui:repeat>
 
-                <p:messages id="messages" globalOnly="true"/>
-                <p:spacer width="3"/>
-                <h:commandButton image="/resources/images/icons/add.png"/>
-                <p:spacer width="5"/>
-                <p:commandLink  ajax="false" value="Nouveau Compte" actionListener="#{accountController.createViewModels()}" action="create?faces-redirect=true"
-                                style="font-weight: bold">
-                    <f:setPropertyActionListener target="#{accountController.redirect}" value="list?faces-redirect=true"/>
-                    <f:setPropertyActionListener target="#{accountController.editMode}" value="false"/>
-                </p:commandLink>
-                <p:spacer height="10"/>
+                            </p:column>  
+                            <p:column headerText="Adresses" style="width:30%">  
+                                <ui:repeat value="#{account.lstAddresses}" var="address">
+                                    <h:outputText value="#{address}" />
+                                    <br/>
+                                </ui:repeat>
+                            </p:column>  
+                            <p:column headerText="Téléphones" style="width:20%">
+                                <ui:repeat value="#{account.lstPhoneNumbers}" var="phone">
+                                    <h:outputText value="#{phone}" />
+                                    <br/>
+                                </ui:repeat>
+                            </p:column>  
+                            <p:column headerText="Actions" style="text-align:center;width: 5%">  
+                                <p:commandLink  title="Modifier" ajax="false" actionListener="#{accountController.initViewModels(account)}" action="edit?faces-redirect=true">
+                                    <h:graphicImage library="images" name="constellation/icons/fugue/pencil.png" width="16" height="16"/>
+                                    <f:setPropertyActionListener target="#{accountController.redirect}" value="list?faces-redirect=true"/>
+                                    <f:setPropertyActionListener target="#{accountController.editMode}" value="true"/>
+                                </p:commandLink>  
+                                <p:spacer width="5"/>
+                                <p:commandLink  title="Supprimer" update=":outPutPanel" oncomplete="confirmation.show()"
+                                                actionListener="#{accountController.beginConversation()}">
+                                    <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
+                                    <f:setPropertyActionListener value="#{account}" target="#{accountController.account}" />
+                                </p:commandLink>
+                                <p:spacer width="5"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:spacer height="20" width="10"/>
+                    </h:panelGrid>
 
-                <h:panelGrid width="100%">
-                    <p:spacer height="7" />
-                    <p:dataTable id="datatable"  var="account" value="#{lstAccounts}"  paginator="true" rows="10"  
-                                 paginatorPosition="bottom">  
+                </h:form>
+            </div>
+        </div>
+        <p:outputPanel id="outPutPanel">
+            <p:confirmDialog message=" Voulez vous supprimer #{accountController.account.name}?"  width="400"   
+                             header="Confirmation" widgetVar="confirmation">  
+                <h:form id="formDelete"  >
 
-                        <f:facet name="header" >
-                            Liste des comptes
-                        </f:facet>
-                        <p:column headerText="Logo" style="width:10%">
-                            <center>
-                                <p:graphicImage value="/CRMData/accounts/#{account.logoURL}"  width="40" height="50" />  
-                            </center>
-                        </p:column> 
-                        <p:column headerText="Société" style="width:5%">  
-                            <h:outputText value="#{account.name}" />  
-                        </p:column>  
-                        <p:column headerText="Type" style="width:5%">  
-                            <h:outputText value="#{account.type}" />  
-                        </p:column>  
-                        <p:column headerText="Site web" style="width:10%">  
-                            <h:outputText value="#{account.website}" />  
-                        </p:column>  
-                        <p:column headerText="e-mails" style="width:10%">  
-                            <ui:repeat value="#{account.lstEmails}" var="email">
-                                <h:outputText value="#{email}" />
-                                <br/>
-                            </ui:repeat>
+                    <table width="100%" border="0">
+                        <tr >
+                            <td width="20%" height="20px">
+                                <p:commandButton  value="Non" onclick="confirmation.hide()"  styleClass="mws-button red small"
+                                                  actionListener="#{accountController.cancel()}"/> 
+                            </td>
+                            <td width="60%" >
+                            </td>
+                            <td  width="20%" height="20px">
 
-                        </p:column>  
-                        <p:column headerText="Adresses" style="width:30%">  
-                            <ui:repeat value="#{account.lstAddresses}" var="address">
-                                <h:outputText value="#{address}" />
-                                <br/>
-                            </ui:repeat>
-                        </p:column>  
-                        <p:column headerText="Téléphones" style="width:20%">
-                            <ui:repeat value="#{account.lstPhoneNumbers}" var="phone">
-                                <h:outputText value="#{phone}" />
-                                <br/>
-                            </ui:repeat>
-                        </p:column>  
-                        <p:column headerText="Actions" style="text-align:center;width: 5%">  
-                            <p:commandLink  title="Modifier" ajax="false" actionListener="#{accountController.initViewModels(account)}" action="edit?faces-redirect=true">
-                                <h:graphicImage library="images" name="constellation/icons/fugue/pencil.png" width="16" height="16"/>
-                                <f:setPropertyActionListener target="#{accountController.redirect}" value="list?faces-redirect=true"/>
-                                <f:setPropertyActionListener target="#{accountController.editMode}" value="true"/>
-                            </p:commandLink>  
-                            <p:spacer width="5"/>
-                            <p:commandLink  title="Supprimer" update=":outPutPanel" oncomplete="confirmation.show()"
-                                            actionListener="#{accountController.beginConversation()}">
-                                <h:graphicImage library="images" name="constellation/icons/fugue/cross-circle.png" width="16" height="16"/>  
-                                <f:setPropertyActionListener value="#{account}" target="#{accountController.account}" />
-                            </p:commandLink>
-                            <p:spacer width="5"/>
-                        </p:column>
-                    </p:dataTable>
-
-                </h:panelGrid>
-
-            </h:form>
-            <p:outputPanel id="outPutPanel">
-                <p:confirmDialog message=" Voulez vous supprimer #{accountController.account.name}?"  width="400"   
-                                 header="Confirmation" widgetVar="confirmation">  
-                    <h:form id="formDelete"  >
-                       
-                        <table width="100%" border="0">
-                            <tr >
-                                <td width="20%" height="20px">
-                                    <p:commandButton id="btnNo" value="Non" onclick="confirmation.hide()" 
-                                                     actionListener="#{accountController.cancel()}"/> 
-                                </td>
-                                <td width="60%" >
-                                </td>
-                                <td  width="20%" height="20px">
-
-                                    <p:commandButton id="btnYes" value="Oui" update=":form1:datatable" 
-                                                     actionListener="#{accountController.deleteAccount()}" 
-                                                     onclick="confirmation.hide()"/>  
-                                </td>
-                            </tr>  
-                        </table>
-                    </h:form>
-                </p:confirmDialog>
-            </p:outputPanel>
-            <br/>
-            <br/>
-        </p:panel>
+                                <p:commandButton  value="Oui" update=":form1:datatable" styleClass="mws-button green small"
+                                                  actionListener="#{accountController.deleteAccount()}" 
+                                                  onclick="confirmation.hide()"/>  
+                            </td>
+                        </tr>  
+                    </table>
+                </h:form>
+            </p:confirmDialog>
+        </p:outputPanel>
+        <br/>
+        <br/>
     </ui:define>
 
 </ui:composition>

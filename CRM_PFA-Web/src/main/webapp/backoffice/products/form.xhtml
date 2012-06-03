@@ -55,7 +55,7 @@
                              required="true" requiredMessage="Valeur requise"/>
                 <p:message for="productPrice"/>
                 <h:outputText value="TVA :"/>
-                <p:selectOneMenu id="productTVA" value="#{productController.product.tva}" 
+                <p:selectOneMenu id="productTVA" value="#{productController.product.tva}" style="width: 150px"
                                  required="true" requiredMessage="Valeur requise">
                     <f:selectItems value="#{lstTva}" var="tva" itemLabel="#{tva.taux} %" itemValue="#{tva}"/>
                 </p:selectOneMenu>

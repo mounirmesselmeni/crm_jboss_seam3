@@ -5,7 +5,9 @@
 package com.insat.gl5.crm_pfa.service.producer;
 
 import com.insat.gl5.crm_pfa.model.Account;
+import com.insat.gl5.crm_pfa.model.BackendUser;
 import com.insat.gl5.crm_pfa.model.Contact;
+import com.insat.gl5.crm_pfa.service.qualifier.CurrentUser;
 import com.insat.gl5.crm_pfa.service.qualifier.DataRepository;
 import java.util.List;
 import javax.enterprise.inject.Produces;
@@ -24,6 +26,9 @@ public class ContactAccountProducer {
     @DataRepository
     private EntityManager em;
 
+    @Inject
+    @CurrentUser
+    private BackendUser backendUser;
     /**
      * Contacts list
      * @return 
@@ -31,7 +36,7 @@ public class ContactAccountProducer {
     @Produces
     @Named("lstContacts")
     public List<Contact> getLstContacts() {
-        Query query = em.createQuery("select c from Contact c");
+        Query query = em.createQuery("select c from Contact c WHERE c.account.crmUser=?1").setParameter(1, backendUser);
         return query.getResultList();
     }
     
@@ -42,7 +47,7 @@ public class ContactAccountProducer {
     @Produces
     @Named("lstAccounts")
     public List<Account> getLstAccounts() {
-        Query query = em.createQuery("select a from Account a");
+        Query query = em.createQuery("select a from Account a WHERE a.crmUser=?1").setParameter(1, backendUser);
         return query.getResultList();
     }
 }
