@@ -56,6 +56,12 @@ div#mws-login input.mws-login-username
 	background-repeat:no-repeat;
 	background-position:8px center;
 }
+div#mws-login input.mws-activation
+{
+	background-image:url(../icons/16/application_view_columns.png);
+	background-repeat:no-repeat;
+	background-position:8px center;
+}
 
 div#mws-login input.mws-login-password
 {
@@ -65,7 +71,8 @@ div#mws-login input.mws-login-password
 }
 
 div#mws-login input.mws-login-username, 
-div#mws-login input.mws-login-password
+div#mws-login input.mws-login-password,
+div#mws-login input.mws-activation
 {
 	padding:8px 8px 8px 32px;
 	border:1px solid #323232;

@@ -20,6 +20,31 @@
         </h:panelGrid>
         <h:commandButton id="login" value="Login" action="#{identity.login()}" styleClass="mws-button green mws-login-button"/>
     </ui:define>
+    <ui:define name="loggedIn">
+        <h:panelGrid columns="2" >
+            <h:graphicImage library="images"  name="/other/Login.png" height="110" width="110"/>
+            <a class="mws-report" >
+                <span class="mws-report-icon mws-ic ic-walk"></span>
+                <span class="mws-report-content" style="width: 100px">
+                    <span class="mws-report-title "><h6><FONT  color="#990000">
+                            Vous êtes déja <br/> connecté </FONT></h6></span>
+                </span>
+            </a>
+        </h:panelGrid>
+        <table width="100%" border="0">
+            <tr >
+                <td width="20%" height="20px">
+                    <h:commandButton value="Acceuil" action="/frontoffice/index" styleClass="mws-button green mws-i-24 i-home large" rendered="#{not empty currentContact}"/>
+                    <h:commandButton value="Acceuil" action="/backoffice/accounts/list" styleClass="mws-button green mws-i-24 i-home large" rendered="#{not empty currentUser}"/>
+                </td>
+                <td width="60%" >
+                </td>
+                <td  width="20%" height="20px" align="right">
+                    <h:commandButton  value="Déconnecter" action="#{identity.logout()}" styleClass="mws-button green mws-login-button large"/>
+                </td>
+            </tr>  
+        </table>
+    </ui:define>
 
 </ui:composition>
 

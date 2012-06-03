@@ -4,7 +4,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                template="./../../WEB-INF/template/generalTemplate2.xhtml">
+                template="./../WEB-INF/template/clientTemplate.xhtml">
     <ui:define name="body">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
@@ -15,19 +15,20 @@
             <div class="mws-panel-body"  >
                 <p:messages id="messages" globalOnly="true"/>
                 <h:form>
+                    <p:commandLink action="#"/>
                     <br/>
                     <p:spacer height="20"/>
-
                     <h:panelGrid width="100%" columns="3">
-                        <p:spacer height="20" width="10"/>
+                        <p:spacer height="20" width="10"/>                        
+                        <p:graphicImage value="/CRMData/contacts/#{currentContact.imageURL}"  width="80" height="80" />  
                         <h:panelGrid columns="2" cellspacing="50" cellpadding="20">
                             <h:panelGrid columns="2">
                                 <h:outputText value="Nom" styleClass="titleLib" />
-                                <h:outputText id="firstName" value="#{currentUser.firstName}"/>
+                                <h:outputText id="firstName" value="#{currentContact.firstName}"/>
                                 <h:outputText value="Prenom" styleClass="titleLib" />
-                                <h:outputText id="lastName" value="#{currentUser.lastName}"/>
+                                <h:outputText id="lastName" value="#{currentContact.lastName}"/>
                             </h:panelGrid>
-                           </h:panelGrid>
+                        </h:panelGrid>
                         <p:spacer height="20" width="10"/>
                     </h:panelGrid>
                 </h:form>

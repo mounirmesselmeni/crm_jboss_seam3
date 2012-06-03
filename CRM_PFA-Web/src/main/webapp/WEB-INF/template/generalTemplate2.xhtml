@@ -53,6 +53,7 @@
                                 <ui:repeat value="#{notificationController.backendUserNotifications}"
                                            var="notif">
                                     <li class="#{not notif.readed ? 'unread' : 'read'}">
+<!--                                        <a href="{notificationController.consult(notification)}">-->
                                         <a href="#">
                                             <span class="message">
                                                 #{notif.content}
@@ -81,11 +82,11 @@
                     <div id="mws-user-functions">
                         <div id="mws-username">
                             <h:outputText value="Bienvenue" style="color: white"/>
-                            <h:outputText value=" #{currentUser.login}"/>
+                            <h:outputText value=" #{currentUser.fullName}"/>
                         </div>
                         <h:form>
                             <ul>
-                                <li><a href="#">Profile</a></li>
+                                <li><h:commandLink value="Profile" action="/backoffice/users/myProfile"/></li>
                                 <li><a href="#">Change Password</a></li>
                                 <li><h:commandLink value="Logout" action="#{identity.logout()}"/></li>
                             </ul>
@@ -104,7 +105,7 @@
                 <div id="mws-navigation">
                     <h:form>
                         <ul>
-                            <li><a href="#{request.contextPath}/resources/mws/dashboard.html" class="mws-i-24 i-home">Dashboard</a></li>
+                            <li><h:commandLink action="/backoffice/home" value="Acceuil" styleClass="mws-i-24 i-home" /></li>
                             <li>
                                 <a href="#" class="mws-i-24 i-users"><h:outputText  value="Gestion des comptes"/></a>
                                 <ul>

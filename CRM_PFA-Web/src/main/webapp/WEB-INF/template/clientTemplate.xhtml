@@ -52,7 +52,7 @@
                                 <ui:repeat value="#{notificationController.contactNotifications}"
                                            var="notif">
                                     <li class="#{not notif.readed ? 'unread' : 'read'}">
-                                        <a href="#">
+                                        <h:commandLink  action="#{notificationController.consult(notification)}" >
                                             <span class="message">
                                                 #{notif.content}
                                             </span>
@@ -61,7 +61,7 @@
                                                     <f:converter converterId="dateTimeConverter"/>
                                                 </h:outputText>
                                             </span>
-                                        </a>
+                                        </h:commandLink>
                                     </li>
                                 </ui:repeat>
                             </ul>
@@ -132,7 +132,7 @@
                 </div>
                 <div id="mws-user-info" class="mws-inset">
                     <div id="mws-user-photo">
-                        <img src="#{request.contextPath}/resources/mws/example/profile.jpg" alt="User Photo" />
+                        <p:graphicImage value="/CRMData/contacts/#{currentContact.imageURL}"  alt="User Photo"/>  
                     </div>
                     <div id="mws-user-functions">
                         <div id="mws-username">
@@ -141,7 +141,7 @@
                         </div>
                         <h:form>
                             <ul>
-                                <li><a href="#">Profile</a></li>
+                                <li><h:commandLink value="Profile" action="/frontoffice/myProfile"/></li>
                                 <li><a href="#">Change Password</a></li>
                                 <li><h:commandLink value="Logout" action="#{identity.logout()}"/></li>
                             </ul>

@@ -8,6 +8,7 @@ import com.insat.gl5.crm_pfa.enumeration.Salutation;
 import com.insat.gl5.crm_pfa.model.*;
 import com.insat.gl5.crm_pfa.service.ContactService;
 import com.insat.gl5.crm_pfa.service.CoordinatesService;
+import com.insat.gl5.crm_pfa.service.OpportunityService;
 import com.insat.gl5.crm_pfa.service.mail.MailService;
 import com.insat.gl5.crm_pfa.service.mail.Person;
 import com.insat.gl5.crm_pfa.service.security.UserProfileService;
@@ -58,6 +59,8 @@ public class ContactController extends ConversationController {
     private ContactService contactService;
     @Inject
     private CoordinatesService coordinatesService;
+    @Inject
+    private OpportunityService opportunityService;
     @Inject
     private MailService mailService;
     @Inject
@@ -409,6 +412,12 @@ public class ContactController extends ConversationController {
 
         try {
             deleteLogo();
+            for(Opportunity opp : opportunityService.getOpportunitiesByContact(contact)){
+                opportunityService.deleteOpportunity(opp);
+            }
+//            opportunityService.deleteOpportunitiesByContact(getContact());
+            contactService.deleteActivationCode(getContact());
+            contactService.deleteNotificationsContact(getContact());
             contactService.deleteContact(getContact());
             messages.info("Contact {0} est supprimé avec succés !", getContact());
 
@@ -552,7 +561,7 @@ public class ContactController extends ConversationController {
         logo.delete();
     }
 
-    private void updateLogo() {
+    private void updateLogo() throws IOException {
         // Nouveau chemin
         String newPath = contact.getLogin() + ".png";
         // Ancien chemin
@@ -564,6 +573,9 @@ public class ContactController extends ConversationController {
             lastURL.renameTo(newURL);
             contact.setImageURL(newPath);
         }
+        if (fileUploadController.getFile() != null) {
+            fileUploadController.upload(CONTACTS_DIRECTORY + contact.getImageURL());
+        } 
     }
 
     private void uploadLogo() throws IOException {

@@ -6,10 +6,12 @@ package com.insat.gl5.crm_pfa.web.controller;
 
 import com.insat.gl5.crm_pfa.enumeration.DirectionEnum;
 import com.insat.gl5.crm_pfa.enumeration.NotificationType;
+import com.insat.gl5.crm_pfa.model.ItemToPurchase;
 import com.insat.gl5.crm_pfa.model.Notification;
 import com.insat.gl5.crm_pfa.model.NotificationContact;
 import com.insat.gl5.crm_pfa.model.Opportunity;
 import com.insat.gl5.crm_pfa.service.AccountService;
+import com.insat.gl5.crm_pfa.service.ContactService;
 import com.insat.gl5.crm_pfa.service.NotificationService;
 import com.insat.gl5.crm_pfa.service.OpportunityService;
 import java.io.Serializable;
@@ -35,6 +37,8 @@ public class ConsultOpportunityController implements Serializable {
 
     @Inject
     private OpportunityService opportunityService;
+    @Inject
+    private ContactService contactService;
     @Inject
     private AccountService accountService;
     @Inject
@@ -95,6 +99,19 @@ public class ConsultOpportunityController implements Serializable {
         notificationService.saveNotification(notification);
     }
 
+     public double calculateTotalPrice() {
+        double price = 0;
+        for (ItemToPurchase item : opportunity.getItemsToPurchase()) {
+            price += item.getQuantity() * item.getProduct().getPrice();
+        }
+        return price;
+    }
+      public double calculateOpportunityPrice() {
+        if (opportunity.getRelatedTo() == null || contactService.getFidelityByContact(opportunity.getRelatedTo()) == null) {
+            return calculateTotalPrice();
+        }
+        return calculateTotalPrice() * ((double)(100 - contactService.getFidelityByContact(opportunity.getRelatedTo()).getScore()) / 100);
+    }
     /**
      * @param
      * opportunity

@@ -8,39 +8,46 @@
 
 
     <ui:define name="body">
-        <p:panel header="Dérnières Notifications">
+        <div class="mws-panel grid_8">
+            <div class="mws-panel-header">
+                <span class="mws-i-24 i-text-documents">
+                    Dérnières Notifications
+                </span>
+            </div>
+            <div class="mws-panel-body"  >
+                <h:form id="form1">
+                    <p:messages id="messages" autoUpdate="true" globalOnly="true"/>
+                    <br/>
+                    <p:spacer height="20"/>
 
-            <h:form id="form1">
-                <p:messages id="messages" globalOnly="true"/>
-                <p:spacer width="10"/>
-                <h:panelGrid width="100%">
-                    <p:spacer height="7" />
-                    <p:dataTable id="datatable"  var="notification" value="#{notificationController.contactNotifications}"  paginator="true" rows="10"  
-                                 paginatorPosition="bottom">  
+                    <h:panelGrid width="100%" columns="3">
+                        <p:spacer height="20" width="10"/>
 
-                        <f:facet name="header" >
-                            Liste des notifications
-                        </f:facet>
-                        <p:column  style="width:10%">
-                            <center>
-                                <p:graphicImage value="/resources/images/constellation/icons/fugue/readed-mail.png"  width="24" height="24" rendered="#{notification.readed}"/>  
-                                <p:graphicImage value="/resources/images/constellation/icons/fugue/unreaded-mail.png"  width="24" height="24" rendered="#{not notification.readed}"/>  
-                            </center>
-                        </p:column> 
-                        <p:column headerText="Contenu" style="width:50%">  
-                            <h:outputText value="#{notification.content}" />  
-                        </p:column>  
-                        <p:column headerText="Type" style="width:10%">  
-                            <h:outputText value="#{notification.type}" />  
-                        </p:column>  
-                        <p:column headerText="Consulter" style="width:10%">  
-                            <p:commandLink value="consulter" ajax="false" action="#{notificationController.consult(notification)}" >
-                                <f:param name="id" value="#{notificationController.id}" />
-                            </p:commandLink>  
-                        </p:column>  
-                    </p:dataTable>
-                </h:panelGrid>
-            </h:form>
-        </p:panel>
+                        <p:dataTable id="datatable"  var="notification" value="#{notificationController.contactNotifications}"  paginator="true" rows="10"  
+                                     paginatorPosition="bottom">  
+
+                            <p:column  style="width:10%">
+                                <center>
+                                    <p:graphicImage value="/resources/images/constellation/icons/fugue/readed-mail.png"  width="24" height="24" rendered="#{notification.readed}"/>  
+                                    <p:graphicImage value="/resources/images/constellation/icons/fugue/unreaded-mail.png"  width="24" height="24" rendered="#{not notification.readed}"/>  
+                                </center>
+                            </p:column> 
+                            <p:column headerText="Contenu" style="width:50%">  
+                                <h:outputText value="#{notification.content}" />  
+                            </p:column>  
+                            <p:column headerText="Type" style="width:10%">  
+                                <h:outputText value="#{notification.type}" />  
+                            </p:column>  
+                            <p:column headerText="Consulter" style="width:10%">  
+                                <p:commandLink value="consulter" ajax="false" action="#{notificationController.consult(notification)}" >
+                                    <f:param name="id" value="#{notificationController.id}" />
+                                </p:commandLink>  
+                            </p:column>  
+                        </p:dataTable>
+                        <p:spacer height="20" width="10"/>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </div>
     </ui:define>
 </ui:composition>

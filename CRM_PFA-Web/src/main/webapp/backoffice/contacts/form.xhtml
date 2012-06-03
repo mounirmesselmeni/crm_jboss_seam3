@@ -6,8 +6,7 @@
                 xmlns:s="http://jboss.org/seam/faces"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:accordionPanel  activeIndex="0" >
-        <p:tab title="Informations générales">
+        <h3><h:graphicImage library="images" name="Icons/48/44.png" /><p:spacer width="20"/>Informations générales</h3>
             <table width="100%">
                 <tr>
                     <td>
@@ -58,16 +57,14 @@
                     </td>
                 </tr>
             </table>
-        </p:tab>
-        <p:tab title="Contrôle d'Accés">
+        <h3><h:graphicImage library="images" name="Icons/48/37.png" /><p:spacer width="20"/>Contrôle d'Accés</h3>
             <h:panelGrid columns="3">
                 <h:outputLabel value="Login"/>
                 <p:inputText id="login" value="#{contactController.contact.login}" required="false" size="35"/>
                 <p:spacer/>
                 <p:spacer height="30"/>
             </h:panelGrid>
-        </p:tab>
-        <p:tab title="Coordonnées">
+        <h3><h:graphicImage library="images" name="Icons/48/6.png" /><p:spacer width="20"/>Coordonnées</h3>
             <h:panelGrid columns="2" style="width: 100%">
                 <h:panelGrid columns="3">
                     <h:outputLabel value="Emails :" />  
@@ -140,7 +137,7 @@
                 </h:panelGrid>
             </h:panelGrid>
             <p:spacer height="40"/>
-            <h3>Adresses</h3>
+            <h3><h:graphicImage library="images" name="Icons/48/42.png" /><p:spacer width="20"/>Adresses</h3>
             <p:spacer height="10"/>
             <h:panelGrid columns="2" style="width: 100%">
                 <h:panelGrid columns="3">
@@ -211,46 +208,7 @@
                 </h:panelGrid>
 
             </h:panelGrid>
-        </p:tab>
-    </p:accordionPanel>
 
-    <ui:remove>
-        <p:outputPanel autoUpdate="true">
-            <h:panelGroup>
-                <h4><h:outputText value="Roles"/></h4>
-                <ui:repeat value="#{contactController.roles}" var="role">
-                    <b><h:outputText value="#{role.roleType.name}"/></b>
-                    <span> <h:outputText value="Groupe"/> </span>
-                    <b><h:outputText value="#{role.group.name}"/></b><br/>
-                </ui:repeat>
-            </h:panelGroup>
-        </p:outputPanel>
-        <p:commandButton value="Ajouter" oncomplete="newRoleType.show();" 
-                         ajax="true"/>
-    </ui:remove>
-    <ui:remove>
-        <p:dialog widgetVar="newRoleType" modal="true" header="Ajouter rôle" >
-            <h:form>
-                <h:panelGrid columns="3">
-                    <h:outputText value="Rôle"/>
-                    <p:selectOneMenu id="roleType" converter="roleTypeConverter" value="#{contactController.roleType}"
-                                     required="true" requiredMessage="required">
-                        <f:selectItems value="#{lstRoleTypes}" var="roleType" itemLabel="#{roleType.name}"/>
-                    </p:selectOneMenu>
-                    <p:message for="roleType"/>
-                    <h:outputText value="Groupe"/>
-                    <p:selectOneMenu id="group" converter="groupConverter" value="#{contactController.roleGroup}"
-                                     required="true" requiredMessage="required">
-                        <f:selectItems value="#{lstGroups}" var="group" itemLabel="#{group.name}"/>
-                    </p:selectOneMenu>
-                    <p:message for="group"/>
-                    <p:spacer/>
-                    <p:commandButton value="Annuler" ajax="true"
-                                     oncomplete="newRoleType.hide();"/>
-                    <p:commandButton value="Valider" ajax="true" action="#{contactController.saveRole()}"
-                                     oncomplete="newRoleType.hide();"/>
-                </h:panelGrid>
-            </h:form>
-        </p:dialog>
-    </ui:remove>
+   
+   
 </ui:composition>

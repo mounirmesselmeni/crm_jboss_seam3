@@ -8,8 +8,17 @@
                 template="./../../WEB-INF/template/generalTemplate2.xhtml">
 
     <ui:define name="body">
-        <p:panel header="Ajouter Contact">
-            <h:form id="contactForm">
+       <div class="mws-panel grid_8">
+            <div class="mws-panel-header">
+                <span class="mws-i-24 i-text-documents">
+                    Nouveau contact
+                </span>
+            </div>
+            <div class="mws-panel-body">
+                <p:spacer height="20" width="20"/>
+                <h:panelGrid columns="3" width="100%">
+                    <p:spacer height="20" width="20"/>      
+                    <h:form id="contactForm" enctype="multipart/form-data">
 
                 <ui:include src="form.xhtml" />			
 
@@ -35,8 +44,10 @@
                     </tr>  
                 </table>				
             </h:form>
-            <div style="clear:both;" />
-        </p:panel>
-
+                    <p:spacer height="20" width="20"/>
+                </h:panelGrid>
+            </div>
+        </div>
     </ui:define>
+
 </ui:composition>

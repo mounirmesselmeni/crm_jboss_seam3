@@ -126,7 +126,8 @@ public class AccountController extends ConversationController {
             affectCoordinates();
             account.setCrmUser(backendUser);
             account.setLogoURL(account.getName() + ".png");
-            account.setFidelity(new Fidelity(5));
+            Fidelity fidelity = new Fidelity(5);
+            account.setFidelity(fidelity);
             accountService.saveAccount(getAccount());
             uploadLogo();
             messages.info("Compte {0} est enregistré avec succés !", getAccount().getName());
@@ -410,7 +411,7 @@ public class AccountController extends ConversationController {
         logo.delete();
     }
 
-    private void updateLogo() {
+    private void updateLogo() throws IOException {
         // Nouveau chemin
         String newPath = account.getName() + ".png";
         // Ancien chemin
@@ -422,6 +423,9 @@ public class AccountController extends ConversationController {
             lastURL.renameTo(newURL);
             account.setLogoURL(newPath);
         }
+           if (fileUploadController.getFile() != null) {
+            fileUploadController.upload(ACCOUNTS_DIRECTORY + account.getLogoURL());
+        } 
     }
 
     private void uploadLogo() throws IOException {
