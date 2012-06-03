@@ -824,7 +824,7 @@ CREATE TABLE `Notification` (
   `readed` tinyint(1) NOT NULL,
   `type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -833,7 +833,7 @@ CREATE TABLE `Notification` (
 
 LOCK TABLES `Notification` WRITE;
 /*!40000 ALTER TABLE `Notification` DISABLE KEYS */;
-INSERT INTO `Notification` VALUES (1,'2012-06-02 20:17:16','2012-06-02 20:33:20','Vous avez un offre : <admin> vous invite à consulter l\'opportunité \' Samsunghbcvnb \' !!','/frontoffice/notifications/viewOpportunity?id=1',1,'OPPORTUNITE'),(2,'2012-06-02 20:35:27','2012-06-02 20:36:09','Messelmeni Mounir a refusé l\'opportunité \' Samsunghbcvnb \' !!','/backoffice/notifications/viewOpportunity?id=1',1,'OPPORTUNITE');
+INSERT INTO `Notification` VALUES (1,'2012-06-02 20:17:16','2012-06-02 20:33:20','Vous avez un offre : <admin> vous invite à consulter l\'opportunité \' Samsunghbcvnb \' !!','/frontoffice/notifications/viewOpportunity?id=1',1,'OPPORTUNITE'),(2,'2012-06-02 20:35:27','2012-06-02 20:36:09','Messelmeni Mounir a refusé l\'opportunité \' Samsunghbcvnb \' !!','/backoffice/notifications/viewOpportunity?id=1',1,'OPPORTUNITE'),(3,'2012-06-03 09:28:57','2012-06-03 09:28:57','Messelmeni Mounir a refusé l\'opportunité \' Samsunghbcvnb \' !!','/backoffice/notifications/viewOpportunity?id=1',0,'OPPORTUNITE');
 /*!40000 ALTER TABLE `Notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -859,7 +859,7 @@ CREATE TABLE `NotificationContact` (
   CONSTRAINT `FKC1742C95675729BB` FOREIGN KEY (`notification_id`) REFERENCES `Notification` (`id`),
   CONSTRAINT `FKC1742C95EACB179` FOREIGN KEY (`backendUser_id`) REFERENCES `BackendUser` (`id`),
   CONSTRAINT `FKC1742C95F51CF139` FOREIGN KEY (`contact_id`) REFERENCES `Contact` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -868,7 +868,7 @@ CREATE TABLE `NotificationContact` (
 
 LOCK TABLES `NotificationContact` WRITE;
 /*!40000 ALTER TABLE `NotificationContact` DISABLE KEYS */;
-INSERT INTO `NotificationContact` VALUES (1,'2012-06-02 20:17:16','2012-06-02 20:17:16',1,2,1,1),(2,'2012-06-02 20:35:27','2012-06-02 20:35:27',0,2,1,2);
+INSERT INTO `NotificationContact` VALUES (1,'2012-06-02 20:17:16','2012-06-02 20:17:16',1,2,1,1),(2,'2012-06-02 20:35:27','2012-06-02 20:35:27',0,2,1,2),(3,'2012-06-03 09:28:57','2012-06-03 09:28:57',0,2,1,3);
 /*!40000 ALTER TABLE `NotificationContact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -996,7 +996,7 @@ CREATE TABLE `Product` (
 
 LOCK TABLES `Product` WRITE;
 /*!40000 ALTER TABLE `Product` DISABLE KEYS */;
-INSERT INTO `Product` VALUES (1,'2012-06-02 20:16:49','2012-06-02 20:16:49','dfgfdqgsq','gdghdshgh_fdgsdfhsdg.png','gdghdshgh',200,200,'fdgsdfhsdg',1,1);
+INSERT INTO `Product` VALUES (1,'2012-06-02 20:16:49','2012-06-03 09:48:33','dfgfdqgsq','gdghdshgh_fdgsdfhsdg.png','Ã©Ã©Ã©Ã©Ã©Ã©',200,200,'fdgsdfhsdg',1,1);
 /*!40000 ALTER TABLE `Product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1091,7 +1091,7 @@ CREATE TABLE `Ticket` (
 
 LOCK TABLES `Ticket` WRITE;
 /*!40000 ALTER TABLE `Ticket` DISABLE KEYS */;
-INSERT INTO `Ticket` VALUES (1,'2012-06-01 16:55:05','2012-06-02 18:08:02','qsfgsfgfsg',0,'sgsfgfs','INCIDENT',1),(5,'2012-06-01 19:24:38','2012-06-01 19:24:38',NULL,0,NULL,NULL,NULL),(6,'2012-06-02 00:02:00','2012-06-02 10:32:49','dsfgsdfggdh',1,'fdhsdhg','INCIDENT',1),(7,'2012-06-02 00:54:52','2012-06-02 00:54:52','Bonjour,<br/><br/><font color=\"#ff0000\">J\'arrive pas à naviguer a partir du menu</font> depuis Lundi le 13/05/2012.<br/>J\'utilise l\'url pour accéder au pages.<br/><br/><u>Veuillez voir ce probleme technique.</u><br/><br/>Merci<br/>',0,'Probleme de navigation','INCIDENT',1),(8,'2012-06-02 03:14:26','2012-06-02 18:07:51','wfgxfwgfxwgw<br/><br/><br/><br/><u>fchngfhfxhgxf</u><br/>',0,'wsgsqgsf','INCIDENT',1),(9,'2012-06-02 03:14:59','2012-06-02 19:58:30','dfdfwhdxghdg<br/><br/>fhfgxhfxghxgf<br/>',0,'xdthdgh','QUESTION',1),(10,'2012-06-02 08:52:52','2012-06-02 19:19:06','sgfsdgfdgddfg8584554xcxb',1,'sfsgfsgfsdgs','INCIDENT',1),(11,'2012-06-02 18:08:19','2012-06-02 19:39:54','qddfqfqFQD',1,'dsdsqfds','QUESTION',1);
+INSERT INTO `Ticket` VALUES (1,'2012-06-01 16:55:05','2012-06-02 18:08:02','qsfgsfgfsg',0,'sgsfgfs','INCIDENT',1),(5,'2012-06-01 19:24:38','2012-06-01 19:24:38',NULL,0,NULL,NULL,NULL),(6,'2012-06-02 00:02:00','2012-06-02 10:32:49','dsfgsdfggdh',1,'fdhsdhg','INCIDENT',1),(7,'2012-06-02 00:54:52','2012-06-02 00:54:52','Bonjour,<br/><br/><font color=\"#ff0000\">J\'arrive pas à naviguer a partir du menu</font> depuis Lundi le 13/05/2012.<br/>J\'utilise l\'url pour accéder au pages.<br/><br/><u>Veuillez voir ce probleme technique.</u><br/><br/>Merci<br/>',0,'Probleme de navigation','INCIDENT',1),(8,'2012-06-02 03:14:26','2012-06-02 18:07:51','wfgxfwgfxwgw<br/><br/><br/><br/><u>fchngfhfxhgxf</u><br/>',0,'wsgsqgsf','INCIDENT',1),(9,'2012-06-02 03:14:59','2012-06-02 19:58:30','dfdfwhdxghdg<br/><br/>fhfgxhfxghxgf<br/>',0,'xdthdgh','QUESTION',1),(10,'2012-06-02 08:52:52','2012-06-03 09:28:30','ljmjm<br/><br/><br/><font color=\"#ff0000\">klm</font><br/>',1,'sfsgfsgfsdgs','INCIDENT',1),(11,'2012-06-02 18:08:19','2012-06-02 19:39:54','qddfqfqFQD',1,'dsdsqfds','QUESTION',1);
 /*!40000 ALTER TABLE `Ticket` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1137,4 +1137,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-06-02 20:41:24
+-- Dump completed on 2012-06-03  9:50:23
