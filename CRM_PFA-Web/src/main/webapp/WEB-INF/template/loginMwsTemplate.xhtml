@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>CRM-PFA Administration</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="cssLayout.css" />
+    </h:head>
+    <h:body >
+        <div style="padding-top:10px;">
+            <h:panelGroup style="width:100%;">
+                <ui:insert name="body" id="content"></ui:insert>
+            </h:panelGroup>
+            <p:spacer height="100%"/>
+            <div align="center"  style="vertical-align:bottom; padding-bottom:5px;"><h:graphicImage library="images" value="/presentation/Vente.png" width="35" height="35" style="vertical-align: middle;"/> Copyright © 2012 CRM-PFA.  All rights reserved</div>
+        </div>
+    </h:body>
+</html>
