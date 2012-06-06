@@ -4,20 +4,21 @@
  */
 package com.insat.gl5.crm_pfa.web.controller.ticket;
 
-import com.insat.gl5.crm_pfa.model.BackendUser;
-import com.insat.gl5.crm_pfa.model.Contact;
-import com.insat.gl5.crm_pfa.model.Ticket;
-import com.insat.gl5.crm_pfa.model.TicketResponse;
+import com.insat.gl5.crm_pfa.enumeration.DirectionEnum;
+import com.insat.gl5.crm_pfa.enumeration.NotificationType;
+import com.insat.gl5.crm_pfa.model.*;
+import com.insat.gl5.crm_pfa.service.ContactService;
+import com.insat.gl5.crm_pfa.service.NotificationService;
 import com.insat.gl5.crm_pfa.service.TicketService;
 import com.insat.gl5.crm_pfa.service.qualifier.CurrentContact;
 import com.insat.gl5.crm_pfa.service.qualifier.CurrentUser;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.hibernate.LazyInitializationException;
 import org.jboss.seam.international.status.Messages;
 import org.jboss.seam.security.Identity;
 
@@ -43,6 +44,10 @@ public class TicketController extends ConversationController {
     private BackendUser currentBackendUser;
     @Inject
     private TicketService ticketService;
+    @Inject
+    private NotificationService notificationService;
+    @Inject
+    private ContactService contactService;
     @Inject
     private Identity identity;
     private Long ticketId;
@@ -124,6 +129,7 @@ public class TicketController extends ConversationController {
         try {
             this.ticket.setCreator(this.currentContact);
             this.ticketService.createTicket(this.ticket);
+            notifyBackendUser(this.ticket, "Le client " + currentContact.getFullName() + " a postulé un nouveau ticket");
             this.ticket = new Ticket();
             this.messages.info("Ticket crée avec succés.");
             return "list";
@@ -131,6 +137,34 @@ public class TicketController extends ConversationController {
             this.messages.error("Erreur lors de la création du ticket");
         }
         return null;
+    }
+
+    private void notifyBackendUser(Ticket tick, String content) throws Exception {
+        Notification notification = new Notification();
+        notification.setContent(content);
+        notification.setLink("/backoffice/ticket/view?id" + "=" + tick.getId());
+        notification.setType(NotificationType.TICKET);
+        List<NotificationContact> list = new LinkedList<NotificationContact>();
+        Contact contact = this.contactService.findById(currentContact.getId());
+        NotificationContact notificationContact = new NotificationContact(contact, contact.getAccount().getCrmUser(), notification, DirectionEnum.TO_BACKUSER);
+        list.add(notificationContact);
+        notification.setNotificationContacts(list);
+        notificationService.saveNotificationContact(notificationContact);
+        notificationService.saveNotification(notification);
+    }
+
+    private void notifyContact(Ticket tick, String content) throws Exception {
+        Notification notification = new Notification();
+        notification.setContent(content);
+        notification.setLink("/frontoffice/ticket/view?id" + "=" + tick.getId());
+        notification.setType(NotificationType.TICKET);
+        List<NotificationContact> list = new LinkedList<NotificationContact>();
+        Contact contact = this.contactService.findById(tick.getCreator().getId());
+        NotificationContact notificationContact = new NotificationContact(contact, contact.getAccount().getCrmUser(), notification, DirectionEnum.FROM_BACKUSER);
+        list.add(notificationContact);
+        notification.setNotificationContacts(list);
+        notificationService.saveNotificationContact(notificationContact);
+        notificationService.saveNotification(notification);
     }
 
     public String editTicket() {
@@ -144,6 +178,7 @@ public class TicketController extends ConversationController {
         }
         try {
             this.ticketService.editTicket(this.ticket);
+            notifyBackendUser(this.ticket, "Le client " + currentContact.getFullName() + " a mis à jour son ticket");
             this.messages.info("Ticket à jour.");
             return "view";
         } catch (Exception ex) {
@@ -161,8 +196,10 @@ public class TicketController extends ConversationController {
                 this.ticket.setResolved(!this.ticket.isResolved());
                 this.ticketService.editTicket(this.ticket);
                 if (this.ticket.isResolved()) {
+                    notifyBackendUser(this.ticket, "Le client " + currentContact.getFullName() + " a marqué le ticket résolu.");
                     this.messages.info("Ticket résolu");
                 } else {
+                    notifyBackendUser(this.ticket, "Le client " + currentContact.getFullName() + " a marqué le ticket non résolu.");
                     this.messages.info("Ticket non résolu");
                 }
             } catch (Exception ex) {
@@ -186,6 +223,7 @@ public class TicketController extends ConversationController {
                 this.ticketResponse.setCrmUser(currentBackendUser);
                 Ticket ticketE = ticketService.findTicket(ticketId);
                 this.ticketService.addResponse(ticketE, this.ticketResponse);
+                notifyContact(ticketE, "Le commercial " + currentBackendUser.getFullName() + " a ajouté une réponse a votre ticket.");
                 this.ticketResponse = new TicketResponse();
                 this.messages.info("Réponse ajouté.");
                 return;
@@ -203,6 +241,7 @@ public class TicketController extends ConversationController {
                 this.ticketResponse.setCrmUser(this.currentContact);
                 Ticket ticketE = ticketService.findTicket(ticketId);
                 this.ticketService.addResponse(ticketE, this.ticketResponse);
+                notifyBackendUser(ticketE, "Le client " + currentContact.getFullName() + " a ajouté une réponse a son ticket.");
                 this.ticketResponse = new TicketResponse();
                 this.messages.info("Réponse ajouté.");
             } catch (Exception ex) {
@@ -221,6 +260,12 @@ public class TicketController extends ConversationController {
         }
         try {
             this.ticketService.editTicketResponse(this.ticketResponse);
+            Ticket ticketE = ticketService.findTicket(ticketId);
+            if (currentContact != null) {
+                notifyBackendUser(ticketE, "Le client " + currentContact.getFullName() + " a ajouté une réponse a son ticket.");
+            } else if (currentBackendUser != null) {
+                notifyContact(ticketE, "Le commercial " + currentBackendUser.getFullName() + " a ajouté une réponse a votre ticket.");
+            }
             this.messages.info("Réponse à jour");
             return "view";
         } catch (Exception ex) {

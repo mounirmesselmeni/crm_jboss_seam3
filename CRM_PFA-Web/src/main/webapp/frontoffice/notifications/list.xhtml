@@ -39,9 +39,10 @@
                                 <h:outputText value="#{notification.type}" />  
                             </p:column>  
                             <p:column headerText="Consulter" style="width:10%">  
-                                <p:commandLink value="consulter" ajax="false" action="#{notificationController.consult(notification)}" >
+                                <p:commandLink rendered="#{notification.type eq 'OPPORTUNITE'}" value="consulter" ajax="false" action="#{notificationController.consult(notification)}" >
                                     <f:param name="id" value="#{notificationController.id}" />
                                 </p:commandLink>  
+                                <h:link rendered="#{notification.type eq 'TICKET'}" value="consulter" outcome="#{notification.link}" />
                             </p:column>  
                         </p:dataTable>
                         <p:spacer height="20" width="10"/>

@@ -44,7 +44,7 @@ public class LoginObserver {
                 context.getExternalContext().redirect(request.getContextPath() + "/frontoffice/home.jsf");
             }
             //Sending welcome message
-            messages.info("Bienvenue");
+            messages.info("Bienvenue "+event.getUser().getId());
         } catch (IOException ex) {
             log.error(ex.getMessage());
         }

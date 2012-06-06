@@ -8,7 +8,7 @@
 
     <ui:define name="body">
         <h:panelGrid columns="2">
-            <h:graphicImage library="images"  name="/other/Login.png" height="110" width="110"/>
+            <h:graphicImage library="images"  name="/other/Login.png" />
             <h:panelGrid columns="2">
                 <h:inputText id="name" value="#{credentials.username}" styleClass="mws-login-username mws-textinput" />
                 <p:watermark for="name" value="username" />
@@ -22,7 +22,7 @@
     </ui:define>
     <ui:define name="loggedIn">
         <h:panelGrid columns="2" >
-            <h:graphicImage library="images"  name="/other/Login.png" height="110" width="110"/>
+            <h:graphicImage library="images"  name="/other/Login.png"/>
             <a class="mws-report" >
                 <span class="mws-report-icon mws-ic ic-walk"></span>
                 <span class="mws-report-content" style="width: 100px">

@@ -66,6 +66,7 @@ public class ContactService extends GenericService {
         int result = query.executeUpdate();
 
     }
+
     public void deleteNotificationsContact(Contact contact) {
 
         Query query = em.createQuery("DELETE FROM NotificationContact n WHERE n.contact=?1").setParameter(1, contact);
@@ -168,12 +169,23 @@ public class ContactService extends GenericService {
         }
     }
 
+    /**
+     * 
+     * @param code
+     * @return
+     * @throws NoResultException 
+     */
     public ActivationCode getActivationCode(String code) throws NoResultException {
         Query query = em.createQuery("select a from ActivationCode a where a.code =?1");
         query.setParameter(1, code);
         return (ActivationCode) query.getSingleResult();
     }
 
+    /**
+     * 
+     * @param contact
+     * @return 
+     */
     public Fidelity getFidelityByContact(Contact contact) {
         TypedQuery query = em.createQuery("SELECT c.account.fidelity FROM Contact c WHERE c=?1", Fidelity.class).setParameter(1, contact);
         if (!query.getResultList().isEmpty()) {
@@ -182,6 +194,11 @@ public class ContactService extends GenericService {
         return null;
     }
 
+    /**
+     * 
+     * @param contact
+     * @return 
+     */
     public Account getAccountByContact(Contact contact) {
         TypedQuery query = em.createQuery("SELECT c.account FROM Contact c WHERE c=?1", Account.class).setParameter(1, contact);
         if (!query.getResultList().isEmpty()) {
@@ -190,8 +207,22 @@ public class ContactService extends GenericService {
         return null;
     }
 
+    /**
+     * 
+     * @param value
+     * @return 
+     */
     public boolean loginExits(String value) {
         TypedQuery query = em.createQuery("SELECT c FROM Contact c WHERE c.login=?1", Contact.class).setParameter(1, value);
         return query.getResultList().size() > 0;
+    }
+
+    /**
+     * 
+     * @param id
+     * @return 
+     */
+    public Contact findById(Long id) {
+        return this.em.find(Contact.class, id);
     }
 }

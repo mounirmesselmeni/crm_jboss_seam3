@@ -8,6 +8,19 @@
                 template="./../../WEB-INF/template/generalTemplate2.xhtml">
     <ui:define name="cssAndJs">
         <h:outputStylesheet library="css" name="profileTd.css" />
+       <style type="text/css">
+            .ui-growl {   
+                position:fixed;
+                top: 90%;
+                right: 5%;
+                z-index:9999; 
+            }
+            .ui-growl-item-container {
+                background-image: none;
+                background-color: black;
+                color: white;
+            }
+        </style>
     </ui:define>
     <ui:define name="body">
         <f:metadata>
@@ -17,6 +30,7 @@
             <f:event type="preRenderView"
                      listener="#{ticketController.beginConversation()}" />
         </f:metadata>
+        <p:growl autoUpdate="true"/>
         <p:panel id="panel">
             <h:form>
                 <table style="width: 100%;height: 60px">

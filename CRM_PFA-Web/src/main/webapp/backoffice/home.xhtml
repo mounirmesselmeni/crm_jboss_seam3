@@ -5,8 +5,23 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html"
                 template="../WEB-INF/template/generalTemplate2.xhtml">
-
+    <ui:define name="cssAndJs">
+        <style type="text/css">
+            .ui-growl {   
+                position:fixed;
+                top: 90%;
+                right: 5%;
+                z-index:9999; 
+            }
+            .ui-growl-item-container {
+                background-image: none;
+                background-color: black;
+                color: white;
+            }
+        </style>
+    </ui:define>
     <ui:define name="body">
+        <p:growl autoUpdate="true"/>
         <table>
             <tr valign="top">
                 <td>

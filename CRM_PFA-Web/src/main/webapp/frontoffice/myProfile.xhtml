@@ -21,12 +21,41 @@
                     <h:panelGrid width="100%" columns="3">
                         <p:spacer height="20" width="10"/>                        
                         <p:graphicImage value="/CRMData/contacts/#{currentContact.imageURL}"  width="80" height="80" />  
-                        <h:panelGrid columns="2" cellspacing="50" cellpadding="20">
-                            <h:panelGrid columns="2">
-                                <h:outputText value="Nom" styleClass="titleLib" />
-                                <h:outputText id="firstName" value="#{currentContact.firstName}"/>
-                                <h:outputText value="Prenom" styleClass="titleLib" />
-                                <h:outputText id="lastName" value="#{currentContact.lastName}"/>
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="3">
+                                <h:outputText value="Nom : " styleClass="titleLib" />
+                                <p:spacer width="5"/>
+                                <h:outputText value="#{currentContact.firstName}"/>
+                                <h:outputText value="Prenom : " styleClass="titleLib" />
+                                <p:spacer width="5"/>
+                                <h:outputText value="#{currentContact.lastName}"/>
+                                <h:outputText value="Société : " styleClass="titleLib" />
+                                <p:spacer width="5"/>
+                                <h:outputText value="#{currentContact.account.name}"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="3">
+                                <ui:repeat value="#{currentContact.lstAddresses}" var="address">
+                                    <h:outputText value="Adresse #{address.type} : " styleClass="titleLib" />
+                                    <p:spacer width="5"/>
+                                    <h:outputText value="#{address.fullAddress}" />
+                                    <br/>
+                                </ui:repeat>
+                            </h:panelGrid>
+                            <h:panelGrid columns="3">
+                                <ui:repeat value="#{currentContact.lstEmails}" var="email" varStatus="myVarStatus">
+                                    <h:outputText value="Email #{myVarStatus.index+1} : " styleClass="titleLib" />
+                                    <p:spacer width="5"/>
+                                    <h:outputText value="#{email}" />
+                                    <br/>
+                                </ui:repeat>
+                            </h:panelGrid>
+                            <h:panelGrid columns="3">
+                                <ui:repeat value="#{currentContact.lstPhoneNumbers}" var="phone" varStatus="myVarStatus">
+                                    <h:outputText value="Téléphone #{phone.type} : " styleClass="titleLib" />
+                                    <p:spacer width="5"/>
+                                    <h:outputText value="#{phone.number}" />
+                                    <br/>
+                                </ui:repeat>
                             </h:panelGrid>
                         </h:panelGrid>
                         <p:spacer height="20" width="10"/>

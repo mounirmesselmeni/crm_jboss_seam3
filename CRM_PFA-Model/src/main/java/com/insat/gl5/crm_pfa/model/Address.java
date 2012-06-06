@@ -70,4 +70,8 @@ public class Address extends BaseEntity {
     public String toString() {
         return type + " : " + street + " - " + postalCode + " - " + city + ", " + gouvernment;
     }
+
+    public String getFullAddress() {
+        return street + " - " + postalCode + " - " + city + ", " + gouvernment;
+    }
 }

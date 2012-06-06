@@ -6,30 +6,19 @@
                 template="./../../WEB-INF/template/generalTemplate2.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html">
     <ui:define name="cssAndJs">
-        <script type="text/javascript">
-            //<![CDATA[
-            PrimeFaces.locales['fr'] = {
-                closeText: 'Fermer',
-                prevText: 'Précedent',
-                nextText: 'Suivant',
-                currentText: 'Texte courant',
-                monthNames: ['Janvier','F\u00e9vrier','Mars','Avril','Mai','Juin','Juillet','Ao\u00fbt','Septembre','Octobre','Novembre','D\u00e9cembre'],
-                monthNamesShort: ['Jan','Fev','Mar','Avr','Mai','Juin','Juil','Aout','Sep','Oct','Nov','Dec'],
-                dayNames: ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'],
-                dayNamesShort: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],
-                weekHeader: 'Hf',
-                firstDay: 1,
-                isRTL: false,
-                showMonthAfterYear: false,
-                yearSuffix: '',
-                month: 'Mois',
-                week: 'Semaine',
-                day: 'Jour',
-                allDayText : 'Tous les jours'
-            };
-            //]]>
-        </script>
-
+        <style type="text/css">
+            .ui-growl {   
+                position:fixed;
+                top: 90%;
+                right: 5%;
+                z-index:9999; 
+            }
+            .ui-growl-item-container {
+                background-image: none;
+                background-color: black;
+                color: white;
+            }
+        </style>
     </ui:define>
     <ui:define name="body">
             <div class="mws-panel grid_8">

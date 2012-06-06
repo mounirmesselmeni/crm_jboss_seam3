@@ -49,24 +49,25 @@
                     <span class="mws-dropdown-notif">#{notificationController.backendUserNotificationsNumber}</span>
                     <div class="mws-dropdown-box">
                         <div class="mws-dropdown-content">
-                            <ul class="mws-messages">
-                                <ui:repeat value="#{notificationController.backendUserNotifications}"
-                                           var="notif">
-                                    <li class="#{not notif.readed ? 'unread' : 'read'}">
-<!--                                        <a href="{notificationController.consult(notification)}">-->
-                                        <a href="#">
-                                            <span class="message">
-                                                #{notif.content}
-                                            </span>
-                                            <span class="time">
-                                                <h:outputText value="#{notif.createdOn}">
-                                                    <f:converter converterId="dateTimeConverter"/>
-                                                </h:outputText>
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ui:repeat>
-                            </ul>
+                            <h:form>
+                                <ul class="mws-messages">
+                                    <ui:repeat value="#{notificationController.backendUserNotifications}"
+                                               var="notif">
+                                        <li class="#{not notif.readed ? 'unread' : 'read'}">
+                                            <h:commandLink  action="#{notificationController.consult(notif)}" >
+                                                <span class="message">
+                                                    #{notif.content}
+                                                </span>
+                                                <span class="time">
+                                                    <h:outputText value="#{notif.createdOn}">
+                                                        <f:converter converterId="dateTimeConverter"/>
+                                                    </h:outputText>
+                                                </span>
+                                            </h:commandLink>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </h:form>
                             <div class="mws-dropdown-viewall">
                                 <h:form>
                                     <h:commandLink value="Afficher toutes" action="/backoffice/notifications/list" />
@@ -86,7 +87,7 @@
                         </div>
                         <h:form>
                             <ul>
-								<li><h:commandLink value="Profile" action="/backoffice/users/myProfile"/></li>
+                                <li><h:commandLink value="Profile" action="/backoffice/users/myProfile"/></li>
                                 <li><h:commandLink value="Changer mot de passe" action="/backoffice/users/changePassword?faces-redirect=true"/></li>
                                 <li><h:commandLink value="Logout" action="/login" actionListener="#{identity.logout()}"/></li>
                             </ul>

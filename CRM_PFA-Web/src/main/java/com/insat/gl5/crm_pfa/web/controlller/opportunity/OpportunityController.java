@@ -215,7 +215,7 @@ public class OpportunityController extends ConversationController {
 
     private void notifyContacts() throws Exception {
         Notification notification = new Notification();
-        notification.setContent("Vous avez un offre : <" + currentUser.getLogin() + "> vous invite à consulter l'opportunité ' " + opportunity.getName() + " ' !!");
+        notification.setContent(currentUser.getFullName()+ " vous invite à consulter l'opportunité ' " + opportunity.getName() + ".");
         notification.setLink("/frontoffice/notifications/viewOpportunity?id=" + opportunity.getId());
         notification.setType(NotificationType.OPPORTUNITE);
         List<NotificationContact> list = new LinkedList<NotificationContact>();

@@ -5,10 +5,14 @@
 package com.insat.gl5.crm_pfa.web.controller.schedule;
 
 import com.insat.gl5.crm_pfa.model.BackendUser;
+import com.insat.gl5.crm_pfa.model.Contact;
 import com.insat.gl5.crm_pfa.model.Task;
 import com.insat.gl5.crm_pfa.service.TaskService;
+import com.insat.gl5.crm_pfa.service.qualifier.CurrentContact;
 import com.insat.gl5.crm_pfa.service.qualifier.CurrentUser;
+import com.insat.gl5.crm_pfa.web.qualifier.Admin;
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
@@ -28,8 +32,6 @@ import org.primefaces.model.ScheduleModel;
 @ViewScoped
 public class ScheduleController implements Serializable {
 
-    @Inject
-    private Task task;
     private ScheduleModel eventModel;
     @Inject
     private TaskService taskService;
@@ -39,22 +41,24 @@ public class ScheduleController implements Serializable {
     @Inject
     @CurrentUser
     private BackendUser currentBackendUser;
+    @Inject
+    @CurrentContact
+    private Contact currentContact;
 
     @PostConstruct
     public void init() {
         event = new TaskViewModel();
         eventModel = new TaskScheduleModel();
-        for (Task task : taskService.getAllTasks()) {
+        List<Task> taskList;
+        if (currentBackendUser != null) {
+            taskList = taskService.getContactTasks(currentBackendUser);
+        } else {
+            taskList = taskService.getContactTasks(currentContact);
+        }
+        for (Task task : taskList) {
             TaskViewModel taskViewModel = new TaskViewModel(task);
             eventModel.addEvent(taskViewModel);
         }
-    }
-
-    /**
-     * Init Task
-     */
-    public void resetTask() {
-        task = new Task();
     }
 
     /**
@@ -84,6 +88,10 @@ public class ScheduleController implements Serializable {
         }
     }
 
+    /**
+     * Add a task, create if newer edit else
+     */
+    @Admin
     public void addTask() {
         if (event.getId() == null) {
             createTask();
@@ -106,9 +114,9 @@ public class ScheduleController implements Serializable {
      * @param selectEvent 
      */
     public void onDateSelect(DateSelectEvent selectEvent) {
-        task = new Task();
-        task.setStartDate(event.getStartDate());
-        task.setDueDate(event.getEndDate());
+        Task task = new Task();
+        task.setStartDate(selectEvent.getDate());
+        task.setDueDate(selectEvent.getDate());
         event = new TaskViewModel(task);
     }
 
@@ -128,20 +136,6 @@ public class ScheduleController implements Serializable {
     public void onEventResize(ScheduleEntryResizeEvent entryResizeEvent) {
         this.event = (TaskViewModel) entryResizeEvent.getScheduleEvent();
         addTask();
-    }
-
-    /**
-     * @return the task
-     */
-    public Task getTask() {
-        return task;
-    }
-
-    /**
-     * @param task the task to set
-     */
-    public void setTask(Task task) {
-        this.task = task;
     }
 
     /**

@@ -16,16 +16,16 @@ import javax.inject.Inject;
  * @author Mu7ammed 3li -- mohamed.ali.affes@gmail.com --
  */
 @FacesConverter(forClass = Account.class)
+@RequestScoped
 public class AccountConverter implements Serializable, Converter {
-    private static final long serialVersionUID = 1L;
 
-    
+    private static final long serialVersionUID = 1L;
     @Inject
     private List<Account> lstAccounts;
 
     @Override
     public Object getAsObject(final FacesContext arg0, final UIComponent arg1, final String id) {
-            if (id == null) {
+        if (id == null) {
             return null;
         }
         for (Account account : lstAccounts) {

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="./../../WEB-INF/template/clientTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="cssAndJs">
+       <style type="text/css">
+            .ui-growl {   
+                position:fixed;
+                top: 90%;
+                right: 5%;
+                z-index:9999; 
+            }
+            .ui-growl-item-container {
+                background-image: none;
+                background-color: black;
+                color: white;
+            }
+        </style>
+
+    </ui:define>
+    <ui:define name="body">
+        <div class="mws-panel grid_8">
+            <div class="mws-panel-header">
+                <span class="mws-i-24 i-day-calendar">
+                    Agenda
+                </span>
+            </div>
+            <div class="mws-panel-body">
+                <p:spacer height="20"/>
+                <h:form> 
+                    <p:schedule  value="#{scheduleController.eventModel}" 
+                                 resizable="false" draggable="false"
+                                 widgetVar="myschedule">
+                        <p:ajax event="eventSelect" listener="#{scheduleController.onEventSelect}" update=":eventDetails" oncomplete="eventDialog.show()"/>
+                    </p:schedule>
+                </h:form>
+
+            </div>
+        </div>
+        <p:growl autoUpdate="true"/>
+        <p:dialog id="eventDetails" modal="true" widgetVar="eventDialog" header="Détails tâche" showEffect="clip" hideEffect="clip">
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="type" value="Type:" />
+                    <h:outputText id="type" value="#{scheduleController.event.task.taskType}"/>
+                    <h:outputLabel for="title" value="Sujet : " />
+                    <h:outputText id="title" value="#{scheduleController.event.task.subject}"/>
+                    <h:outputLabel for="priority" value="Priorité : "/>
+                    <h:outputText id="priority" value="#{scheduleController.event.task.priority}"/>
+                    <h:outputLabel for="from" value="Date début : " />
+                    <h:outputText id="from" value="#{scheduleController.event.task.startDate}">
+                        <f:converter converterId="dateTimeConverter"/>
+                    </h:outputText>
+                    <h:outputLabel for="to" value="Date de fin : " />
+                    <h:outputText id="to" value="#{scheduleController.event.task.dueDate}">
+                        <f:converter converterId="dateTimeConverter"/>
+                    </h:outputText>
+                    <h:outputLabel for="description" value="Description : "/>
+                    <h:outputText id="description" value="#{scheduleController.event.task.description}"/>
+                </h:panelGrid>
+                <h:link value="Consulter" outcome="/frontoffice/agenda/viewMeeting">
+                    <f:param name="id" value="#{scheduleController.event.task.id}"/>
+                </h:link>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

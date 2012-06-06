@@ -34,6 +34,7 @@ public class Task extends BaseEntity {
     private Date startDate;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dueDate;
+    private boolean accepted;
 
     /**
      * @return the taskType
@@ -145,5 +146,19 @@ public class Task extends BaseEntity {
      */
     public void setAssignedTo(Contact assignedTo) {
         this.assignedTo = assignedTo;
+    }
+
+    /**
+     * @return the accepted
+     */
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    /**
+     * @param accepted the accepted to set
+     */
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 }
