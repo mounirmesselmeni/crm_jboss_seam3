@@ -98,16 +98,33 @@ public class TaskService extends GenericService {
 
     public Task getMeetingTask(Long taskId, Contact contact) {
         TypedQuery query = em.createQuery("SELECT a FROM Task a "
-                + "WHERE a.assignedTo =?1 "
-                + "AND a.taskType =?2", Task.class).setParameter(1, contact).setParameter(2, TaskType.REUNION);
+                + "WHERE a.id =?1 "
+                + "AND a.taskType =?2 AND a.assignedTo =?3", Task.class);
+        query.setParameter(1, taskId);
+        query.setParameter(2, TaskType.REUNION);
+        query.setParameter(3, contact);
         if (query.getResultList().isEmpty()) {
             return null;
         } else {
-            return (Task)query.getResultList().get(0);
+            return (Task) query.getResultList().get(0);
         }
     }
 
     private String getDisplayText(Task Task) {
         return Task.getTaskType().getDisplayName() + " : " + Task.getSubject();
+    }
+
+    public Task getMeetingTask(Long taskId, BackendUser currentUser) {
+        TypedQuery query = em.createQuery("SELECT a FROM Task a "
+                + "WHERE a.id =?1 "
+                + "AND a.taskType =?2 AND a.creator =?3", Task.class);
+        query.setParameter(1, taskId);
+        query.setParameter(2, TaskType.REUNION);
+        query.setParameter(3, currentUser);
+        if (query.getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (Task) query.getResultList().get(0);
+        }
     }
 }

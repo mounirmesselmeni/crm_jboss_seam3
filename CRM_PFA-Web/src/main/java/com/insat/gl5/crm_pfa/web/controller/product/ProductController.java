@@ -114,7 +114,7 @@ public class ProductController extends ConversationController {
             this.productService.deleteProduct(getSelectedProduct());
             messages.info("Produit supprimé.");
         } catch (Exception ex) {
-            messages.error("Erreur de suppression du produit.");
+            messages.error("Opération non permise : Le produit {0} est lié à une opportunité", getProduct().getName());
         }
     }
 

@@ -32,24 +32,27 @@
 
                         <p:dataTable value="#{lstProducts}" var="product" paginator="true"
                                      paginatorPosition="bottom">
-                            <p:column headerText="Image">
+                            <p:column headerText="Image" style="text-align: center;width: 10%">
                                 <p:graphicImage alt="#{product.name}" value="/CRMData/products/#{product.image}"
                                                 width="50" height="50"/>
                             </p:column>
-                            <p:column headerText="Nom">
-                                <h:outputText value="#{product.name}"/>
-                            </p:column>
-                            <p:column headerText="Référence">
+                            <p:column headerText="Référence" style="width: 15%">
                                 <h:outputText value="#{product.reference}"/>
                             </p:column>
-                            <p:column headerText="Prix">
+                            <p:column headerText="Nom" style="width: 15%">
+                                <h:outputText value="#{product.name}"/>
+                            </p:column>
+                            <p:column headerText="Prix" style="width: 10%">
                                 <h:outputText value="#{product.price}"/>
                             </p:column>
-                            <p:column headerText="Quantité">
+                            <p:column headerText="Quantité en Stock" style="width: 10%">
                                 <h:outputText value="#{product.quantity}"/>
                             </p:column>
-                            <p:column headerText="Description">
+                            <p:column headerText="Description" style="width: 25%">
                                 <h:outputText value="#{product.description}"/>
+                            </p:column>
+                            <p:column headerText="Catégorie" style="width: 10%">
+                                <h:outputText value="#{product.category.name}"/>
                             </p:column>
                             <p:column headerText="Actions" style="text-align:center;width: 5%">  
                                 <p:commandLink  title="Modifier" action="edit?faces-redirect=true" actionListener="#{productController.beginConversation()}">

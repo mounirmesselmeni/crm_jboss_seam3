@@ -64,7 +64,7 @@ public class ChartBean implements Serializable {
     private void createPieModelAchat() {
         pieModelAchat = new PieChartModel();
 
-        pieModelAchat.set("Demande propal", 43);
+        pieModelAchat.set("Demandes", 43);
         pieModelAchat.set("Attente de validation", 5);
         pieModelAchat.set("En commande", 12);
     }

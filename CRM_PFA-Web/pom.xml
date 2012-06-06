@@ -209,29 +209,12 @@
                         <artifactId>jboss-as-maven-plugin</artifactId>
                         <version>7.1.0.Final</version>
                         <executions>
-                            <execution>
-                                <id>add-datasource</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>add-resource</goal>
-                                </goals>
-                                <configuration>
-                                    <address>subsystem=datasources,data-source=java:jboss/crmDS</address>
-                                    <resource>
-                                        <enable-resource>true</enable-resource>
-                                        <properties>
-                                            <jndi-name>java:jboss/crmDS</jndi-name>
-                                            <enabled>true</enabled>
-                                            <connection-url>jdbc:mysql://localhost:3306/crm_pfa</connection-url>
-                                            <driver-class>com.mysql.jdbc.Driver</driver-class>
-                                            <driver-name>mysql-connector-java-5.1.13-bin.jar</driver-name>
-                                            <security.user-name>root</security.user-name>
-                                            <security.password></security.password>
-                                            <pool-name>crm_pfa_pool</pool-name>
-                                        </properties>
-                                    </resource>
-                                </configuration>
-                            </execution>
+                                <execution>
+                                    <phase>install</phase>
+                                    <goals>
+                                        <goal>deploy</goal>
+                                    </goals>
+                                </execution>
                         </executions>
                     </plugin>
                 </plugins>

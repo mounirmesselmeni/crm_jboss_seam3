@@ -33,12 +33,12 @@
                         <p:dataTable id="datatable"  var="account" value="#{lstAccounts}"  paginator="true" rows="10"  
                                      paginatorPosition="bottom">  
 
-                            <p:column headerText="Logo" style="width:10%">
+                            <p:column headerText="Logo" style="width:5%">
                                 <center>
                                     <p:graphicImage value="/CRMData/accounts/#{account.logoURL}"  width="40" height="50" />  
                                 </center>
                             </p:column> 
-                            <p:column headerText="Société" style="width:5%">  
+                            <p:column headerText="Société" style="width:10%">  
                                 <h:outputText value="#{account.name}" />  
                             </p:column>  
                             <p:column headerText="Type" style="width:5%">  

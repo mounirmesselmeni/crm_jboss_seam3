@@ -5,7 +5,14 @@ package com.insat.gl5.crm_pfa.enumeration;
  */
 public enum Gouvernment {
 	TUNIS("Tunis"),
-	SFAX("Sfax");
+        ARIANA("Ariana"),
+        MANNOUBA("Mannouba"),
+        SOUSSE("Sousse"),
+        MONASTIR("Monastir"),
+        DJERBA("Djerba"),
+	SFAX("Sfax"),
+        GABES("Gabes"),
+        NABEUL("Nabeul");
 
 	private String displayName;
 

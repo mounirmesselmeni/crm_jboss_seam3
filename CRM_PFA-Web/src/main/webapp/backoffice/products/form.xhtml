@@ -21,9 +21,9 @@
                                          required="true" requiredMessage="Valeur requise"/>
                             <p:message for="productReference"/>
                             <h:outputText value="Catégorie :"/>
-                            <p:selectOneMenu id="productCategory" value="#{productController.product.category}" 
-                                             required="true" requiredMessage="Valeur requise">
+                            <p:selectOneMenu id="productCategory" value="#{productController.product.category}" >
                                 <f:selectItems value="#{lstCategories}" var="category" itemLabel="#{category.name}" itemValue="#{category}"/>
+                                <p:ajax event="change" update="@this"/>
                             </p:selectOneMenu>
                             <p:message for="productCategory"/>
                             <h:outputText value="Description :"/>

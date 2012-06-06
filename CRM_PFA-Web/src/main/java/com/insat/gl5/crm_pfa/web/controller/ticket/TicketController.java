@@ -7,18 +7,19 @@ package com.insat.gl5.crm_pfa.web.controller.ticket;
 import com.insat.gl5.crm_pfa.enumeration.DirectionEnum;
 import com.insat.gl5.crm_pfa.enumeration.NotificationType;
 import com.insat.gl5.crm_pfa.model.*;
+import com.insat.gl5.crm_pfa.service.AccountService;
 import com.insat.gl5.crm_pfa.service.ContactService;
 import com.insat.gl5.crm_pfa.service.NotificationService;
 import com.insat.gl5.crm_pfa.service.TicketService;
 import com.insat.gl5.crm_pfa.service.qualifier.CurrentContact;
 import com.insat.gl5.crm_pfa.service.qualifier.CurrentUser;
 import com.insat.gl5.crm_pfa.web.controller.ConversationController;
+import com.insat.gl5.crm_pfa.web.controller.NotificationController;
 import java.util.LinkedList;
 import java.util.List;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.hibernate.LazyInitializationException;
 import org.jboss.seam.international.status.Messages;
 import org.jboss.seam.security.Identity;
 
@@ -49,14 +50,23 @@ public class TicketController extends ConversationController {
     @Inject
     private ContactService contactService;
     @Inject
+    private AccountService accountService;
+    @Inject
     private Identity identity;
     private Long ticketId;
-
+    @Inject
+    private NotificationController notificationController;
+    @Inject
+    private List<Account> lstAccounts;
     /**
      * Load Ticket by Id
      */
     public void loadTicket() {
-        this.ticket = this.ticketService.findTicket(this.ticketId);
+        if (ticketId != null) {
+            this.ticket = this.ticketService.findTicket(this.ticketId);
+        } else {
+            this.ticket = this.ticketService.findTicket(notificationController.getId());
+        }
         if (!isAllowedUser()) {
             //if user not allowed nothing gonna to be viewed by resting the ticket
             ticket = new Ticket();
@@ -221,7 +231,7 @@ public class TicketController extends ConversationController {
             }
             try {
                 this.ticketResponse.setCrmUser(currentBackendUser);
-                Ticket ticketE = ticketService.findTicket(ticketId);
+                Ticket ticketE = ticketService.findTicket(ticket.getId());
                 this.ticketService.addResponse(ticketE, this.ticketResponse);
                 notifyContact(ticketE, "Le commercial " + currentBackendUser.getFullName() + " a ajouté une réponse a votre ticket.");
                 this.ticketResponse = new TicketResponse();
@@ -239,7 +249,7 @@ public class TicketController extends ConversationController {
             }
             try {
                 this.ticketResponse.setCrmUser(this.currentContact);
-                Ticket ticketE = ticketService.findTicket(ticketId);
+                Ticket ticketE = ticketService.findTicket(ticket.getId());
                 this.ticketService.addResponse(ticketE, this.ticketResponse);
                 notifyBackendUser(ticketE, "Le client " + currentContact.getFullName() + " a ajouté une réponse a son ticket.");
                 this.ticketResponse = new TicketResponse();
@@ -260,7 +270,7 @@ public class TicketController extends ConversationController {
         }
         try {
             this.ticketService.editTicketResponse(this.ticketResponse);
-            Ticket ticketE = ticketService.findTicket(ticketId);
+            Ticket ticketE = ticketService.findTicket(ticket.getId());
             if (currentContact != null) {
                 notifyBackendUser(ticketE, "Le client " + currentContact.getFullName() + " a ajouté une réponse a son ticket.");
             } else if (currentBackendUser != null) {
@@ -292,7 +302,15 @@ public class TicketController extends ConversationController {
      */
     public List<Ticket> getContactTickets() {
         if (this.currentContact == null) {
-            return null;
+//            return null;
+            List<Ticket> tickets = new LinkedList<Ticket>();
+            for(Account a : lstAccounts){
+                List<Contact> contacts = contactService.getContactsByAccount(accountService.findById(a.getId()));
+                for(Contact c : contacts){
+                    tickets.addAll(ticketService.getContactTicketList(c));
+                }
+            }
+            return tickets;
         }
         return ticketService.getContactTicketList(currentContact);
     }

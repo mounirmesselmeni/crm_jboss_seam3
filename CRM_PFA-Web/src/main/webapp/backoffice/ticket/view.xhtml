@@ -8,7 +8,7 @@
                 template="./../../WEB-INF/template/generalTemplate2.xhtml">
     <ui:define name="cssAndJs">
         <h:outputStylesheet library="css" name="profileTd.css" />
-       <style type="text/css">
+        <style type="text/css">
             .ui-growl {   
                 position:fixed;
                 top: 90%;
@@ -42,10 +42,11 @@
                                     <h:graphicImage library="images" name="vote-accepted-off.png" rendered="#{not ticketController.ticket.resolved}"/>
                                     <h:graphicImage library="images" name="vote-accepted-on.png" rendered="#{ticketController.ticket.resolved}"/>
                                 </p:commandLink>
+                               
                                 <div align="center">
                                     <h1>
-                                    <h:outputText value="#{ticketController.ticket.type}"/>
-                                    <h:outputText value=" : #{ticketController.ticket.subject}"/>
+                                        <h:outputText value="#{ticketController.ticket.type}"/>
+                                        <h:outputText value=" : #{ticketController.ticket.subject}"/>
                                     </h1>
                                 </div>
                             </td>
@@ -54,6 +55,11 @@
                                 <p:commandLink title="Modifier ticket" action="create" ajax="false"
                                                rendered="#{ticketController.canEditTicket()}">
                                     <h:graphicImage library="images" name="Icons/48/13.png"/>
+                                </p:commandLink>
+                                <p:spacer width="10"/>
+                                <p:commandLink   title="Retour" ajax="false" action="list"
+                                                 immediate="true" >
+                                    <h:graphicImage library="images" name="Icons/48/72.png" />   
                                 </p:commandLink>
                             </td>
                         </tr>
@@ -102,7 +108,7 @@
                                         <h:outputText value="#{ticketReponse.content}" escape="false"/>
                                     </td>
                                     <td style="width: 30%">
-                                        
+
                                     </td>
                                     <td style="width: 10%" align="right">
                                         <p:commandLink title="Modifier votre réponse"
@@ -129,7 +135,7 @@
                                         <br/>
                                     </td>
                                     <td>
-                                        
+
                                     </td>
                                 </tr>
                             </table>
@@ -139,6 +145,15 @@
                 <br/>
                 <p:commandButton value="Répondre" update=":respDlg" actionListener="#{ticketController.initTicketResponse()}" 
                                  oncomplete="responseDlg.show();" />
+                <br/>
+                <br/>
+                <div align="right">
+                    <p:commandLink   title="Retour" ajax="false" action="list"
+                                     immediate="true" >
+                        <h:graphicImage library="images" name="Icons/48/72.png" />   
+                    </p:commandLink>
+                </div>
+
             </h:form>
         </p:panel>
         <p:dialog id="respDlg" widgetVar="responseDlg" modal="true" 

@@ -19,65 +19,100 @@
                 color: white;
             }
         </style>
+
+        <script type="text/javascript" src="js/demo.dashboard.js"></script>
+
     </ui:define>
     <ui:define name="body">
         <p:growl autoUpdate="true"/>
-        <table>
-            <tr valign="top">
-                <td>
-                    <p:panel header="Recherche">
-                        <h:form>
-                            <h:panelGrid columns="2">
-                                <h:panelGroup>
-                                    [image]<h:outputLabel value="Societé"/>
-                                </h:panelGroup>
-                                <p:spacer/>
-                                <h:inputText/>
-                                <p:commandButton value="Go"/>
-                                <h:panelGroup>
-                                    [image]<h:outputLabel value="Contact"/>
-                                </h:panelGroup>
-                                <p:spacer/>
-                                <h:inputText/>
-                                <p:commandButton value="Go"/>
-                                <h:panelGroup>
-                                    [image]<h:outputLabel value="Prospect"/>
-                                </h:panelGroup>
-                                <p:spacer/>
-                                <h:inputText/>
-                                <p:commandButton value="Go"/>
-                            </h:panelGrid>
-                        </h:form>
+        <div class="mws-report-container clearfix">
+            <h:form>
+                <p:commandLink action="#"/>
+            </h:form>
+            <a class="mws-report" href="#">
+                <span class="mws-report-icon mws-ic ic-building"></span>
+                <span class="mws-report-content">
+                    <span class="mws-report-title">Vos clients</span>
+                    <span class="mws-report-value">#{lstAccounts.size()}</span>
+                </span>
+            </a>
 
-                    </p:panel>
-                </td>
-                <td rowspan="2" valign="top" width="100%">
+            <a class="mws-report" href="#">
+                <span class="mws-report-icon mws-ic ic-group"></span>
+                <span class="mws-report-content">
+                    <span class="mws-report-title">Vos Contacts</span>
+                    <span class="mws-report-value">#{lstContacts.size()}</span>
+                </span>
+            </a>
+            <a class="mws-report" href="#">
+                <span class="mws-report-icon mws-ic ic-award-star-add"></span>
+                <span class="mws-report-content">
+                    <span class="mws-report-title">Vos Opportunités</span>
+                    <span class="mws-report-value">18</span>
+                </span>
+            </a>
+            <a class="mws-report" href="#">
+                <span class="mws-report-icon mws-ic ic-money-bag"></span>
+                <span class="mws-report-content">
+                    <span class="mws-report-title">Pourcentage CA</span>
+                    <span class="mws-report-value down">14%</span>
+                </span>
+            </a>
 
-                    <p:panel header="Les 10 derniers clients modifiés">
 
-                        <center>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                        </td>
+            <a class="mws-report" href="#">
+                <span class="mws-report-icon mws-ic ic-tag-blue-add"></span>
+                <span class="mws-report-content">
+                    <span class="mws-report-title">Résolution Tickets</span>
+                    <span class="mws-report-value up">22%</span>
+                </span>
+            </a>
 
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </center>
-                    </p:panel>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <p:panel header="Recherche">
 
-                        <p:pieChart value="#{chartBean.pieModelAchat}" legendPosition="e" title="Achats" style="width:300px;height:200px" />
-                    </p:panel>
-                </td>
-            </tr>
-        </table>
+        </div>
+
+        <div class="mws-panel grid_5">
+            <div class="mws-panel-header">
+                <span class="mws-i-24 i-graph">Graphiques</span>
+            </div>
+            <div class="mws-panel-body">
+                <div class="mws-panel-content">
+                    <div id="mws-dashboard-chart" style="width:100%; height:215px;">
+                        <p:pieChart value="#{chartBean.pieModelAchat}" legendPosition="e" title="Ventes" style="width:300px;height:200px" />  
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mws-panel grid_3">
+            <div class="mws-panel-header">
+                <span class="mws-i-24 i-books-2">Résumé CRM-PFA</span>
+            </div>
+            <div class="mws-panel-body">
+                <ul class="mws-summary">
+
+                    <li>
+                        <span>1238</span> Total des visites
+                    </li>
+                    <li>
+                        <span>512</span> Votes
+                    </li>
+                    <li>
+                        <span>11</span> Nouveaux clients
+                    </li>
+                    <li>
+                        <span>64</span> Nouveaux contacts
+                    </li>
+                    <li>
+                        <span>716</span> Produits
+                    </li>
+                    <li>
+                        <span>312</span> Items achetés
+                    </li>
+                </ul>
+            </div>
+        </div>
+
     </ui:define>
 
 </ui:composition>

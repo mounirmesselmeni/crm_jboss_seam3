@@ -11,7 +11,7 @@
         <h:outputStylesheet library="css" name="default.css" />
         <h:outputStylesheet library="css" name="cssLayout.css" />
         <ui:insert name="cssAndJs"></ui:insert>
-        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <title><ui:insert name="title">CRM-PFA</ui:insert></title>
         <!-- Required Stylesheets -->
         <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/reset.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/text.css" media="screen" />
@@ -106,7 +106,7 @@
                     <h:form>
                         <ul>
                             <li>
-                                <h:commandLink action="/frontoffice/index" value="Tableau de bord"  class="mws-i-24 i-home"/>
+                                <h:commandLink action="/frontoffice/home" value="Tableau de bord"  class="mws-i-24 i-home"/>
                             </li>
                             <li>
                                 <h:commandLink action="/frontoffice/ticket/list" value="Mes tickets" class="mws-i-24 i-text-documents"/>

@@ -22,45 +22,50 @@ import javax.inject.Named;
  */
 @Named
 @SessionScoped
-public class NotificationController  implements Serializable {
-        @Inject
-        private NotificationService notificationService;
-        @Inject
-        @CurrentContact
-        private Contact currentContact;
-        @Inject
-        @CurrentUser
-        private BackendUser currentUser;
-        
-        private Long id;
+public class NotificationController implements Serializable {
+
+    @Inject
+    private NotificationService notificationService;
+    @Inject
+    @CurrentContact
+    private Contact currentContact;
+    @Inject
+    @CurrentUser
+    private BackendUser currentUser;
+    private Long id;
+
     /**
      * @return the notificationsNumber
      */
     public String consult(Notification notification) {
         String link = notification.getLink();
-        setId((Long) Long.parseLong(link.substring(link.indexOf("=")+1, link.length())));
+        setId((Long) Long.parseLong(link.substring(link.indexOf("=") + 1, link.length())));
         link = link.substring(0, link.indexOf("?"));
         notification.setReaded(true);
         return link;
     }
+
     /**
      * @return the notificationsNumber
      */
     public int getContactNotificationsNumber() {
         return notificationService.getUnreadedNotificationsByContact(currentContact).size();
     }
+
     /**
      * @return the notifications
      */
     public List<Notification> getContactNotifications() {
         return notificationService.getAllNotificationsByContact(currentContact);
     }
+
     /**
      * @return the notificationsNumber
      */
     public int getBackendUserNotificationsNumber() {
         return notificationService.getUnreadedNotificationsByBackendUser(currentUser).size();
     }
+
     /**
      * @return the notifications
      */
@@ -81,6 +86,4 @@ public class NotificationController  implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-    
 }

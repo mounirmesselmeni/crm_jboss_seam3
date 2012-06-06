@@ -21,63 +21,58 @@
         </style>
     </ui:define>
     <ui:define name="body">
-        <p:growl autoUpdate="true"/>
-        <table>
-            <tr valign="top">
-                <td>
-                    <p:panel header="Recherche">
-                        <h:form>
-                            <h:panelGrid columns="2">
-                                <h:panelGroup>
-                                    [image]<h:outputLabel value="Societé"/>
-                                </h:panelGroup>
-                                <p:spacer/>
-                                <h:inputText/>
-                                <p:commandButton value="Go"/>
-                                <h:panelGroup>
-                                    [image]<h:outputLabel value="Contact"/>
-                                </h:panelGroup>
-                                <p:spacer/>
-                                <h:inputText/>
-                                <p:commandButton value="Go"/>
-                                <h:panelGroup>
-                                    [image]<h:outputLabel value="Prospect"/>
-                                </h:panelGroup>
-                                <p:spacer/>
-                                <h:inputText/>
-                                <p:commandButton value="Go"/>
-                            </h:panelGrid>
-                        </h:form>
+        <div class="mws-panel grid_5">
+                	<div class="mws-panel-header">
+                    	<span>Default Panel</span>
+                    </div>
+                    <div class="mws-panel-body">
+                    	<div class="mws-panel-content">
+                            <h:form>
+                            <p:commandLink action="#"/>
+                            </h:form>
+                            <h1>Bienvenue</h1><h4><i>#{currentContact.salutation} #{currentContact.firstName} #{currentContact.lastName}</i></h4>
+                            <p>    <p:spacer width="20"/> Aujourd’hui plus que jamais, dans un contexte économique complexe, les entreprises qui réussissent se concentrent avant tout sur leurs ressources à plus forte valeur ajoutée : leurs clients. Elles cherchent à fidéliser leurs clients les plus importants et optimisent chacune de leurs interactions (vente, service ou marketing).</p>
+                            <p>
+<p:spacer width="20"/> 
+Contrairement aux autres logiciels de gestion de la relation client, CRM-PFA, une application de GLINSAT Business Suite, ne se contente pas de vous aider à traiter vos demandes les plus urgentes en réduisant les coûts et en optimisant la prise de décision. CRM-PFA vous permet également d'acquérir de nouvelles capacités qui contribueront à maintenir votre compétitivité sur le long terme.</p>
+                            <p>
+<p:spacer width="20"/> 
+GLINSAT a permis aux sociétés les mieux gérées dans plus de 26 secteurs d'atteindre l'excellence dans tous les aspects de la gestion de la relation client.    
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-                    </p:panel>
-                </td>
-                <td rowspan="2" valign="top" width="100%">
 
-                    <p:panel header="Les 10 derniers clients modifiés">
-
-                        <center>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                        </td>
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </center>
-                    </p:panel>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <p:panel header="Recherche">
-
-                        <p:pieChart value="#{chartBean.pieModelAchat}" legendPosition="e" title="Achats" style="width:300px;height:200px" />
-                    </p:panel>
-                </td>
-            </tr>
-        </table>
+        <div class="mws-panel grid_3">
+            <div class="mws-panel-header">
+                <span class="mws-i-24 i-books-2">Résumé CRM-PFA</span>
+            </div>
+            <div class="mws-panel-body">
+                <ul class="mws-summary">
+                    <li>
+                        <span>1238</span> Total des visites
+                    </li>
+                    
+                    <li>
+                        <span>66</span> Total clients
+                    </li>
+                    <li>
+                        <span>128</span> Total contacts
+                    </li>
+                    <li>
+                        <span>716</span> Total Produits
+                    </li>
+                    <li>
+                        <span>112</span> Items achetés
+                    </li>
+                    <li>
+                        <span>512</span> Vos tickets
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
     </ui:define>
 
 </ui:composition>

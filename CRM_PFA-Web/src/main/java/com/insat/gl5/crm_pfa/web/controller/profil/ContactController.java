@@ -43,10 +43,11 @@ import org.picketlink.idm.impl.api.model.SimpleRole;
 /**
  *
  * @author
- * Mounir
- * Messelmeni,
- * contact:
- * messelmeni.mounir@gmail.com
+ * Mu7ammed
+ * 3li
+ * --
+ * mohamed.ali.affes@gmail.com
+ * --
  */
 @Named
 @ConversationScoped

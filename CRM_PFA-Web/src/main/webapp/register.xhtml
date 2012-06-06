@@ -13,7 +13,7 @@
                      listener="#{registerController.beginConversation()}" />
         </f:metadata>
         <p:outputPanel id="panel">
-
+            <p:growl autoUpdate="true"/>
             <h:form id="activationForm" styleClass="mws-form" rendered="#{not registerController.activationOk}">
                 <div class="mws-form-item large " >
                     <table>
@@ -38,6 +38,7 @@
                         </tr>
                         <tr>
                             <td>
+                                <p:commandButton value="Valider" action="#{registerController.activate()}" ajax="false"/>
                                 <p:commandButton value="Valider" action="#{registerController.activate()}" update=":panel"/>
                             </td>
                         </tr>

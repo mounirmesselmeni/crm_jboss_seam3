@@ -37,7 +37,7 @@ CREATE TABLE `Account` (
   KEY `FK1D0C220DB25605B` (`fidelity_id`),
   CONSTRAINT `FK1D0C220D123FCEEF` FOREIGN KEY (`crmUser_id`) REFERENCES `BackendUser` (`id`),
   CONSTRAINT `FK1D0C220DB25605B` FOREIGN KEY (`fidelity_id`) REFERENCES `Fidelity` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `Account` (
 
 LOCK TABLES `Account` WRITE;
 /*!40000 ALTER TABLE `Account` DISABLE KEYS */;
-INSERT INTO `Account` VALUES (1,'2012-06-01 16:48:05','2012-06-01 16:48:05','Samsung.png','Samsung','CLIENT','',NULL,NULL);
+INSERT INTO `Account` VALUES (1,'2012-06-01 16:48:05','2012-06-06 07:03:26','El Mouradi.png','El Mouradi','CLIENT','www.el_moradi.tn',2,NULL),(2,'2012-06-06 07:08:07','2012-06-06 07:08:07','Topnet.png','Topnet','CLIENT','www.topnet.tn',2,1),(3,'2012-06-06 07:09:36','2012-06-06 07:10:23','Geant.png','Geant','CLIENT','www.geant.tn',2,2),(4,'2012-06-06 07:11:43','2012-06-06 10:35:00','Palm Garden.png','Palm Garden','CLIENT','www.palm_garden.tn',2,3);
 /*!40000 ALTER TABLE `Account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,7 +74,7 @@ CREATE TABLE `Account_Address` (
 
 LOCK TABLES `Account_Address` WRITE;
 /*!40000 ALTER TABLE `Account_Address` DISABLE KEYS */;
-INSERT INTO `Account_Address` VALUES (1,1);
+INSERT INTO `Account_Address` VALUES (1,1),(2,4),(3,5),(4,6);
 /*!40000 ALTER TABLE `Account_Address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,7 +102,7 @@ CREATE TABLE `Account_EmailAdress` (
 
 LOCK TABLES `Account_EmailAdress` WRITE;
 /*!40000 ALTER TABLE `Account_EmailAdress` DISABLE KEYS */;
-INSERT INTO `Account_EmailAdress` VALUES (1,1);
+INSERT INTO `Account_EmailAdress` VALUES (1,1),(2,4),(2,5),(2,6),(3,7),(3,8),(4,9);
 /*!40000 ALTER TABLE `Account_EmailAdress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,7 +130,7 @@ CREATE TABLE `Account_PhoneNumber` (
 
 LOCK TABLES `Account_PhoneNumber` WRITE;
 /*!40000 ALTER TABLE `Account_PhoneNumber` DISABLE KEYS */;
-INSERT INTO `Account_PhoneNumber` VALUES (1,1);
+INSERT INTO `Account_PhoneNumber` VALUES (1,1),(2,3),(2,4),(3,5),(4,6);
 /*!40000 ALTER TABLE `Account_PhoneNumber` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,7 +150,7 @@ CREATE TABLE `ActivationCode` (
   PRIMARY KEY (`id`),
   KEY `FK741EF443F51CF139` (`contact_id`),
   CONSTRAINT `FK741EF443F51CF139` FOREIGN KEY (`contact_id`) REFERENCES `Contact` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +179,7 @@ CREATE TABLE `Address` (
   `street` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,7 +188,7 @@ CREATE TABLE `Address` (
 
 LOCK TABLES `Address` WRITE;
 /*!40000 ALTER TABLE `Address` DISABLE KEYS */;
-INSERT INTO `Address` VALUES (1,'2012-06-01 16:48:05','2012-06-01 16:48:05','fdfgsdggg','TUNIS','8888','rettseerste','TRAVAIL'),(2,'2012-06-01 16:48:54','2012-06-01 16:48:54','ariana','TUNIS','2080','etrt','TRAVAIL');
+INSERT INTO `Address` VALUES (1,'2012-06-01 16:48:05','2012-06-06 07:03:26','Tunis','TUNIS','1004','Place D\'Afrique','TRAVAIL'),(2,'2012-06-01 16:48:54','2012-06-05 23:08:23','ariana','TUNIS','2080','rue mustapha hjayij, imm 5 app 37','TRAVAIL'),(3,'2012-06-05 23:08:23','2012-06-05 23:08:23','tunis','TUNIS','1002','20, rue habib bourguiga','DOMICILE'),(4,'2012-06-06 07:08:07','2012-06-06 07:08:07','Ariana','TUNIS','2008','20, rue Alger','TRAVAIL'),(5,'2012-06-06 07:09:36','2012-06-06 07:10:23','Ariana','TUNIS','2045','20, avenue la liberte','TRAVAIL'),(6,'2012-06-06 07:11:43','2012-06-06 07:11:43','Tunis','TUNIS','1002','14, rue Tayeb Lemhiri','TRAVAIL'),(7,'2012-06-06 07:18:15','2012-06-06 07:18:15','Sakier Ezzit','SFAX','1233','20, rue Turquie','DOMICILE'),(8,'2012-06-06 07:22:41','2012-06-06 07:22:41','Ezzahra','TUNIS','3012','14, rue Tripoli','TRAVAIL'),(9,'2012-06-06 07:25:49','2012-06-06 07:25:49','Tunis','TUNIS','1000','8, avenue de Carthage','TRAVAIL'),(10,'2012-06-06 10:47:57','2012-06-06 10:47:57','Ariana','TUNIS','2080','58,rue hedi chaker','TRAVAIL');
 /*!40000 ALTER TABLE `Address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,7 +230,7 @@ CREATE TABLE `Category` (
   `modifiedOn` datetime DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -239,7 +239,7 @@ CREATE TABLE `Category` (
 
 LOCK TABLES `Category` WRITE;
 /*!40000 ALTER TABLE `Category` DISABLE KEYS */;
-INSERT INTO `Category` VALUES (1,'2012-06-02 20:16:08','2012-06-02 20:16:08','dfdqfdqsfqd');
+INSERT INTO `Category` VALUES (1,'2012-06-02 20:16:08','2012-06-06 07:31:48','Small Cameras'),(2,'2012-06-06 06:31:24','2012-06-06 07:32:03','Big Cameras'),(3,'2012-06-06 06:31:36','2012-06-06 07:32:15','Cables'),(4,'2012-06-06 07:32:24','2012-06-06 07:32:24','Accessoires');
 /*!40000 ALTER TABLE `Category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,7 +269,7 @@ CREATE TABLE `Contact` (
 
 LOCK TABLES `Contact` WRITE;
 /*!40000 ALTER TABLE `Contact` DISABLE KEYS */;
-INSERT INTO `Contact` VALUES ('mounir.png','MR',1,1);
+INSERT INTO `Contact` VALUES ('mounir.png','MR',1,1),('slim.png','MR',3,2),('rafik.png','MR',4,3),('samira.png','MLLE',5,4),('amir.png','MR',6,3);
 /*!40000 ALTER TABLE `Contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,7 +297,7 @@ CREATE TABLE `Contact_Address` (
 
 LOCK TABLES `Contact_Address` WRITE;
 /*!40000 ALTER TABLE `Contact_Address` DISABLE KEYS */;
-INSERT INTO `Contact_Address` VALUES (1,2);
+INSERT INTO `Contact_Address` VALUES (1,2),(1,3),(3,7),(4,8),(5,9),(6,10);
 /*!40000 ALTER TABLE `Contact_Address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,7 +325,7 @@ CREATE TABLE `Contact_PhoneNumber` (
 
 LOCK TABLES `Contact_PhoneNumber` WRITE;
 /*!40000 ALTER TABLE `Contact_PhoneNumber` DISABLE KEYS */;
-INSERT INTO `Contact_PhoneNumber` VALUES (1,2);
+INSERT INTO `Contact_PhoneNumber` VALUES (1,2),(3,7),(3,8),(4,9),(5,10),(6,11);
 /*!40000 ALTER TABLE `Contact_PhoneNumber` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,7 +344,7 @@ CREATE TABLE `CrmUser` (
   `lastName` varchar(255) NOT NULL,
   `login` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,7 +353,7 @@ CREATE TABLE `CrmUser` (
 
 LOCK TABLES `CrmUser` WRITE;
 /*!40000 ALTER TABLE `CrmUser` DISABLE KEYS */;
-INSERT INTO `CrmUser` VALUES (1,'2012-06-01 16:48:54','2012-06-01 16:48:54','Messelmeni','Mounir','mounir'),(2,'2012-06-02 01:30:53','2012-06-02 01:30:53','Affes','Mohamed Ali','admin');
+INSERT INTO `CrmUser` VALUES (1,'2012-06-01 16:48:54','2012-06-01 16:48:54','Messelmeni','Mounir','mounir'),(2,'2012-06-02 01:30:53','2012-06-02 01:30:53','Affes','Mohamed Ali','admin'),(3,'2012-06-06 07:18:15','2012-06-06 07:18:28','Ben Ayed','Slim','slim'),(4,'2012-06-06 07:22:41','2012-06-06 07:22:41','Ben Yedder','Rafik','rafik'),(5,'2012-06-06 07:25:49','2012-06-06 10:35:26','Laroussi','Samira','samira'),(6,'2012-06-06 10:47:57','2012-06-06 10:47:57','Jarraya','Amir','amir');
 /*!40000 ALTER TABLE `CrmUser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -381,7 +381,7 @@ CREATE TABLE `CrmUser_EmailAdress` (
 
 LOCK TABLES `CrmUser_EmailAdress` WRITE;
 /*!40000 ALTER TABLE `CrmUser_EmailAdress` DISABLE KEYS */;
-INSERT INTO `CrmUser_EmailAdress` VALUES (1,2);
+INSERT INTO `CrmUser_EmailAdress` VALUES (1,2),(1,3),(3,10),(4,11),(5,12),(6,13),(6,14);
 /*!40000 ALTER TABLE `CrmUser_EmailAdress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -453,7 +453,7 @@ CREATE TABLE `EmailAdress` (
   `emailAdress` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `emailAdress` (`emailAdress`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -462,7 +462,7 @@ CREATE TABLE `EmailAdress` (
 
 LOCK TABLES `EmailAdress` WRITE;
 /*!40000 ALTER TABLE `EmailAdress` DISABLE KEYS */;
-INSERT INTO `EmailAdress` VALUES (1,'2012-06-01 16:48:05','2012-06-01 16:48:05','messdssd@df.co'),(2,'2012-06-01 16:48:54','2012-06-01 16:48:54','messelmeni.mounir@gmail.com');
+INSERT INTO `EmailAdress` VALUES (1,'2012-06-01 16:48:05','2012-06-06 07:03:26','mouradi@hotel.tn'),(2,'2012-06-01 16:48:54','2012-06-06 10:45:58','messelmeni.mounir2@gmail.com'),(3,'2012-06-05 23:18:53','2012-06-05 23:18:53','test.crm@aol.com'),(4,'2012-06-06 07:08:07','2012-06-06 07:08:07','topnet@princip.tn'),(5,'2012-06-06 07:08:07','2012-06-06 07:08:07','topnet@sales.tn'),(6,'2012-06-06 07:08:07','2012-06-06 07:08:07','donotreply@topnet.tn'),(7,'2012-06-06 07:09:36','2012-06-06 07:09:36','geant@sales.tn'),(8,'2012-06-06 07:09:36','2012-06-06 07:09:36','geant@rh.tn'),(9,'2012-06-06 07:11:43','2012-06-06 07:11:43','palmgarden@gmail.tn'),(10,'2012-06-06 07:18:15','2012-06-06 07:21:29','benayedslim@gmail.com'),(11,'2012-06-06 07:22:41','2012-06-06 07:24:36','benyedder.rafik@gmail.com'),(12,'2012-06-06 07:25:49','2012-06-06 07:28:38','laroussi.samira@gmail.com'),(13,'2012-06-06 10:47:57','2012-06-06 10:47:57','messelmeni.mounir@gmail.com'),(14,'2012-06-06 10:47:57','2012-06-06 10:47:57','jarraya.amir@gmail.com');
 /*!40000 ALTER TABLE `EmailAdress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -482,7 +482,7 @@ CREATE TABLE `Fidelity` (
   PRIMARY KEY (`id`),
   KEY `FKCA6727663E011A19` (`account_id`),
   CONSTRAINT `FKCA6727663E011A19` FOREIGN KEY (`account_id`) REFERENCES `Account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -491,6 +491,7 @@ CREATE TABLE `Fidelity` (
 
 LOCK TABLES `Fidelity` WRITE;
 /*!40000 ALTER TABLE `Fidelity` DISABLE KEYS */;
+INSERT INTO `Fidelity` VALUES (1,'2012-06-06 07:08:07','2012-06-06 07:08:07',5,NULL),(2,'2012-06-06 07:09:36','2012-06-06 07:40:11',6,NULL),(3,'2012-06-06 07:11:43','2012-06-06 07:11:43',5,NULL);
 /*!40000 ALTER TABLE `Fidelity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -509,7 +510,7 @@ CREATE TABLE `IdentityObject` (
   UNIQUE KEY `name` (`name`,`IDENTITY_OBJECT_TYPE_ID`),
   KEY `FKB760C5BD3DDCEF05` (`IDENTITY_OBJECT_TYPE_ID`),
   CONSTRAINT `FKB760C5BD3DDCEF05` FOREIGN KEY (`IDENTITY_OBJECT_TYPE_ID`) REFERENCES `IdentityObjectType` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -518,7 +519,7 @@ CREATE TABLE `IdentityObject` (
 
 LOCK TABLES `IdentityObject` WRITE;
 /*!40000 ALTER TABLE `IdentityObject` DISABLE KEYS */;
-INSERT INTO `IdentityObject` VALUES (11,'admin',2),(1,'crm',1),(7,'mounir',2);
+INSERT INTO `IdentityObject` VALUES (11,'admin',2),(15,'amir',2),(1,'crm',1),(7,'mounir',2),(13,'rafik',2),(14,'samira',2),(12,'slim',2);
 /*!40000 ALTER TABLE `IdentityObject` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -538,7 +539,7 @@ CREATE TABLE `IdentityObjectAttribute` (
   UNIQUE KEY `name` (`name`,`IDENTITY_OBJECT_ID`),
   KEY `FKEB1F295FC42863A4` (`IDENTITY_OBJECT_ID`),
   CONSTRAINT `FKEB1F295FC42863A4` FOREIGN KEY (`IDENTITY_OBJECT_ID`) REFERENCES `IdentityObject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -547,7 +548,7 @@ CREATE TABLE `IdentityObjectAttribute` (
 
 LOCK TABLES `IdentityObjectAttribute` WRITE;
 /*!40000 ALTER TABLE `IdentityObjectAttribute` DISABLE KEYS */;
-INSERT INTO `IdentityObjectAttribute` VALUES (3,'informationUser','1',7),(4,'informationUser','2',11);
+INSERT INTO `IdentityObjectAttribute` VALUES (3,'informationUser','1',7),(4,'informationUser','2',11),(5,'informationUser','3',12),(6,'informationUser','4',13),(7,'informationUser','5',14),(8,'informationUser','6',15);
 /*!40000 ALTER TABLE `IdentityObjectAttribute` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -569,7 +570,7 @@ CREATE TABLE `IdentityObjectCredential` (
   KEY `FK37DC41F48B732EF3` (`CREDENTIAL_TYPE_ID`),
   CONSTRAINT `FK37DC41F48B732EF3` FOREIGN KEY (`CREDENTIAL_TYPE_ID`) REFERENCES `IdentityObjectCredentialType` (`id`),
   CONSTRAINT `FK37DC41F4C42863A4` FOREIGN KEY (`IDENTITY_OBJECT_ID`) REFERENCES `IdentityObject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -578,7 +579,7 @@ CREATE TABLE `IdentityObjectCredential` (
 
 LOCK TABLES `IdentityObjectCredential` WRITE;
 /*!40000 ALTER TABLE `IdentityObjectCredential` DISABLE KEYS */;
-INSERT INTO `IdentityObjectCredential` VALUES (3,'elmes',7,1),(7,'admin',11,1);
+INSERT INTO `IdentityObjectCredential` VALUES (3,'elmes',7,1),(7,'admin',11,1),(8,'slim',12,1),(9,'rafik',13,1),(10,'samira',14,1),(11,'amir',15,1);
 /*!40000 ALTER TABLE `IdentityObjectCredential` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -628,7 +629,7 @@ CREATE TABLE `IdentityObjectRelationship` (
   CONSTRAINT `FK8C4CDC953DE562F1` FOREIGN KEY (`FROM_IDENTITY_ID`) REFERENCES `IdentityObject` (`id`),
   CONSTRAINT `FK8C4CDC95A06CA842` FOREIGN KEY (`TO_IDENTITY_ID`) REFERENCES `IdentityObject` (`id`),
   CONSTRAINT `FK8C4CDC95EB830EB5` FOREIGN KEY (`RELATIONSHIP_TYPE_ID`) REFERENCES `IdentityObjectRelationshipType` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -637,7 +638,7 @@ CREATE TABLE `IdentityObjectRelationship` (
 
 LOCK TABLES `IdentityObjectRelationship` WRITE;
 /*!40000 ALTER TABLE `IdentityObjectRelationship` DISABLE KEYS */;
-INSERT INTO `IdentityObjectRelationship` VALUES (3,'client',1,1,7),(4,'admin',1,1,11);
+INSERT INTO `IdentityObjectRelationship` VALUES (3,'client',1,1,7),(4,'admin',1,1,11),(5,'client',1,1,12),(6,'client',1,1,13),(7,'client',1,1,14),(8,'client',1,1,15);
 /*!40000 ALTER TABLE `IdentityObjectRelationship` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -763,7 +764,7 @@ CREATE TABLE `ItemToPurchase` (
   PRIMARY KEY (`id`),
   KEY `FKC79C742FA1A0AD9` (`product_id`),
   CONSTRAINT `FKC79C742FA1A0AD9` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -772,7 +773,7 @@ CREATE TABLE `ItemToPurchase` (
 
 LOCK TABLES `ItemToPurchase` WRITE;
 /*!40000 ALTER TABLE `ItemToPurchase` DISABLE KEYS */;
-INSERT INTO `ItemToPurchase` VALUES (1,'2012-06-02 20:17:16','2012-06-02 20:17:16',10,1);
+INSERT INTO `ItemToPurchase` VALUES (1,'2012-06-02 20:17:16','2012-06-05 14:28:29',20,1),(2,'2012-06-06 07:39:49','2012-06-06 07:39:49',20,4),(3,'2012-06-06 07:39:49','2012-06-06 07:39:49',12,1);
 /*!40000 ALTER TABLE `ItemToPurchase` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -824,7 +825,7 @@ CREATE TABLE `Notification` (
   `readed` tinyint(1) NOT NULL,
   `type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -833,7 +834,6 @@ CREATE TABLE `Notification` (
 
 LOCK TABLES `Notification` WRITE;
 /*!40000 ALTER TABLE `Notification` DISABLE KEYS */;
-INSERT INTO `Notification` VALUES (1,'2012-06-02 20:17:16','2012-06-02 20:33:20','Vous avez un offre : <admin> vous invite à consulter l\'opportunité \' Samsunghbcvnb \' !!','/frontoffice/notifications/viewOpportunity?id=1',1,'OPPORTUNITE'),(2,'2012-06-02 20:35:27','2012-06-02 20:36:09','Messelmeni Mounir a refusé l\'opportunité \' Samsunghbcvnb \' !!','/backoffice/notifications/viewOpportunity?id=1',1,'OPPORTUNITE'),(3,'2012-06-03 09:28:57','2012-06-03 09:28:57','Messelmeni Mounir a refusé l\'opportunité \' Samsunghbcvnb \' !!','/backoffice/notifications/viewOpportunity?id=1',0,'OPPORTUNITE');
 /*!40000 ALTER TABLE `Notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -859,7 +859,7 @@ CREATE TABLE `NotificationContact` (
   CONSTRAINT `FKC1742C95675729BB` FOREIGN KEY (`notification_id`) REFERENCES `Notification` (`id`),
   CONSTRAINT `FKC1742C95EACB179` FOREIGN KEY (`backendUser_id`) REFERENCES `BackendUser` (`id`),
   CONSTRAINT `FKC1742C95F51CF139` FOREIGN KEY (`contact_id`) REFERENCES `Contact` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -868,7 +868,6 @@ CREATE TABLE `NotificationContact` (
 
 LOCK TABLES `NotificationContact` WRITE;
 /*!40000 ALTER TABLE `NotificationContact` DISABLE KEYS */;
-INSERT INTO `NotificationContact` VALUES (1,'2012-06-02 20:17:16','2012-06-02 20:17:16',1,2,1,1),(2,'2012-06-02 20:35:27','2012-06-02 20:35:27',0,2,1,2),(3,'2012-06-03 09:28:57','2012-06-03 09:28:57',0,2,1,3);
 /*!40000 ALTER TABLE `NotificationContact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -895,7 +894,7 @@ CREATE TABLE `Opportunity` (
   KEY `FK16648EB3D44540DA` (`contactId`),
   CONSTRAINT `FK16648EB3D44540DA` FOREIGN KEY (`contactId`) REFERENCES `Contact` (`id`),
   CONSTRAINT `FK16648EB3E2BB9238` FOREIGN KEY (`backendUserId`) REFERENCES `BackendUser` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -904,7 +903,7 @@ CREATE TABLE `Opportunity` (
 
 LOCK TABLES `Opportunity` WRITE;
 /*!40000 ALTER TABLE `Opportunity` DISABLE KEYS */;
-INSERT INTO `Opportunity` VALUES (1,'2012-06-02 20:17:16','2012-06-02 20:35:27','2012-06-15','','Samsunghbcvnb',2,2,1,0);
+INSERT INTO `Opportunity` VALUES (1,'2012-06-02 20:17:16','2012-06-06 07:38:36','2012-06-15','','Offre fin d\'annee',2,2,3,0),(2,'2012-06-06 07:39:49','2012-06-06 07:40:11','2012-06-22','','Protion fete',2,2,4,1);
 /*!40000 ALTER TABLE `Opportunity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -932,7 +931,7 @@ CREATE TABLE `Opportunity_ItemToPurchase` (
 
 LOCK TABLES `Opportunity_ItemToPurchase` WRITE;
 /*!40000 ALTER TABLE `Opportunity_ItemToPurchase` DISABLE KEYS */;
-INSERT INTO `Opportunity_ItemToPurchase` VALUES (1,1);
+INSERT INTO `Opportunity_ItemToPurchase` VALUES (1,1),(2,2),(2,3);
 /*!40000 ALTER TABLE `Opportunity_ItemToPurchase` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -950,7 +949,7 @@ CREATE TABLE `PhoneNumber` (
   `number` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -959,7 +958,7 @@ CREATE TABLE `PhoneNumber` (
 
 LOCK TABLES `PhoneNumber` WRITE;
 /*!40000 ALTER TABLE `PhoneNumber` DISABLE KEYS */;
-INSERT INTO `PhoneNumber` VALUES (1,'2012-06-01 16:48:05','2012-06-01 16:48:05','55-555-555','TRAVAIL'),(2,'2012-06-01 16:48:54','2012-06-01 16:48:54','22 487 036','TRAVAIL');
+INSERT INTO `PhoneNumber` VALUES (1,'2012-06-01 16:48:05','2012-06-01 16:48:05','55-555-555','TRAVAIL'),(2,'2012-06-01 16:48:54','2012-06-01 16:48:54','22 487 036','TRAVAIL'),(3,'2012-06-06 07:08:07','2012-06-06 07:08:07','71-256-987','TRAVAIL'),(4,'2012-06-06 07:08:07','2012-06-06 07:08:07','71-445-896','TRAVAIL'),(5,'2012-06-06 07:09:36','2012-06-06 07:09:36','71-555-599','TRAVAIL'),(6,'2012-06-06 07:11:43','2012-06-06 07:11:43','71-548-963','TRAVAIL'),(7,'2012-06-06 07:18:15','2012-06-06 07:18:15','55 555 555','PORTABLE'),(8,'2012-06-06 07:18:15','2012-06-06 07:18:15','74 859 658','DOMICILE'),(9,'2012-06-06 07:22:41','2012-06-06 07:22:41','71 589 654','TRAVAIL'),(10,'2012-06-06 07:25:49','2012-06-06 07:25:49','44 558 899','TRAVAIL'),(11,'2012-06-06 10:47:57','2012-06-06 10:47:57','22 222 222','TRAVAIL');
 /*!40000 ALTER TABLE `PhoneNumber` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -987,7 +986,7 @@ CREATE TABLE `Product` (
   KEY `FK50C664CFAB3B5059` (`tva_id`),
   CONSTRAINT `FK50C664CF2C8A655B` FOREIGN KEY (`category_id`) REFERENCES `Category` (`id`),
   CONSTRAINT `FK50C664CFAB3B5059` FOREIGN KEY (`tva_id`) REFERENCES `TVA` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -996,7 +995,7 @@ CREATE TABLE `Product` (
 
 LOCK TABLES `Product` WRITE;
 /*!40000 ALTER TABLE `Product` DISABLE KEYS */;
-INSERT INTO `Product` VALUES (1,'2012-06-02 20:16:49','2012-06-03 09:48:33','dfgfdqgsq','gdghdshgh_fdgsdfhsdg.png','Ã©Ã©Ã©Ã©Ã©Ã©',200,200,'fdgsdfhsdg',1,1);
+INSERT INTO `Product` VALUES (1,'2012-06-02 20:16:49','2012-06-06 07:33:28','','Surveill-1200_21454612121.png','Surveill-1200',10,200,'21454612121',1,1),(2,'2012-06-03 14:47:34','2012-06-06 07:33:49','','HaltSurveill-895_4846132121.png','HaltSurveill-895',1,2000,'4846132121',1,1),(3,'2012-06-06 06:39:31','2012-06-06 07:34:20','','PicoSurveill-1899_sds54885sd.png','PicoSurveill-1899',0.3,1500,'sds54885sd',1,4),(4,'2012-06-06 06:40:21','2012-06-06 07:34:44','','CADER-522_SON-5485-hgf.png','CADER-522',100.2,500,'SON-5485-hgf',2,1),(5,'2012-06-06 06:41:16','2012-06-06 07:35:12','','Ultimate-1200_SAMS-54821lko.png','Ultimate-1200',250.6,240,'SAMS-54821lko',2,2),(6,'2012-06-06 06:42:04','2012-06-06 07:35:34','','LC connector 45_CHAUSS-548pol.png','LC connector 45',45.9,856,'CHAUSS-548pol',3,1),(7,'2012-06-06 06:42:57','2012-06-06 07:36:01','','VB tivk 548_N-50124.png','VB tivk 548',1099.8,420,'N-50124',3,3),(8,'2012-06-06 06:43:41','2012-06-06 07:36:49','','FRSurveill-98_548-gtf-77.png','FRSurveill-98',1277,560,'548-gtf-77',2,1),(9,'2012-06-06 07:37:50','2012-06-06 09:47:22','','Ubraid52_sdsd215.png','Ubraid52',85,6500,'sdsd215',4,4);
 /*!40000 ALTER TABLE `Product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1014,7 +1013,7 @@ CREATE TABLE `TVA` (
   `description` varchar(255) NOT NULL,
   `taux` float NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1023,7 +1022,7 @@ CREATE TABLE `TVA` (
 
 LOCK TABLES `TVA` WRITE;
 /*!40000 ALTER TABLE `TVA` DISABLE KEYS */;
-INSERT INTO `TVA` VALUES (1,'2012-06-02 20:16:16','2012-06-02 20:16:16','qdsfvsdf',15);
+INSERT INTO `TVA` VALUES (1,'2012-06-02 20:16:16','2012-06-06 06:31:56','',15),(2,'2012-06-03 11:02:14','2012-06-06 06:32:03','',12),(3,'2012-06-06 06:31:47','2012-06-06 06:31:47','',18),(4,'2012-06-06 06:32:08','2012-06-06 06:32:08','',6);
 /*!40000 ALTER TABLE `TVA` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1046,12 +1045,13 @@ CREATE TABLE `Task` (
   `taskType` varchar(255) DEFAULT NULL,
   `assignedTo_id` bigint(20) DEFAULT NULL,
   `creator_id` bigint(20) DEFAULT NULL,
+  `accepted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK27A9A5B06F87F0` (`assignedTo_id`),
-  KEY `FK27A9A53EFD89AD` (`creator_id`),
-  CONSTRAINT `FK27A9A53EFD89AD` FOREIGN KEY (`creator_id`) REFERENCES `Contact` (`id`),
-  CONSTRAINT `FK27A9A5B06F87F0` FOREIGN KEY (`assignedTo_id`) REFERENCES `Contact` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `FK27A9A5B37B8A8C` (`creator_id`),
+  CONSTRAINT `FK27A9A5B06F87F0` FOREIGN KEY (`assignedTo_id`) REFERENCES `Contact` (`id`),
+  CONSTRAINT `FK27A9A5B37B8A8C` FOREIGN KEY (`creator_id`) REFERENCES `BackendUser` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1060,6 +1060,7 @@ CREATE TABLE `Task` (
 
 LOCK TABLES `Task` WRITE;
 /*!40000 ALTER TABLE `Task` DISABLE KEYS */;
+INSERT INTO `Task` VALUES (1,'2012-06-03 14:36:56','2012-06-03 20:02:34','','2012-06-13 08:00:00',0,'2012-06-10 16:00:00','Daly','FAX',NULL,NULL,0),(2,'2012-06-03 14:49:15','2012-06-03 20:04:19','appler dupont pour corriger la vente ref 25556633322','2012-06-14 06:00:00',0,'2012-06-14 00:30:00','Vente opp 34','APPEL',NULL,NULL,0),(3,'2012-06-03 15:08:02','2012-06-03 17:16:17',NULL,'2012-05-15 00:00:00',NULL,'2012-05-25 00:00:00','Soutenance PFA @this','APPEL',NULL,NULL,0),(4,'2012-06-03 18:13:24','2012-06-03 19:40:28','','2012-06-07 05:00:00',3,'2012-06-07 03:00:00','Mounir23','EMAIL',NULL,NULL,0),(5,'2012-06-04 00:11:07','2012-06-06 07:46:57','','2012-06-04 17:00:00',3,'2012-06-04 15:00:00','Reunion Chiffre d\'Affaire','REUNION',1,2,1),(6,'2012-06-04 00:11:24','2012-06-06 07:47:20','','2012-06-05 18:30:00',2,'2012-06-05 15:00:00','Negotiation contrat','REUNION',3,2,0),(7,'2012-06-06 01:57:00','2012-06-06 07:47:44','','2012-06-06 00:00:00',0,'2012-06-06 00:00:00','Renouvellement contrat','APPEL',5,2,0),(8,'2012-06-06 01:57:23','2012-06-06 07:49:03','','2012-06-04 12:00:00',0,'2012-06-04 11:00:00','Envoyer campagne','EMAIL',5,2,0),(9,'2012-06-06 02:02:09','2012-06-06 07:48:31','','2012-06-07 12:00:00',0,'2012-06-07 10:00:00','Test de materiel','REUNION',3,2,1),(10,'2012-06-06 07:49:43','2012-06-06 07:49:51','','2012-05-30 00:00:00',1,'2012-05-30 00:00:00','Test de materiel','REUNION',4,2,1);
 /*!40000 ALTER TABLE `Task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1082,7 +1083,7 @@ CREATE TABLE `Ticket` (
   PRIMARY KEY (`id`),
   KEY `FK954D572C3EFD89AD` (`creator_id`),
   CONSTRAINT `FK954D572C3EFD89AD` FOREIGN KEY (`creator_id`) REFERENCES `Contact` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1091,7 +1092,6 @@ CREATE TABLE `Ticket` (
 
 LOCK TABLES `Ticket` WRITE;
 /*!40000 ALTER TABLE `Ticket` DISABLE KEYS */;
-INSERT INTO `Ticket` VALUES (1,'2012-06-01 16:55:05','2012-06-02 18:08:02','qsfgsfgfsg',0,'sgsfgfs','INCIDENT',1),(5,'2012-06-01 19:24:38','2012-06-01 19:24:38',NULL,0,NULL,NULL,NULL),(6,'2012-06-02 00:02:00','2012-06-02 10:32:49','dsfgsdfggdh',1,'fdhsdhg','INCIDENT',1),(7,'2012-06-02 00:54:52','2012-06-02 00:54:52','Bonjour,<br/><br/><font color=\"#ff0000\">J\'arrive pas à naviguer a partir du menu</font> depuis Lundi le 13/05/2012.<br/>J\'utilise l\'url pour accéder au pages.<br/><br/><u>Veuillez voir ce probleme technique.</u><br/><br/>Merci<br/>',0,'Probleme de navigation','INCIDENT',1),(8,'2012-06-02 03:14:26','2012-06-02 18:07:51','wfgxfwgfxwgw<br/><br/><br/><br/><u>fchngfhfxhgxf</u><br/>',0,'wsgsqgsf','INCIDENT',1),(9,'2012-06-02 03:14:59','2012-06-02 19:58:30','dfdfwhdxghdg<br/><br/>fhfgxhfxghxgf<br/>',0,'xdthdgh','QUESTION',1),(10,'2012-06-02 08:52:52','2012-06-03 09:28:30','ljmjm<br/><br/><br/><font color=\"#ff0000\">klm</font><br/>',1,'sfsgfsgfsdgs','INCIDENT',1),(11,'2012-06-02 18:08:19','2012-06-02 19:39:54','qddfqfqFQD',1,'dsdsqfds','QUESTION',1);
 /*!40000 ALTER TABLE `Ticket` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1115,7 +1115,7 @@ CREATE TABLE `TicketResponse` (
   KEY `FKA55AE38DA2C46CB9` (`crmUser_id`),
   CONSTRAINT `FKA55AE38DA2C46CB9` FOREIGN KEY (`crmUser_id`) REFERENCES `CrmUser` (`id`),
   CONSTRAINT `FKA55AE38DA42FA6DB` FOREIGN KEY (`ticket_id`) REFERENCES `Ticket` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1124,8 +1124,29 @@ CREATE TABLE `TicketResponse` (
 
 LOCK TABLES `TicketResponse` WRITE;
 /*!40000 ALTER TABLE `TicketResponse` DISABLE KEYS */;
-INSERT INTO `TicketResponse` VALUES (10,'2012-06-02 00:22:01','2012-06-02 00:22:01','wvsfvwsv','swfsvwv',1,6),(11,'2012-06-02 00:22:18','2012-06-02 00:22:18','zqefsfdgwsdf','xcvxwbvxbv',1,6),(12,'2012-06-02 00:28:24','2012-06-02 00:28:24','Salut <strong>Mounir</strong>,<br/><br/>Vous devez <em>bla bla bla</em><br/><br/><font color=\"#3366ff\">Cordialement<br/>Elmes</font><br/>','Salut',1,6),(13,'2012-06-02 01:32:33','2012-06-02 01:32:33','Test by <font color=\"#000000\">Admin</font><br/>','gggggggg',2,6),(14,'2012-06-02 03:16:41','2012-06-02 18:03:01','fssfgwfdgdfsg<br/><br/>cgfhshfxhwxcwxcx<br/>wccvwv<br/><br/><br/><br/><font color=\"#ff0000\">byecwxcw</font><br/>','ELMES TEST',1,9),(17,'2012-06-02 03:19:25','2012-06-02 17:19:14','fgfdgsdgfdqsdsqd','gdgdsgsdgs',1,9),(18,'2012-06-02 07:47:12','2012-06-02 18:03:28','testgfsdg<br/><br/><font color=\"#cc33cc\"><br/></font><font color=\"#cc33cc\">tdgsd</font><br/>','test daly',1,9),(19,'2012-06-02 08:49:50','2012-06-02 08:49:50','Wi, Systeme logique<br/>','c pas logique',1,9),(20,'2012-06-02 18:08:27','2012-06-02 18:08:41','qfdqfdqFQDF','sssssssssssssssssss',1,11),(21,'2012-06-02 18:08:32','2012-06-02 18:08:32','dQFDQFDQFcqd','fsqfqdf',1,11),(22,'2012-06-02 19:01:36','2012-06-02 19:01:36','ffwfsgsggsg','hxfhhfgd',1,10),(23,'2012-06-02 19:58:22','2012-06-02 19:58:22','dfqffdqfsfd','Saluuuutttttttt',1,9),(24,'2012-06-02 19:59:22','2012-06-02 19:59:22','fdsfqdsqsf','Hello',1,10);
 /*!40000 ALTER TABLE `TicketResponse` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hibernate_sequence`
+--
+
+DROP TABLE IF EXISTS `hibernate_sequence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hibernate_sequence`
+--
+
+LOCK TABLES `hibernate_sequence` WRITE;
+/*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
+INSERT INTO `hibernate_sequence` VALUES (11);
+/*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -1137,4 +1158,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-06-03  9:50:23
+-- Dump completed on 2012-06-06 12:48:17

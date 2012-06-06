@@ -10,7 +10,7 @@
         <h:outputStylesheet library="css" name="default.css" />
         <h:outputStylesheet library="css" name="cssLayout.css" />
         <ui:insert name="cssAndJs"></ui:insert>
-        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <title><ui:insert name="title">CRM-PFA Administration</ui:insert></title>
         <!-- Required Stylesheets -->
         <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/reset.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/mws/css/text.css" media="screen" />
@@ -123,10 +123,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="#" class="mws-i-24 i-facebook-like"><h:outputText  value="Gestion des opportunités"/></a>
-                                <ul>
-                                    <li><h:commandLink action="/backoffice/opportunities/list" value="Opportunités" /></li>
-                                </ul>
+                                <h:commandLink class="mws-i-24 i-facebook-like" action="/backoffice/opportunities/list" value="Gestion des opportunités" />
                             </li>
                             <li>
                                 <h:commandLink action="/backoffice/ticket/list" value="Tickets" class="mws-i-24 i-tag"/>

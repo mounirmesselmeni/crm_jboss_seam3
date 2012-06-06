@@ -65,6 +65,7 @@ public class RegisterController extends ConversationController {
         if (returnString != null) {
             try {
                 contactService.deleteActivationCode(getActivation());
+                return "/login.jsf";
             } catch (Exception ex) {
             }
         }

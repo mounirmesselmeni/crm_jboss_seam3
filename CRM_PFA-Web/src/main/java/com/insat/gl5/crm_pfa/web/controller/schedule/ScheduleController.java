@@ -4,14 +4,18 @@
  */
 package com.insat.gl5.crm_pfa.web.controller.schedule;
 
-import com.insat.gl5.crm_pfa.model.BackendUser;
-import com.insat.gl5.crm_pfa.model.Contact;
-import com.insat.gl5.crm_pfa.model.Task;
+import com.insat.gl5.crm_pfa.enumeration.DirectionEnum;
+import com.insat.gl5.crm_pfa.enumeration.NotificationType;
+import com.insat.gl5.crm_pfa.enumeration.TaskType;
+import com.insat.gl5.crm_pfa.model.*;
+import com.insat.gl5.crm_pfa.service.ContactService;
+import com.insat.gl5.crm_pfa.service.NotificationService;
 import com.insat.gl5.crm_pfa.service.TaskService;
 import com.insat.gl5.crm_pfa.service.qualifier.CurrentContact;
 import com.insat.gl5.crm_pfa.service.qualifier.CurrentUser;
 import com.insat.gl5.crm_pfa.web.qualifier.Admin;
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
@@ -44,6 +48,10 @@ public class ScheduleController implements Serializable {
     @Inject
     @CurrentContact
     private Contact currentContact;
+    @Inject
+    private NotificationService notificationService;
+    @Inject
+    private ContactService contactService;
 
     @PostConstruct
     public void init() {
@@ -64,10 +72,13 @@ public class ScheduleController implements Serializable {
     /**
      * Add new Task
      */
-    public void createTask() {
+    private void createTask() {
         try {
             event.getTask().setCreator(currentBackendUser);
             this.taskService.saveTask(event.getTask());
+            if (this.event.getTask().getTaskType().equals(TaskType.REUNION)) {
+                notifyContact(this.event.getTask(), "Le commercial " + currentBackendUser.getFullName() + " souhaite organiser une réunion avec vous.");
+            }
             eventModel.addEvent(event);
             messages.info("Tâche ajoutée.");
         } catch (Exception ex) {
@@ -78,14 +89,33 @@ public class ScheduleController implements Serializable {
     /**
      * Add new Task
      */
-    public void editTask() {
+    private void editTask() {
         try {
             this.taskService.editTask(event.getTask());
+            if (this.event.getTask().getTaskType().equals(TaskType.REUNION)) {
+                if (currentBackendUser != null) {
+                    notifyContact(this.event.getTask(), "Le commercial " + currentBackendUser.getFullName() + " a modifié les détails du réunion prévu.");
+                }
+            }
             eventModel.updateEvent(event);
             messages.info("Tâche à jour.");
         } catch (Exception ex) {
             messages.error("Erreur de mise à jour de votre taĉhe.");
         }
+    }
+
+    private void notifyContact(Task task, String content) throws Exception {
+        Notification notification = new Notification();
+        notification.setContent(content);
+        notification.setLink("/frontoffice/agenda/viewMeeting?id" + "=" + task.getId());
+        notification.setType(NotificationType.REUNION);
+        List<NotificationContact> list = new LinkedList<NotificationContact>();
+        Contact contact = this.contactService.findById(task.getAssignedTo().getId());
+        NotificationContact notificationContact = new NotificationContact(contact, contact.getAccount().getCrmUser(), notification, DirectionEnum.FROM_BACKUSER);
+        list.add(notificationContact);
+        notification.setNotificationContacts(list);
+        notificationService.saveNotificationContact(notificationContact);
+        notificationService.saveNotification(notification);
     }
 
     /**

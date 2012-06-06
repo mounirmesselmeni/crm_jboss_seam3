@@ -8,7 +8,7 @@
                 template="./../../WEB-INF/template/clientTemplate.xhtml">
 
     <ui:define name="body">
-        <p:panel header="#{empty ticketController.ticket.id ? 'Nouvelle ticket' : 'Modifier ticket'}">
+        <p:panel header="#{empty ticketController.ticket.id ? 'Nouveau ticket' : 'Modifier ticket'}">
             <p:messages autoUpdate="true"/>
             <h:form>
                 <ui:include src="ticketForm.xhtml" />

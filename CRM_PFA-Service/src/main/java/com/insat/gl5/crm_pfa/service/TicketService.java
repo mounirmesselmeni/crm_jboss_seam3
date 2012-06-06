@@ -4,6 +4,7 @@
  */
 package com.insat.gl5.crm_pfa.service;
 
+import com.insat.gl5.crm_pfa.model.BackendUser;
 import com.insat.gl5.crm_pfa.model.Contact;
 import com.insat.gl5.crm_pfa.model.Ticket;
 import com.insat.gl5.crm_pfa.model.TicketResponse;
@@ -71,6 +72,7 @@ public class TicketService extends GenericService {
         query.setParameter(1, contact);
         return query.getResultList();
     }
+  
 
     /**
      * Get TicketResponse List for a Ticket
